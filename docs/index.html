@@ -2717,7 +2717,7 @@ body.comment-mode * { cursor: crosshair !important; }
       }
 
       /* only show cursor if on same section */
-      var sameSection = !data.section || data.section === currentSection;
+      var sameSection = data.section === currentSection;
       cur.el.style.display = sameSection ? '' : 'none';
       if (!sameSection) return;
 
