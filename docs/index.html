@@ -2383,7 +2383,8 @@ body.comment-mode * { cursor: crosshair !important; }
     c.messages = c.messages
       ? (Array.isArray(c.messages) ? c.messages : Object.values(c.messages))
       : [];
-    c.messages.push({ author: 'You', text: text, time: timeAgo(Date.now()) });
+    var myName = localStorage.getItem('wds_name') || 'You';
+    c.messages.push({ author: myName, text: text, time: timeAgo(Date.now()) });
     inp.value = '';
     document.getElementById('send-' + id).disabled = true;
     document.getElementById('msgs-' + id).innerHTML = renderMessages(c.messages);
