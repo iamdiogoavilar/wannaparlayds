@@ -22,11 +22,6 @@
   <nav class="navbar__links">
     <!-- Online users avatars -->
     <div class="online-users" id="online-users"></div>
-    <!-- Follow indicator -->
-    <div class="follow-badge" id="follow-badge" style="display:none">
-      <span id="follow-badge-name"></span>
-      <button onclick="stopFollowing()">✕</button>
-    </div>
     <button class="theme-toggle" id="theme-toggle" aria-label="Toggle light/dark mode" onclick="toggleTheme()">
       <!-- Moon = currently light, click to go dark -->
       <svg class="icon-moon" viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-3.14-9.8c-.44-.06-.9-.1-1.36-.1z"/></svg>
@@ -2625,8 +2620,6 @@ body.comment-mode * { cursor: crosshair !important; }
     var followingUid = null;
     window.stopFollowing = function() {
       followingUid = null;
-      document.getElementById('follow-badge').style.display = 'none';
-      document.querySelectorAll('.online-avatar').forEach(function(a) { a.removeAttribute('data-following'); });
     };
 
     /* Stop following if user moves their own mouse */
@@ -2667,14 +2660,6 @@ body.comment-mode * { cursor: crosshair !important; }
       followingUid = id;
       var u = onlineData[id];
       if (!u) return;
-      var badge = document.getElementById('follow-badge');
-      document.getElementById('follow-badge-name').textContent = 'Following ' + u.name;
-      badge.style.display = 'flex';
-      /* highlight avatar */
-      document.querySelectorAll('.online-avatar').forEach(function(a) {
-        a.toggleAttribute('data-following', a.dataset.uid === id);
-      });
-      /* jump to their section immediately */
       jumpToUserView(u);
     }
 

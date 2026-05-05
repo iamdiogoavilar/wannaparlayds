@@ -206,21 +206,6 @@ body {
 }
 .online-avatar:hover .online-avatar__tooltip { opacity: 1; }
 
-/* ── Follow badge ── */
-.follow-badge {
-  display: flex; align-items: center; gap: 6px;
-  background: var(--da); color: #fff;
-  font-family: 'Montserrat', sans-serif;
-  font-size: 11px; font-weight: 700;
-  padding: 4px 10px 4px 12px; border-radius: 99px;
-}
-.follow-badge button {
-  background: rgba(255,255,255,.25); border: none;
-  color: #fff; cursor: pointer; font-size: 10px;
-  width: 18px; height: 18px; border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  line-height: 1;
-}
 .navbar__link {
   font-size: 13px; font-weight: 600; color: var(--dtm);
   text-decoration: none; padding: 6px 12px; border-radius: 6px;
