@@ -272,6 +272,18 @@ body {
 .sidebar__link.active {
   background: var(--dat); color: var(--da); font-weight: 700;
 }
+.sidebar__comment-badge {
+  margin-left: auto;
+  background: #2563EB;
+  color: #fff;
+  font-size: 9px; font-weight: 800;
+  font-family: 'Montserrat', sans-serif;
+  min-width: 16px; height: 16px;
+  border-radius: 99px;
+  padding: 0 4px;
+  display: flex; align-items: center; justify-content: center;
+  line-height: 1;
+}
 .sidebar__link.active::before {
   content: ''; position: absolute; left: 0; top: 20%; bottom: 20%;
   width: 3px; border-radius: 0 3px 3px 0;

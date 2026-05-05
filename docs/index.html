@@ -1359,8 +1359,6 @@ function showToast(msg) {
 
 /* ── Montserrat scale — grouped by weight ── */
 const mWeights = [
-  {name:'Regular',    w:400},
-  {name:'Medium',     w:500},
   {name:'SemiBold',   w:600},
   {name:'Bold',       w:700},
   {name:'ExtraBold',  w:800},
@@ -1389,7 +1387,6 @@ mWeights.forEach(({name, w}) => {
 
 /* ── Barlow Condensed scale ── */
 const bWeights = [
-  {name:'Regular',  w:400},
   {name:'SemiBold', w:600},
   {name:'Bold',     w:700},
 ];
@@ -1827,8 +1824,7 @@ if (FIREBASE_CONFIG) {
   <div class="ds-cpanel__list" id="cpanel-list"></div>
 </div>
 
-<!-- Comment pins container -->
-<div id="comment-layer"></div>
+<!-- pins are injected directly into each .section element -->
 
 <style>
 /* ─── Toolbar ─── */
@@ -1968,23 +1964,17 @@ body.comment-mode * { cursor: crosshair !important; }
   font-family: 'Montserrat', sans-serif;
 }
 
-/* ─── Comment layer — sits inside .main (content area) ─── */
-#comment-layer {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  pointer-events: none;
-  z-index: 800;
-}
+/* ─── Each section is the pin coordinate space ─── */
+.section { position: relative; }
 
-/* ─── Comment pin ─── */
+/* ─── Comment pin — absolute inside .section ─── */
 .ds-comment-pin {
   position: absolute;
   width: 28px; height: 28px;
   cursor: pointer;
   z-index: 900;
   pointer-events: auto;
-  transform: translate(-4px, -26px); /* tip of bubble at click point */
+  transform: translate(-4px, -26px);
 }
 .ds-comment-pin__bubble {
   width: 28px; height: 28px;
@@ -2144,18 +2134,25 @@ body.comment-mode * { cursor: crosshair !important; }
   });
 
   function updatePinVisibility() {
+    /* pins live inside their section — nothing to do, sections handle show/hide */
+    updateSidebarBadges();
+  }
+
+  function updateSidebarBadges() {
+    /* count unresolved comments per section */
+    var counts = {};
     comments.forEach(function(c) {
-      var pin = document.getElementById('pin-' + c.id);
-      if (!pin) return;
-      var visible = (c.section === currentSection);
-      pin.style.display = visible ? '' : 'none';
-      if (visible) {
-        /* reposition now that the section is active and has a real rect */
-        setTimeout(function() {
-          var pos = pinScreenPos(c);
-          pin.style.left = pos.left + 'px';
-          pin.style.top  = pos.top  + 'px';
-        }, 20);
+      if (!c.resolved) counts[c.section] = (counts[c.section] || 0) + 1;
+    });
+    document.querySelectorAll('.sidebar__link').forEach(function(link) {
+      var sec = link.dataset.section;
+      var existing = link.querySelector('.sidebar__comment-badge');
+      if (existing) existing.remove();
+      if (counts[sec]) {
+        var badge = document.createElement('span');
+        badge.className = 'sidebar__comment-badge';
+        badge.textContent = counts[sec];
+        link.appendChild(badge);
       }
     });
   }
@@ -2180,18 +2177,19 @@ body.comment-mode * { cursor: crosshair !important; }
     if (currentTool !== 'comment') return;
     if (e.target.closest('.ds-comment-pin') || e.target.closest('.ds-toolbar')) return;
 
-    /* coords relative to the active section element */
-    var activeSection = document.querySelector('.section.active');
-    var rect = activeSection ? activeSection.getBoundingClientRect() : { left: 0, top: 0 };
+    /* coords relative to the section element (accounts for scroll of .main) */
+    var sec = document.querySelector('.section.active');
+    if (!sec) return;
+    var rect = sec.getBoundingClientRect();
+    var main = document.querySelector('.main') || document.documentElement;
     var x = e.clientX - rect.left;
-    var y = e.clientY - rect.top + (activeSection ? activeSection.scrollTop : 0);
+    var y = e.clientY - rect.top + main.scrollTop;
 
     pinCounter++;
     var comment = { id: pinCounter, x: x, y: y, section: currentSection, messages: [], resolved: false, ts: Date.now() };
     comments.push(comment);
     saveComment(comment);
-    if (!db) renderPin(comment, true); /* Firebase listener handles render when db is active */
-    else renderPin(comment, true);
+    renderPin(comment, true);
     setTool('move');
   });
 
@@ -2230,6 +2228,7 @@ body.comment-mode * { cursor: crosshair !important; }
         }
       });
       updatePinVisibility();
+      updateSidebarBadges();
       if (document.getElementById('ds-cpanel') && document.getElementById('ds-cpanel').classList.contains('is-open')) {
         refreshCommentPanel();
       }
@@ -2242,38 +2241,17 @@ body.comment-mode * { cursor: crosshair !important; }
     updatePinVisibility();
   }
 
-  /* ── Compute screen position of a pin (section-relative → screen) ── */
-  function pinScreenPos(c) {
-    var sec = document.getElementById('section-' + c.section);
-    if (!sec) return { left: c.x, top: c.y };
-    var r = sec.getBoundingClientRect();
-    return { left: r.left + c.x, top: r.top + c.y };
-  }
-
-  /* ── Reposition all visible pins (called on scroll/resize) ── */
-  function repositionPins() {
-    comments.forEach(function(c) {
-      var pin = document.getElementById('pin-' + c.id);
-      if (!pin || pin.style.display === 'none') return;
-      var pos = pinScreenPos(c);
-      pin.style.left = pos.left + 'px';
-      pin.style.top  = pos.top  + 'px';
-    });
-  }
-  window.addEventListener('scroll', repositionPins, true);
-  window.addEventListener('resize', repositionPins);
-
-  /* ── Render a single pin ── */
+  /* ── Render a single pin — injected directly into its section ── */
   function renderPin(c, openImmediately) {
-    var layer = document.getElementById('comment-layer');
+    var sec = document.getElementById('section-' + c.section);
+    if (!sec) return;
 
-    var pos = pinScreenPos(c);
     var pin = document.createElement('div');
     pin.className = 'ds-comment-pin' + (c.resolved ? ' ds-comment-pin--resolved' : '');
     pin.id = 'pin-' + c.id;
-    pin.style.cssText = 'left:' + pos.left + 'px;top:' + pos.top + 'px;';
+    pin.style.cssText = 'left:' + c.x + 'px;top:' + c.y + 'px;';
 
-    pin.innerHTML =
+pin.innerHTML =
       '<div class="ds-comment-pin__bubble">' +
         '<span class="ds-comment-pin__num">' + c.id + '</span>' +
       '</div>' +
@@ -2309,7 +2287,7 @@ body.comment-mode * { cursor: crosshair !important; }
         '</div>' +
       '</div>';
 
-    layer.appendChild(pin);
+    sec.appendChild(pin);
 
     /* textarea input → enable send button */
     var inp = document.getElementById('inp-' + c.id);
@@ -2752,11 +2730,10 @@ body.comment-mode * { cursor: crosshair !important; }
       if (otherCursors[id]) { otherCursors[id].el.remove(); delete otherCursors[id]; }
     }
 
-    /* expose so section-switch can refresh cursor visibility + avatar list */
     window.__refreshCursorVisibility = function() {
       Object.keys(onlineData).forEach(function(id) { updateCursor(id, onlineData[id]); });
     };
-    window.__refreshOnlineList = function() { refreshOnlineList(); };
+    window.__refreshOnlineList = refreshOnlineList;
   })();
 
   /* ── Comment history panel ── */
