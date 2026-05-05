@@ -1868,8 +1868,10 @@ body.comment-mode * { cursor: crosshair !important; }
   display: flex; align-items: center; justify-content: center;
   box-shadow: 0 2px 8px rgba(0,0,0,.3);
   transition: transform .12s, background .12s;
+  cursor: grab;
 }
 .ds-comment-pin:hover .ds-comment-pin__bubble { transform: rotate(-45deg) scale(1.1); }
+.ds-comment-pin__bubble:active { cursor: grabbing; }
 .ds-comment-pin--resolved .ds-comment-pin__bubble { background: #22C55E; }
 .ds-comment-pin__num {
   transform: rotate(45deg);
@@ -2181,10 +2183,52 @@ body.comment-mode * { cursor: crosshair !important; }
       document.getElementById('send-' + c.id).disabled = !inp.value.trim();
     });
 
-    /* pin click → toggle popover */
-    pin.querySelector('.ds-comment-pin__bubble').addEventListener('click', function(e) {
+    /* ── Drag to reposition ── */
+    var bubble = pin.querySelector('.ds-comment-pin__bubble');
+    var dragging = false;
+    var dragMoved = false;
+    var dragStartX, dragStartY, pinStartLeft, pinStartTop;
+
+    bubble.addEventListener('mousedown', function(e) {
+      if (e.button !== 0) return;
       e.stopPropagation();
-      togglePop(c.id);
+      dragging = true;
+      dragMoved = false;
+      dragStartX = e.clientX;
+      dragStartY = e.clientY;
+      pinStartLeft = parseFloat(pin.style.left);
+      pinStartTop  = parseFloat(pin.style.top);
+      closeAllPops();
+      document.body.style.userSelect = 'none';
+      bubble.style.cursor = 'grabbing';
+    });
+
+    document.addEventListener('mousemove', function(e) {
+      if (!dragging) return;
+      var dx = e.clientX - dragStartX;
+      var dy = e.clientY - dragStartY;
+      if (Math.abs(dx) > 3 || Math.abs(dy) > 3) dragMoved = true;
+      pin.style.left = (pinStartLeft + dx) + 'px';
+      pin.style.top  = (pinStartTop  + dy) + 'px';
+    });
+
+    document.addEventListener('mouseup', function(e) {
+      if (!dragging) return;
+      dragging = false;
+      document.body.style.userSelect = '';
+      bubble.style.cursor = '';
+
+      if (dragMoved) {
+        /* convert screen pos back to section-relative coords */
+        var sec = document.getElementById('section-' + c.section);
+        var r = sec ? sec.getBoundingClientRect() : { left: 0, top: 0 };
+        c.x = parseFloat(pin.style.left) - r.left;
+        c.y = parseFloat(pin.style.top)  - r.top;
+        saveComment(c);
+      } else {
+        /* just a click, not a drag → toggle popover */
+        togglePop(c.id);
+      }
     });
 
     if (openImmediately) {
