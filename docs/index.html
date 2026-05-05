@@ -2485,6 +2485,77 @@ body.comment-mode * { cursor: crosshair !important; }
     return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');
   }
 
+  /* ══════════════════════════════════════════════════
+     MULTIPLAYER CURSORS
+  ══════════════════════════════════════════════════ */
+  if (db) (function() {
+    /* ── Identity ── */
+    var uid = localStorage.getItem('wds_uid');
+    if (!uid) { uid = 'u' + Math.random().toString(36).slice(2,9); localStorage.setItem('wds_uid', uid); }
+
+    var name = localStorage.getItem('wds_name');
+    if (!name) {
+      name = prompt('Seu nome (aparece pro time):') || 'Anônimo';
+      localStorage.setItem('wds_name', name);
+    }
+
+    /* ── Cursor colors — deterministic from uid ── */
+    var COLORS = ['#A855F7','#3B82F6','#EF4444','#F59E0B','#10B981','#EC4899','#06B6D4','#F97316'];
+    function uidColor(id) { var n=0; for(var i=0;i<id.length;i++) n+=id.charCodeAt(i); return COLORS[n%COLORS.length]; }
+    var myColor = uidColor(uid);
+
+    /* ── Cursor DOM container ── */
+    var cursorLayer = document.createElement('div');
+    cursorLayer.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:1100;';
+    document.body.appendChild(cursorLayer);
+
+    var otherCursors = {}; /* uid → {el, timer} */
+
+    /* ── Broadcast my cursor ── */
+    var myRef = db.ref('wds_cursors/' + uid);
+    myRef.onDisconnect().remove(); /* auto-remove on disconnect */
+
+    var lastSend = 0;
+    document.addEventListener('mousemove', function(e) {
+      var now = Date.now();
+      if (now - lastSend < 40) return; /* throttle ~25fps */
+      lastSend = now;
+      myRef.set({ name: name, color: myColor, x: e.clientX, y: e.clientY, ts: now });
+    });
+
+    /* ── Listen to others ── */
+    db.ref('wds_cursors').on('child_added',   function(s) { updateCursor(s.key, s.val()); });
+    db.ref('wds_cursors').on('child_changed', function(s) { updateCursor(s.key, s.val()); });
+    db.ref('wds_cursors').on('child_removed', function(s) { removeCursor(s.key); });
+
+    function updateCursor(id, data) {
+      if (id === uid) return; /* don't show own cursor */
+      if (!data) return;
+      var cur = otherCursors[id];
+      if (!cur) {
+        var el = document.createElement('div');
+        el.style.cssText = 'position:fixed;pointer-events:none;transition:left .07s linear,top .07s linear;z-index:1100;display:flex;align-items:flex-start;gap:5px;';
+        el.innerHTML =
+          '<svg width="16" height="20" viewBox="0 0 16 20" fill="none" style="flex-shrink:0;filter:drop-shadow(0 1px 3px rgba(0,0,0,.35))">' +
+            '<path d="M0 0L0 16L4.5 12L7.5 19L9.5 18L6.5 11L12 11Z" fill="' + data.color + '"/>' +
+          '</svg>' +
+          '<span style="background:' + data.color + ';color:#fff;font-family:Montserrat,sans-serif;font-size:10px;font-weight:700;padding:2px 7px;border-radius:20px;white-space:nowrap;margin-top:14px;box-shadow:0 2px 8px rgba(0,0,0,.2)">' + escHtml(data.name) + '</span>';
+        cursorLayer.appendChild(el);
+        cur = otherCursors[id] = { el: el };
+      }
+      cur.el.style.left = data.x + 'px';
+      cur.el.style.top  = data.y + 'px';
+      /* hide if inactive for 8s */
+      clearTimeout(cur.timer);
+      cur.el.style.opacity = '1';
+      cur.timer = setTimeout(function() { cur.el.style.opacity = '0'; }, 8000);
+    }
+
+    function removeCursor(id) {
+      if (otherCursors[id]) { otherCursors[id].el.remove(); delete otherCursors[id]; }
+    }
+  })();
+
   /* ── Comment history panel ── */
   window.toggleCommentPanel = function() {
     var panel = document.getElementById('ds-cpanel');
