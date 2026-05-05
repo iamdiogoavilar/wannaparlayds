@@ -1813,12 +1813,22 @@ function updatePromo(input) {
 body.comment-mode { cursor: crosshair !important; }
 body.comment-mode * { cursor: crosshair !important; }
 
+/* ─── Comment layer ─── */
+#comment-layer {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: 800;
+}
+
 /* ─── Comment pin ─── */
 .ds-comment-pin {
   position: absolute;
   width: 28px; height: 28px;
   cursor: pointer;
   z-index: 900;
+  pointer-events: auto;
   transform: translate(-4px, -26px); /* tip of bubble at click point */
 }
 .ds-comment-pin__bubble {
