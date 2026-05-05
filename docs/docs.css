@@ -859,8 +859,8 @@ body {
 .wds-btn {
   display: inline-flex; align-items: center; justify-content: center;
   font-family: 'Montserrat', sans-serif; font-weight: 600;
-  border: none; outline: none; cursor: pointer;
-  white-space: nowrap; transition: filter .15s;
+  border: none; outline: none; cursor: default;
+  white-space: nowrap;
   box-sizing: border-box; width: 100%;
 }
 .wds-btn svg { flex-shrink: 0; fill: currentColor; }
@@ -871,11 +871,10 @@ body {
   background: var(--color-accent-light, #5723B0);
   color: var(--color-neutral-white, #fff); font-size: 16px; gap: 8px;
 }
-.wds-btn--primary-brand:hover { filter: brightness(1.15); }
 .wds-btn--primary-brand.is-disabled {
   background: var(--color-neutral-200, #EAE7F1);
   color: var(--color-neutral-400, #988DAC);
-  cursor: not-allowed; filter: none; pointer-events: none;
+  cursor: not-allowed; pointer-events: none;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) .wds-btn--primary-brand.is-disabled {
@@ -894,7 +893,6 @@ body {
   color: var(--color-neutral-white, #fff); font-size: 16px;
   justify-content: space-between; padding: 0 12px;
 }
-.wds-btn--primary-brand-ir:hover { filter: brightness(1.15); }
 .wds-btn__bal { width: 24px; height: 24px; flex-shrink: 0; visibility: hidden; }
 /* Payout */
 .wds-btn--payout {
@@ -903,7 +901,6 @@ body {
   color: var(--color-neutral-white, #fff);
   justify-content: space-between; padding: 0 12px 0 16px;
 }
-.wds-btn--payout:hover { filter: brightness(1.15); }
 .wds-btn__payout-lbl { font-size: 14px; font-weight: 600; }
 .wds-btn__payout-r { display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; }
 /* Accent (Yellow) — text always dark regardless of theme */
@@ -912,7 +909,6 @@ body {
   background: var(--color-support-yellow, #F5CC45);
   color: #090127 !important; font-size: 16px;
 }
-.wds-btn--accent:hover { filter: brightness(1.06); }
 /* Gold */
 .wds-btn--gold {
   height: 48px; border-radius: 32px;
@@ -920,10 +916,9 @@ body {
   border: 1px solid #987F26;
   color: #090127; font-size: 16px; gap: 10px; padding: 0 13px;
 }
-.wds-btn--gold:hover { filter: brightness(1.04); }
 .wds-btn--gold.is-disabled {
   background: linear-gradient(90deg, #C0C0C0 0%, #F6F3F6 50%, #C0C0C0 100%);
-  border-color: #BCBCBC; color: #C7C0D4; cursor: not-allowed; filter: none;
+  border-color: #BCBCBC; color: #C7C0D4; cursor: not-allowed;
 }
 /* Secondary Outline */
 .wds-btn--secondary-outline {
@@ -931,7 +926,6 @@ body {
   border: 1px solid var(--color-accent-light, #5723B0);
   color: var(--color-accent-light, #5723B0); font-size: 16px;
 }
-.wds-btn--secondary-outline:hover { background: var(--color-overlay-10, rgba(87,35,176,.1)); }
 /* Secondary Soft */
 .wds-btn--secondary-soft {
   height: 48px; border-radius: 100px;
@@ -957,7 +951,6 @@ body {
   height: 48px; background: transparent; border: none;
   color: var(--color-primary-500, #5723B0); font-size: 12px; width: auto;
 }
-.wds-btn--link:hover { text-decoration: underline; }
 /* Compact Accent — text always dark regardless of theme */
 .wds-btn--compact-accent {
   border-radius: 42px;
@@ -967,7 +960,6 @@ body {
   padding: 8px 20px; width: auto; height: auto;
   align-self: flex-start;
 }
-.wds-btn--compact-accent:hover { filter: brightness(1.06); }
 /* CTA Brand */
 .wds-btn--cta-brand {
   width: auto; align-self: flex-start;
@@ -977,7 +969,6 @@ body {
   gap: 8px; padding: 8px 8px 8px 16px;
   box-shadow: 0px 4px 8px rgba(0,0,0,.15);
 }
-.wds-btn--cta-brand:hover { filter: brightness(1.12); }
 /* CTA Secondary */
 .wds-btn--cta-secondary {
   width: auto; align-self: flex-start;
