@@ -248,12 +248,12 @@
       </div>
       <div class="color-tr" onclick="copyColor('--color-semantic-warning')">
         <div class="color-tr__swatches">
-          <div class="color-tr__dot" style="background:#F59E0B"></div>
-          <div class="color-tr__dot color-tr__dot--dark" style="background:#F59E0B"></div>
+          <div class="color-tr__dot" style="background:#FCA512"></div>
+          <div class="color-tr__dot color-tr__dot--dark" style="background:#FCA512"></div>
         </div>
         <span class="color-tr__name">semantic/warning</span>
-        <span class="color-tr__hex color-tr__hex--l">#F59E0B</span>
-        <span class="color-tr__hex color-tr__hex--d">#F59E0B</span>
+        <span class="color-tr__hex color-tr__hex--l">#FCA512</span>
+        <span class="color-tr__hex color-tr__hex--d">#FCA512</span>
       </div>
       <div class="color-tr" onclick="copyColor('--color-semantic-error')">
         <div class="color-tr__swatches">
@@ -404,6 +404,73 @@
         <span class="color-tr__name">overlay/20</span>
         <span class="color-tr__hex color-tr__hex--l">rgba(87,35,176,.20)</span>
         <span class="color-tr__hex color-tr__hex--d">rgba(87,35,176,.20)</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Overlay Accent -->
+  <div class="token-group">
+    <div class="token-group__header">
+      <h2 class="token-group__title">Overlay · Accent</h2>
+      <span class="token-group__count">3 tokens</span>
+    </div>
+    <p class="token-group__desc">Accent-tinted transparent surfaces — used in Dark Mode for interactive states on #A874FF base.</p>
+    <div class="color-table">
+      <div class="color-tr" onclick="copyColor('--color-overlay-accent-5')">
+        <div class="color-tr__swatches">
+          <div class="color-tr__dot" style="background:rgba(168,116,255,.05)"></div>
+          <div class="color-tr__dot color-tr__dot--dark" style="background:rgba(168,116,255,.05)"></div>
+        </div>
+        <span class="color-tr__name">overlay/accent/5</span>
+        <span class="color-tr__hex color-tr__hex--l">rgba(168,116,255,.05)</span>
+        <span class="color-tr__hex color-tr__hex--d">rgba(168,116,255,.05)</span>
+      </div>
+      <div class="color-tr" onclick="copyColor('--color-overlay-accent-10')">
+        <div class="color-tr__swatches">
+          <div class="color-tr__dot" style="background:rgba(168,116,255,.10)"></div>
+          <div class="color-tr__dot color-tr__dot--dark" style="background:rgba(168,116,255,.10)"></div>
+        </div>
+        <span class="color-tr__name">overlay/accent/10</span>
+        <span class="color-tr__hex color-tr__hex--l">rgba(168,116,255,.10)</span>
+        <span class="color-tr__hex color-tr__hex--d">rgba(168,116,255,.10)</span>
+      </div>
+      <div class="color-tr" onclick="copyColor('--color-overlay-accent-20')">
+        <div class="color-tr__swatches">
+          <div class="color-tr__dot" style="background:rgba(168,116,255,.20)"></div>
+          <div class="color-tr__dot color-tr__dot--dark" style="background:rgba(168,116,255,.20)"></div>
+        </div>
+        <span class="color-tr__name">overlay/accent/20</span>
+        <span class="color-tr__hex color-tr__hex--l">rgba(168,116,255,.20)</span>
+        <span class="color-tr__hex color-tr__hex--d">rgba(168,116,255,.20)</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Gradient -->
+  <div class="token-group">
+    <div class="token-group__header">
+      <h2 class="token-group__title">Gradient</h2>
+      <span class="token-group__count">2 tokens</span>
+    </div>
+    <p class="token-group__desc">Linear gradients for premium Gold and Silver surfaces — sourced from partner JSON.</p>
+    <div class="color-table">
+      <div class="color-tr" onclick="copyColor('--gradient-gold')">
+        <div class="color-tr__swatches">
+          <div class="color-tr__dot" style="background:linear-gradient(90deg,#F8BD4F 0%,#FCFDC9 50%,#F8BD4F 100%)"></div>
+          <div class="color-tr__dot color-tr__dot--dark" style="background:linear-gradient(90deg,#F8BD4F 0%,#FCFDC9 50%,#F8BD4F 100%)"></div>
+        </div>
+        <span class="color-tr__name">gradient/gold</span>
+        <span class="color-tr__hex color-tr__hex--l">#F8BD4F → #FCFDC9 → #F8BD4F</span>
+        <span class="color-tr__hex color-tr__hex--d">#F8BD4F → #FCFDC9 → #F8BD4F</span>
+      </div>
+      <div class="color-tr" onclick="copyColor('--gradient-silver')">
+        <div class="color-tr__swatches">
+          <div class="color-tr__dot" style="background:linear-gradient(90deg,#C0C0C0 0%,#F6F3F6 50%,#C0C0C0 100%)"></div>
+          <div class="color-tr__dot color-tr__dot--dark" style="background:linear-gradient(90deg,#C0C0C0 0%,#F6F3F6 50%,#C0C0C0 100%)"></div>
+        </div>
+        <span class="color-tr__name">gradient/silver</span>
+        <span class="color-tr__hex color-tr__hex--l">#C0C0C0 → #F6F3F6 → #C0C0C0</span>
+        <span class="color-tr__hex color-tr__hex--d">#C0C0C0 → #F6F3F6 → #C0C0C0</span>
       </div>
     </div>
   </div>
@@ -2506,7 +2573,7 @@ pin.innerHTML =
     }
 
     /* ── Cursor colors — deterministic from uid ── */
-    var COLORS = ['#A855F7','#3B82F6','#EF4444','#F59E0B','#10B981','#EC4899','#06B6D4','#F97316'];
+    var COLORS = ['#A855F7','#3B82F6','#EF4444','#FCA512','#10B981','#EC4899','#06B6D4','#F97316'];
     function uidColor(id) { var n=0; for(var i=0;i<id.length;i++) n+=id.charCodeAt(i); return COLORS[n%COLORS.length]; }
     var myColor = uidColor(uid);
 

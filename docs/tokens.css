@@ -24,7 +24,7 @@
   /* ─── Colors: Semantic ────────────────────────────── */
   --color-semantic-success: #198F51;
   --color-semantic-success-dark: #55BC5B;
-  --color-semantic-warning: #F59E0B;
+  --color-semantic-warning: #FCA512;
   --color-semantic-error: #EA3A2E;
   --color-semantic-error-dark: #FF584D;
   --color-semantic-info: #5723B0;
@@ -37,10 +37,19 @@
   --color-support-yellow: #F5CC45;
   --color-support-yellow-20: rgba(245, 204, 69, 0.20);
 
-  /* ─── Colors: Overlay ─────────────────────────────── */
-  --color-overlay-5: rgba(87, 35, 176, 0.05);
+  /* ─── Colors: Overlay (Primary) ──────────────────── */
+  --color-overlay-5:  rgba(87, 35, 176, 0.05);
   --color-overlay-10: rgba(87, 35, 176, 0.10);
   --color-overlay-20: rgba(87, 35, 176, 0.20);
+
+  /* ─── Colors: Overlay (Accent — Dark Mode) ────────── */
+  --color-overlay-accent-5:  rgba(168, 116, 255, 0.05);
+  --color-overlay-accent-10: rgba(168, 116, 255, 0.10);
+  --color-overlay-accent-20: rgba(168, 116, 255, 0.20);
+
+  /* ─── Colors: Gradient ───────────────────────────── */
+  --gradient-gold: linear-gradient(90deg, #F8BD4F 0%, #FCFDC9 50%, #F8BD4F 100%);
+  --gradient-silver: linear-gradient(90deg, #C0C0C0 0%, #F6F3F6 50%, #C0C0C0 100%);
 
   /* ─── Colors: Accent ──────────────────────────────── */
   --color-accent-light: #5723B0;
@@ -87,6 +96,7 @@
     --color-neutral-black: #FFFFFF;
     --color-neutral-white: #090127;
     --color-semantic-success: #55BC5B;
+    --color-semantic-warning: #FCA512;
     --color-semantic-error: #FF584D;
     --color-semantic-info: #A874FF;
     --color-accent-light: #A874FF;
