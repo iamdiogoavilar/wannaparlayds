@@ -1851,6 +1851,8 @@ if (FIREBASE_CONFIG) {
 }
 .ds-toolbar__btn:hover { background: rgba(255,255,255,.08); color: #fff; }
 .ds-toolbar__btn--active { background: #2563EB !important; color: #fff !important; }
+/* Panel toggle — lighter active, doesn't look like a selected tool */
+.ds-toolbar__btn--panel-active { background: rgba(255,255,255,.15) !important; color: #fff !important; }
 .ds-toolbar__sep {
   width: 1px; height: 20px;
   background: rgba(255,255,255,.12);
@@ -2481,7 +2483,7 @@ body.comment-mode * { cursor: crosshair !important; }
     var panel = document.getElementById('ds-cpanel');
     var btn = document.getElementById('tool-history');
     var isOpen = panel.classList.toggle('is-open');
-    btn.classList.toggle('ds-toolbar__btn--active', isOpen);
+    btn.classList.toggle('ds-toolbar__btn--panel-active', isOpen);
     if (isOpen) refreshCommentPanel();
   };
 
