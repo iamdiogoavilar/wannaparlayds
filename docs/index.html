@@ -2249,7 +2249,7 @@ body.comment-mode * { cursor: crosshair !important; }
     var pin = document.createElement('div');
     pin.className = 'ds-comment-pin' + (c.resolved ? ' ds-comment-pin--resolved' : '');
     pin.id = 'pin-' + c.id;
-    pin.style.cssText = 'left:' + c.x + 'px;top:' + c.y + 'px;';
+    pin.style.cssText = 'left:' + c.x + 'px;top:' + c.y + 'px;' + (c.resolved ? 'display:none;' : '');
 
 pin.innerHTML =
       '<div class="ds-comment-pin__bubble">' +
@@ -2403,9 +2403,17 @@ pin.innerHTML =
     if (!c) return;
     c.resolved = !c.resolved;
     saveComment(c);
+    updateSidebarBadges();
     var pin = document.getElementById('pin-' + id);
     if (!pin) return;
     pin.className = 'ds-comment-pin' + (c.resolved ? ' ds-comment-pin--resolved' : '');
+    /* hide from canvas when resolved */
+    if (c.resolved) {
+      closeAllPops();
+      pin.style.display = 'none';
+    } else {
+      pin.style.display = '';
+    }
     /* rebuild the resolve row so delete button appears/disappears */
     var resolveRow = pin.querySelector('.ds-comment-pop > div:last-child');
     if (resolveRow) {
@@ -2452,6 +2460,14 @@ pin.innerHTML =
 
   function closeAllPops() {
     document.querySelectorAll('.ds-comment-pop.is-open').forEach(function(p) { p.classList.remove('is-open'); });
+    /* re-hide any resolved pins that were temporarily shown from history */
+    if (openPinId !== null) {
+      var c = comments.find(function(c) { return c.id === openPinId; });
+      if (c && c.resolved) {
+        var pin = document.getElementById('pin-' + openPinId);
+        if (pin) pin.style.display = 'none';
+      }
+    }
     openPinId = null;
   }
 
@@ -2786,19 +2802,17 @@ pin.innerHTML =
     /* switch to the right section */
     var link = document.querySelector('.sidebar__link[data-section="' + c.section + '"]');
     if (link) link.click();
-    /* wait for section to render then open pin */
     setTimeout(function() {
-      updatePinVisibility();
-      setTimeout(function() {
-        togglePop(id);
-        /* scroll pin into view */
-        var pin = document.getElementById('pin-' + id);
-        if (pin) {
-          var top = parseFloat(pin.style.top) - window.innerHeight / 2;
-          window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
-        }
-      }, 60);
-    }, 30);
+      var pin = document.getElementById('pin-' + id);
+      if (!pin) return;
+      /* temporarily show resolved pins */
+      pin.style.display = '';
+      /* scroll pin into view */
+      var main = document.querySelector('.main') || document.documentElement;
+      var pinTop = parseFloat(pin.style.top);
+      main.scrollTo({ top: Math.max(0, pinTop - main.clientHeight / 2), behavior: 'smooth' });
+      setTimeout(function() { openPop(id); }, 80);
+    }, 50);
   };
 
   /* refresh panel whenever comments change */
