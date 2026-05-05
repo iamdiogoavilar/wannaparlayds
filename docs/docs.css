@@ -173,7 +173,54 @@ body {
   color: var(--da); background: var(--dat);
   border-radius: 99px; padding: 2px 9px;
 }
-.navbar__links { display: flex; gap: 4px; }
+.navbar__links { display: flex; align-items: center; gap: 8px; }
+
+/* ── Online users ── */
+.online-users { display: flex; align-items: center; gap: -6px; margin-right: 4px; }
+.online-avatar {
+  width: 30px; height: 30px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 800; color: #fff;
+  font-family: 'Montserrat', sans-serif;
+  border: 2px solid var(--ds);
+  margin-left: -6px; cursor: pointer;
+  transition: transform .15s, box-shadow .15s;
+  position: relative;
+  box-shadow: 0 0 0 0 transparent;
+}
+.online-avatar:first-child { margin-left: 0; }
+.online-avatar:hover { transform: translateY(-2px) scale(1.08); z-index: 2; box-shadow: 0 4px 12px rgba(0,0,0,.2); }
+.online-avatar[data-following="true"] {
+  box-shadow: 0 0 0 2px #fff, 0 0 0 4px currentColor;
+  transform: translateY(-2px) scale(1.08);
+  z-index: 3;
+}
+.online-avatar__tooltip {
+  position: absolute; bottom: calc(100% + 6px); left: 50%;
+  transform: translateX(-50%);
+  background: #1A1330; color: #F7F6F9;
+  font-size: 10px; font-weight: 600;
+  padding: 4px 8px; border-radius: 6px;
+  white-space: nowrap; pointer-events: none;
+  opacity: 0; transition: opacity .12s;
+}
+.online-avatar:hover .online-avatar__tooltip { opacity: 1; }
+
+/* ── Follow badge ── */
+.follow-badge {
+  display: flex; align-items: center; gap: 6px;
+  background: var(--da); color: #fff;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 11px; font-weight: 700;
+  padding: 4px 10px 4px 12px; border-radius: 99px;
+}
+.follow-badge button {
+  background: rgba(255,255,255,.25); border: none;
+  color: #fff; cursor: pointer; font-size: 10px;
+  width: 18px; height: 18px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  line-height: 1;
+}
 .navbar__link {
   font-size: 13px; font-weight: 600; color: var(--dtm);
   text-decoration: none; padding: 6px 12px; border-radius: 6px;
