@@ -2363,8 +2363,12 @@ body.comment-mode * { cursor: crosshair !important; }
   }
 
   function renderMessages(msgs) {
-    if (!msgs.length) return '<span style="font-size:11px;color:#C7C0D4;font-family:Montserrat,sans-serif">No comments yet…</span>';
-    return msgs.map(function(m) {
+    /* Firebase converts arrays → objects with numeric keys — normalize */
+    var arr = msgs
+      ? (Array.isArray(msgs) ? msgs : Object.values(msgs))
+      : [];
+    if (!arr.length) return '<span style="font-size:11px;color:#C7C0D4;font-family:Montserrat,sans-serif">No comments yet…</span>';
+    return arr.map(function(m) {
       return '<div class="ds-comment-pop__msg"><strong style="font-size:10px;color:#5723B0;font-family:Montserrat,sans-serif;display:block;margin-bottom:2px">' + m.author + ' · <span style="font-weight:400;color:#988DAC">' + m.time + '</span></strong>' + escHtml(m.text) + '</div>';
     }).join('');
   }
@@ -2375,7 +2379,10 @@ body.comment-mode * { cursor: crosshair !important; }
     if (!text) return;
     var c = comments.find(function(c) { return c.id === id; });
     if (!c) return;
-    c.messages = c.messages || [];
+    /* normalize Firebase object-arrays back to real arrays before push */
+    c.messages = c.messages
+      ? (Array.isArray(c.messages) ? c.messages : Object.values(c.messages))
+      : [];
     c.messages.push({ author: 'You', text: text, time: timeAgo(Date.now()) });
     inp.value = '';
     document.getElementById('send-' + id).disabled = true;
