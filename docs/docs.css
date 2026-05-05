@@ -195,6 +195,10 @@ body {
   transform: translateY(-2px) scale(1.08);
   z-index: 3;
 }
+/* green ring = on same section as you */
+.online-avatar--here {
+  box-shadow: 0 0 0 2px var(--ds), 0 0 0 4px #22C55E;
+}
 .online-avatar__tooltip {
   position: absolute; bottom: calc(100% + 6px); left: 50%;
   transform: translateX(-50%);

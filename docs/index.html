@@ -2135,8 +2135,11 @@ body.comment-mode * { cursor: crosshair !important; }
       currentSection = link.dataset.section || 'colors';
       updatePinVisibility();
       closeAllPops();
-      /* refresh cursor visibility for new section */
+      /* broadcast new section immediately */
+      if (window.__broadcastSection) window.__broadcastSection();
+      /* refresh cursors + avatar rings */
       if (window.__refreshCursorVisibility) window.__refreshCursorVisibility();
+      if (window.__refreshOnlineList) window.__refreshOnlineList();
     });
   });
 
@@ -2528,14 +2531,17 @@ body.comment-mode * { cursor: crosshair !important; }
     var lastSend = 0;
     var msgClearTimer = null;
 
-    function broadcastCursor() {
+    function broadcastCursor(force) {
       var now = Date.now();
-      if (now - lastSend < 40) return;
+      if (!force && now - lastSend < 40) return;
       lastSend = now;
       var payload = { name: name, color: myColor, x: myX, y: myY, ts: now, section: currentSection };
       if (myMsg) payload.msg = myMsg;
       myRef.set(payload);
     }
+
+    /* expose so section-switch can broadcast immediately */
+    window.__broadcastSection = function() { broadcastCursor(true); };
 
     document.addEventListener('mousemove', function(e) {
       myX = e.clientX; myY = e.clientY;
@@ -2637,6 +2643,8 @@ body.comment-mode * { cursor: crosshair !important; }
     /* ── Online users list ── */
     var onlineData = {}; /* uid → data */
 
+    var sectionLabels = { colors:'Colors', typography:'Typography', spacing:'Spacing & Radius', shadows:'Shadows', inputs:'Inputs', buttons:'Buttons' };
+
     function refreshOnlineList() {
       var container = document.getElementById('online-users');
       if (!container) return;
@@ -2645,12 +2653,17 @@ body.comment-mode * { cursor: crosshair !important; }
         if (id === uid) return;
         var u = onlineData[id];
         var initials = u.name.split(' ').map(function(w){ return w[0]; }).join('').slice(0,2).toUpperCase();
+        var secLabel = sectionLabels[u.section] || u.section || '—';
+        var sameSection = u.section === currentSection;
         var av = document.createElement('div');
-        av.className = 'online-avatar';
+        av.className = 'online-avatar' + (sameSection ? ' online-avatar--here' : '');
         av.style.background = u.color;
-        av.style.color = '#fff';
         av.dataset.uid = id;
-        av.innerHTML = initials + '<span class="online-avatar__tooltip">' + u.name + (u.section ? ' · ' + u.section : '') + '</span>';
+        av.innerHTML =
+          initials +
+          '<span class="online-avatar__tooltip">' +
+            '<strong>' + u.name + '</strong><br>' + secLabel +
+          '</span>';
         av.addEventListener('click', function() { followUser(id); });
         container.appendChild(av);
       });
@@ -2739,10 +2752,11 @@ body.comment-mode * { cursor: crosshair !important; }
       if (otherCursors[id]) { otherCursors[id].el.remove(); delete otherCursors[id]; }
     }
 
-    /* expose so section-switch can refresh cursor visibility */
+    /* expose so section-switch can refresh cursor visibility + avatar list */
     window.__refreshCursorVisibility = function() {
       Object.keys(onlineData).forEach(function(id) { updateCursor(id, onlineData[id]); });
     };
+    window.__refreshOnlineList = function() { refreshOnlineList(); };
   })();
 
   /* ── Comment history panel ── */
