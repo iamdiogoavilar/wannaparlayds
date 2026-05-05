@@ -1761,5 +1761,391 @@ function updatePromo(input) {
   wrap.classList.add('wds-input--filled');
 }
 </script>
+
+<!-- ═══ FIGMA-STYLE TOOLBAR ═══ -->
+<div class="ds-toolbar" id="ds-toolbar">
+  <button class="ds-toolbar__btn ds-toolbar__btn--active" id="tool-move" title="Move" onclick="setTool('move')">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M13.64 21.97C13.14 22.21 12.54 22 12.31 21.5L10.13 16.76L7.62 19.78C7.45 19.96 7.21 20.01 6.97 19.97C6.72 19.93 6.51 19.73 6.45 19.5L3.01 4.09C2.95 3.81 3.1 3.53 3.35 3.42C3.6 3.31 3.89 3.38 4.07 3.59L15.79 16.78L11.37 17.27L13.87 22.03L13.64 21.97Z"/></svg>
+  </button>
+  <div class="ds-toolbar__sep"></div>
+  <button class="ds-toolbar__btn" id="tool-comment" title="Add comment (C)" onclick="setTool('comment')">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M21.99 4c0-1.1-.89-2-1.99-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4-.01-18z"/></svg>
+  </button>
+</div>
+
+<!-- Comment pins container -->
+<div id="comment-layer"></div>
+
+<style>
+/* ─── Toolbar ─── */
+.ds-toolbar {
+  position: fixed;
+  top: 72px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  background: #1C1C24;
+  border: 1px solid rgba(255,255,255,.10);
+  border-radius: 10px;
+  padding: 5px 6px;
+  box-shadow: 0 4px 20px rgba(0,0,0,.35);
+  z-index: 1000;
+  user-select: none;
+}
+.ds-toolbar__btn {
+  display: flex; align-items: center; justify-content: center;
+  width: 32px; height: 32px; border-radius: 6px;
+  background: transparent; border: none; cursor: pointer;
+  color: rgba(255,255,255,.6);
+  transition: background .12s, color .12s;
+}
+.ds-toolbar__btn:hover { background: rgba(255,255,255,.08); color: #fff; }
+.ds-toolbar__btn--active { background: #2563EB !important; color: #fff !important; }
+.ds-toolbar__sep {
+  width: 1px; height: 20px;
+  background: rgba(255,255,255,.12);
+  margin: 0 2px;
+}
+
+/* ─── Comment mode cursor ─── */
+body.comment-mode { cursor: crosshair !important; }
+body.comment-mode * { cursor: crosshair !important; }
+
+/* ─── Comment pin ─── */
+.ds-comment-pin {
+  position: absolute;
+  width: 28px; height: 28px;
+  cursor: pointer;
+  z-index: 900;
+  transform: translate(-4px, -26px); /* tip of bubble at click point */
+}
+.ds-comment-pin__bubble {
+  width: 28px; height: 28px;
+  background: #2563EB;
+  border-radius: 50% 50% 50% 0;
+  transform: rotate(-45deg);
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,.3);
+  transition: transform .12s, background .12s;
+}
+.ds-comment-pin:hover .ds-comment-pin__bubble { transform: rotate(-45deg) scale(1.1); }
+.ds-comment-pin--resolved .ds-comment-pin__bubble { background: #22C55E; }
+.ds-comment-pin__num {
+  transform: rotate(45deg);
+  font-size: 9px; font-weight: 800;
+  font-family: 'Montserrat', sans-serif;
+  color: #fff;
+  line-height: 1;
+}
+
+/* ─── Comment popover ─── */
+.ds-comment-pop {
+  position: absolute;
+  left: 32px; top: -4px;
+  width: 260px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0,0,0,.18), 0 2px 8px rgba(0,0,0,.1);
+  overflow: hidden;
+  z-index: 901;
+  display: none;
+  flex-direction: column;
+}
+.ds-comment-pop.is-open { display: flex; }
+
+/* flip left when near right edge */
+.ds-comment-pop.flip-left {
+  left: auto; right: 32px;
+}
+
+.ds-comment-pop__header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 10px 12px 8px;
+  border-bottom: 1px solid #F1F0F5;
+}
+.ds-comment-pop__author {
+  font-size: 11px; font-weight: 700;
+  color: #090127; font-family: 'Montserrat', sans-serif;
+}
+.ds-comment-pop__time {
+  font-size: 10px; color: #988DAC;
+  font-family: 'Montserrat', sans-serif;
+}
+.ds-comment-pop__close {
+  background: none; border: none; cursor: pointer;
+  color: #988DAC; padding: 2px; border-radius: 4px;
+  display: flex; align-items: center; justify-content: center;
+  line-height: 1;
+}
+.ds-comment-pop__close:hover { background: #F1F0F5; color: #090127; }
+
+.ds-comment-pop__messages {
+  max-height: 180px;
+  overflow-y: auto;
+  padding: 8px 12px;
+  display: flex; flex-direction: column; gap: 8px;
+}
+.ds-comment-pop__msg {
+  font-size: 12px; line-height: 1.45;
+  color: #3F3855; font-family: 'Montserrat', sans-serif;
+}
+
+.ds-comment-pop__input-row {
+  display: flex; align-items: flex-end; gap: 6px;
+  padding: 8px 10px 10px;
+  border-top: 1px solid #F1F0F5;
+}
+.ds-comment-pop__textarea {
+  flex: 1; resize: none; border: none; outline: none;
+  font-size: 12px; line-height: 1.4; color: #090127;
+  font-family: 'Montserrat', sans-serif;
+  background: transparent;
+  max-height: 80px;
+  min-height: 20px;
+}
+.ds-comment-pop__textarea::placeholder { color: #C7C0D4; }
+.ds-comment-pop__send {
+  width: 28px; height: 28px; border-radius: 8px;
+  background: #2563EB; border: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  color: #fff;
+  transition: background .12s;
+}
+.ds-comment-pop__send:hover { background: #1D4ED8; }
+.ds-comment-pop__send:disabled { background: #EAE7F1; color: #C7C0D4; cursor: default; }
+
+.ds-comment-pop__resolve {
+  display: flex; align-items: center; gap: 6px;
+  padding: 0 12px 10px;
+  font-size: 10px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .6px; color: #988DAC;
+  background: none; border: none; cursor: pointer;
+  font-family: 'Montserrat', sans-serif;
+  width: 100%;
+}
+.ds-comment-pop__resolve:hover { color: #22C55E; }
+
+/* dark mode */
+[data-theme="dark"] .ds-comment-pop,
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .ds-comment-pop {
+    background: #1E1A35;
+    box-shadow: 0 8px 32px rgba(0,0,0,.5);
+  }
+}
+[data-theme="dark"] .ds-comment-pop { background: #1E1A35; }
+[data-theme="dark"] .ds-comment-pop__header { border-color: #2B1F52; }
+[data-theme="dark"] .ds-comment-pop__author { color: #EAE7F1; }
+[data-theme="dark"] .ds-comment-pop__msg { color: #C7C0D4; }
+[data-theme="dark"] .ds-comment-pop__input-row { border-color: #2B1F52; }
+[data-theme="dark"] .ds-comment-pop__textarea { color: #EAE7F1; }
+[data-theme="dark"] .ds-comment-pop__resolve { color: #706784; }
+[data-theme="dark"] .ds-comment-pop__send:disabled { background: #2B1F52; color: #706784; }
+</style>
+
+<script>
+(function() {
+  /* ── State ── */
+  var currentTool = 'move';
+  var comments = JSON.parse(localStorage.getItem('wds_comments') || '[]');
+  var openPinId = null;
+  var pinCounter = comments.length;
+
+  /* ── Tool switcher ── */
+  window.setTool = function(tool) {
+    currentTool = tool;
+    document.getElementById('tool-move').classList.toggle('ds-toolbar__btn--active', tool === 'move');
+    document.getElementById('tool-comment').classList.toggle('ds-toolbar__btn--active', tool === 'comment');
+    document.body.classList.toggle('comment-mode', tool === 'comment');
+  };
+
+  /* ── Keyboard shortcut ── */
+  document.addEventListener('keydown', function(e) {
+    if (e.target.tagName === 'TEXTAREA' || e.target.tagName === 'INPUT') return;
+    if (e.key === 'c' || e.key === 'C') setTool('comment');
+    if (e.key === 'v' || e.key === 'V' || e.key === 'Escape') setTool('move');
+  });
+
+  /* ── Click to place comment ── */
+  document.addEventListener('click', function(e) {
+    if (currentTool !== 'comment') return;
+    if (e.target.closest('.ds-comment-pin') || e.target.closest('.ds-toolbar')) return;
+
+    var x = e.pageX;
+    var y = e.pageY;
+    pinCounter++;
+
+    var comment = { id: pinCounter, x: x, y: y, messages: [], resolved: false };
+    comments.push(comment);
+    saveComments();
+    renderPin(comment, true);
+    setTool('move');
+  });
+
+  /* ── Close open popovers when clicking outside ── */
+  document.addEventListener('click', function(e) {
+    if (openPinId === null) return;
+    if (e.target.closest('.ds-comment-pin') || e.target.closest('.ds-toolbar')) return;
+    if (currentTool === 'comment') return;
+    closeAllPops();
+  });
+
+  /* ── Render all saved pins on load ── */
+  comments.forEach(function(c) { renderPin(c, false); });
+
+  /* ── Render a single pin ── */
+  function renderPin(c, openImmediately) {
+    var layer = document.getElementById('comment-layer');
+
+    var pin = document.createElement('div');
+    pin.className = 'ds-comment-pin' + (c.resolved ? ' ds-comment-pin--resolved' : '');
+    pin.id = 'pin-' + c.id;
+    pin.style.cssText = 'left:' + c.x + 'px;top:' + c.y + 'px;';
+
+    pin.innerHTML =
+      '<div class="ds-comment-pin__bubble">' +
+        '<span class="ds-comment-pin__num">' + c.id + '</span>' +
+      '</div>' +
+      '<div class="ds-comment-pop" id="pop-' + c.id + '">' +
+        '<div class="ds-comment-pop__header">' +
+          '<span class="ds-comment-pop__author">Comment #' + c.id + '</span>' +
+          '<div style="display:flex;align-items:center;gap:4px">' +
+            '<span class="ds-comment-pop__time">' + timeAgo(Date.now()) + '</span>' +
+            '<button class="ds-comment-pop__close" onclick="deletePin(' + c.id + ',event)" title="Delete">' +
+              '<svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>' +
+            '</button>' +
+          '</div>' +
+        '</div>' +
+        '<div class="ds-comment-pop__messages" id="msgs-' + c.id + '">' +
+          renderMessages(c.messages) +
+        '</div>' +
+        '<div class="ds-comment-pop__input-row">' +
+          '<textarea class="ds-comment-pop__textarea" id="inp-' + c.id + '" placeholder="Add a comment…" rows="1"' +
+            ' oninput="autoGrow(this)" onkeydown="handleKey(event,' + c.id + ')"></textarea>' +
+          '<button class="ds-comment-pop__send" id="send-' + c.id + '" onclick="sendComment(' + c.id + ')" disabled>' +
+            '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>' +
+          '</button>' +
+        '</div>' +
+        '<button class="ds-comment-pop__resolve" onclick="toggleResolve(' + c.id + ')">' +
+          (c.resolved ? '↩ Reopen' : '✓ Mark as resolved') +
+        '</button>' +
+      '</div>';
+
+    layer.appendChild(pin);
+
+    /* textarea input → enable send button */
+    var inp = document.getElementById('inp-' + c.id);
+    inp.addEventListener('input', function() {
+      document.getElementById('send-' + c.id).disabled = !inp.value.trim();
+    });
+
+    /* pin click → toggle popover */
+    pin.querySelector('.ds-comment-pin__bubble').addEventListener('click', function(e) {
+      e.stopPropagation();
+      togglePop(c.id);
+    });
+
+    if (openImmediately) {
+      setTimeout(function() {
+        openPop(c.id);
+        inp.focus();
+      }, 10);
+    }
+  }
+
+  function renderMessages(msgs) {
+    if (!msgs.length) return '<span style="font-size:11px;color:#C7C0D4;font-family:Montserrat,sans-serif">No comments yet…</span>';
+    return msgs.map(function(m) {
+      return '<div class="ds-comment-pop__msg"><strong style="font-size:10px;color:#5723B0;font-family:Montserrat,sans-serif;display:block;margin-bottom:2px">' + m.author + ' · <span style="font-weight:400;color:#988DAC">' + m.time + '</span></strong>' + escHtml(m.text) + '</div>';
+    }).join('');
+  }
+
+  window.sendComment = function(id) {
+    var inp = document.getElementById('inp-' + id);
+    var text = inp.value.trim();
+    if (!text) return;
+    var c = comments.find(function(c) { return c.id === id; });
+    if (!c) return;
+    c.messages.push({ author: 'You', text: text, time: timeAgo(Date.now()) });
+    inp.value = '';
+    document.getElementById('send-' + id).disabled = true;
+    document.getElementById('msgs-' + id).innerHTML = renderMessages(c.messages);
+    saveComments();
+  };
+
+  window.deletePin = function(id, e) {
+    e.stopPropagation();
+    comments = comments.filter(function(c) { return c.id !== id; });
+    saveComments();
+    var pin = document.getElementById('pin-' + id);
+    if (pin) pin.remove();
+    openPinId = null;
+  };
+
+  window.toggleResolve = function(id) {
+    var c = comments.find(function(c) { return c.id === id; });
+    if (!c) return;
+    c.resolved = !c.resolved;
+    saveComments();
+    var pin = document.getElementById('pin-' + id);
+    if (pin) pin.className = 'ds-comment-pin' + (c.resolved ? ' ds-comment-pin--resolved' : '');
+    var btn = pin.querySelector('.ds-comment-pop__resolve');
+    if (btn) btn.textContent = c.resolved ? '↩ Reopen' : '✓ Mark as resolved';
+  };
+
+  window.handleKey = function(e, id) {
+    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendComment(id); }
+  };
+
+  window.autoGrow = function(el) {
+    el.style.height = 'auto';
+    el.style.height = Math.min(el.scrollHeight, 80) + 'px';
+  };
+
+  function togglePop(id) {
+    if (openPinId === id) { closeAllPops(); return; }
+    closeAllPops();
+    openPop(id);
+  }
+
+  function openPop(id) {
+    var pop = document.getElementById('pop-' + id);
+    if (!pop) return;
+    pop.classList.add('is-open');
+    openPinId = id;
+    /* flip left if near right edge */
+    var rect = pop.getBoundingClientRect();
+    if (rect.right > window.innerWidth - 20) pop.classList.add('flip-left');
+    else pop.classList.remove('flip-left');
+    /* scroll msgs to bottom */
+    var msgs = document.getElementById('msgs-' + id);
+    if (msgs) msgs.scrollTop = msgs.scrollHeight;
+  }
+
+  function closeAllPops() {
+    document.querySelectorAll('.ds-comment-pop.is-open').forEach(function(p) { p.classList.remove('is-open'); });
+    openPinId = null;
+  }
+
+  function saveComments() {
+    localStorage.setItem('wds_comments', JSON.stringify(comments));
+  }
+
+  function timeAgo(ts) {
+    var s = Math.floor((Date.now() - ts) / 1000);
+    if (s < 5) return 'just now';
+    if (s < 60) return s + 's ago';
+    if (s < 3600) return Math.floor(s/60) + 'm ago';
+    return Math.floor(s/3600) + 'h ago';
+  }
+
+  function escHtml(t) {
+    return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');
+  }
+})();
+</script>
 </body>
 </html>
