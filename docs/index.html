@@ -2514,14 +2514,85 @@ body.comment-mode * { cursor: crosshair !important; }
 
     /* ── Broadcast my cursor ── */
     var myRef = db.ref('wds_cursors/' + uid);
-    myRef.onDisconnect().remove(); /* auto-remove on disconnect */
+    myRef.onDisconnect().remove();
 
+    var myX = 0, myY = 0, myMsg = '';
     var lastSend = 0;
-    document.addEventListener('mousemove', function(e) {
+    var msgClearTimer = null;
+
+    function broadcastCursor() {
       var now = Date.now();
-      if (now - lastSend < 40) return; /* throttle ~25fps */
+      if (now - lastSend < 40) return;
       lastSend = now;
-      myRef.set({ name: name, color: myColor, x: e.clientX, y: e.clientY, ts: now });
+      var payload = { name: name, color: myColor, x: myX, y: myY, ts: now };
+      if (myMsg) payload.msg = myMsg;
+      myRef.set(payload);
+    }
+
+    document.addEventListener('mousemove', function(e) {
+      myX = e.clientX; myY = e.clientY;
+      broadcastCursor();
+    });
+
+    /* ── "Say something" — press / ── */
+    var sayBox = null;
+
+    document.addEventListener('keydown', function(e) {
+      if (e.target.tagName === 'TEXTAREA' || e.target.tagName === 'INPUT') return;
+      if (e.key !== '/') return;
+      e.preventDefault();
+      openSayBox();
+    });
+
+    function openSayBox() {
+      if (sayBox) return;
+      sayBox = document.createElement('div');
+      sayBox.style.cssText = 'position:fixed;z-index:1200;pointer-events:auto;' +
+        'left:' + (myX + 16) + 'px;top:' + (myY + 8) + 'px;';
+      sayBox.innerHTML =
+        '<div style="display:flex;align-items:center;gap:8px;background:' + myColor + ';' +
+        'border-radius:20px;padding:6px 14px;box-shadow:0 4px 16px rgba(0,0,0,.25);min-width:120px;">' +
+          '<input id="say-input" autofocus placeholder="Say something…" ' +
+            'style="border:none;outline:none;background:transparent;color:#fff;' +
+            'font-family:Montserrat,sans-serif;font-size:12px;font-weight:600;' +
+            'width:160px;caret-color:#fff;" />' +
+        '</div>';
+      document.body.appendChild(sayBox);
+
+      var inp = sayBox.querySelector('#say-input');
+      inp.focus();
+
+      inp.addEventListener('input', function() {
+        myMsg = inp.value;
+        broadcastCursor();
+        /* reposition to follow cursor */
+        sayBox.style.left = (myX + 16) + 'px';
+        sayBox.style.top  = (myY + 8)  + 'px';
+        /* auto-clear after 4s of no typing */
+        clearTimeout(msgClearTimer);
+        msgClearTimer = setTimeout(closeSayBox, 4000);
+      });
+
+      inp.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' || e.key === 'Escape') {
+          e.stopPropagation();
+          closeSayBox();
+        }
+      });
+    }
+
+    function closeSayBox() {
+      if (!sayBox) return;
+      sayBox.remove(); sayBox = null;
+      myMsg = '';
+      myRef.update({ msg: null });
+    }
+
+    /* keep say-box following mouse */
+    document.addEventListener('mousemove', function() {
+      if (!sayBox) return;
+      sayBox.style.left = (myX + 16) + 'px';
+      sayBox.style.top  = (myY + 8)  + 'px';
     });
 
     /* ── Listen to others ── */
@@ -2530,23 +2601,38 @@ body.comment-mode * { cursor: crosshair !important; }
     db.ref('wds_cursors').on('child_removed', function(s) { removeCursor(s.key); });
 
     function updateCursor(id, data) {
-      if (id === uid) return; /* don't show own cursor */
+      if (id === uid) return;
       if (!data) return;
       var cur = otherCursors[id];
       if (!cur) {
         var el = document.createElement('div');
-        el.style.cssText = 'position:fixed;pointer-events:none;transition:left .07s linear,top .07s linear;z-index:1100;display:flex;align-items:flex-start;gap:5px;';
-        el.innerHTML =
-          '<svg width="16" height="20" viewBox="0 0 16 20" fill="none" style="flex-shrink:0;filter:drop-shadow(0 1px 3px rgba(0,0,0,.35))">' +
-            '<path d="M0 0L0 16L4.5 12L7.5 19L9.5 18L6.5 11L12 11Z" fill="' + data.color + '"/>' +
-          '</svg>' +
-          '<span style="background:' + data.color + ';color:#fff;font-family:Montserrat,sans-serif;font-size:10px;font-weight:700;padding:2px 7px;border-radius:20px;white-space:nowrap;margin-top:14px;box-shadow:0 2px 8px rgba(0,0,0,.2)">' + escHtml(data.name) + '</span>';
+        el.style.cssText = 'position:fixed;pointer-events:none;transition:left .07s linear,top .07s linear;z-index:1100;';
         cursorLayer.appendChild(el);
         cur = otherCursors[id] = { el: el };
       }
+
+      var hasMsg = data.msg && data.msg.trim();
+      cur.el.innerHTML = hasMsg
+        /* Say something mode — big pill with text */
+        ? '<div style="display:flex;align-items:center;gap:0;">' +
+            '<svg width="16" height="20" viewBox="0 0 16 20" fill="none" style="flex-shrink:0;filter:drop-shadow(0 1px 3px rgba(0,0,0,.35))">' +
+              '<path d="M0 0L0 16L4.5 12L7.5 19L9.5 18L6.5 11L12 11Z" fill="' + data.color + '"/>' +
+            '</svg>' +
+            '<span style="background:' + data.color + ';color:#fff;font-family:Montserrat,sans-serif;font-size:12px;font-weight:700;' +
+              'padding:6px 14px;border-radius:20px;white-space:nowrap;margin-left:4px;' +
+              'box-shadow:0 4px 16px rgba(0,0,0,.25);">' + escHtml(data.msg) + '</span>' +
+          '</div>'
+        /* Normal cursor — arrow + name label */
+        : '<div style="display:flex;align-items:flex-start;gap:5px;">' +
+            '<svg width="16" height="20" viewBox="0 0 16 20" fill="none" style="flex-shrink:0;filter:drop-shadow(0 1px 3px rgba(0,0,0,.35))">' +
+              '<path d="M0 0L0 16L4.5 12L7.5 19L9.5 18L6.5 11L12 11Z" fill="' + data.color + '"/>' +
+            '</svg>' +
+            '<span style="background:' + data.color + ';color:#fff;font-family:Montserrat,sans-serif;font-size:10px;font-weight:700;' +
+              'padding:2px 7px;border-radius:20px;white-space:nowrap;margin-top:14px;box-shadow:0 2px 8px rgba(0,0,0,.2);">' + escHtml(data.name) + '</span>' +
+          '</div>';
+
       cur.el.style.left = data.x + 'px';
       cur.el.style.top  = data.y + 'px';
-      /* hide if inactive for 8s */
       clearTimeout(cur.timer);
       cur.el.style.opacity = '1';
       cur.timer = setTimeout(function() { cur.el.style.opacity = '0'; }, 8000);
