@@ -1801,6 +1801,10 @@ if (FIREBASE_CONFIG) {
     <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M21.99 4c0-1.1-.89-2-1.99-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4-.01-18z"/></svg>
   </button>
   <div class="ds-toolbar__sep"></div>
+  <button class="ds-toolbar__btn" id="tool-say" title="Say something (/)" onclick="if(window.openSayBox)openSayBox()">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z"/></svg>
+  </button>
+  <div class="ds-toolbar__sep"></div>
   <button class="ds-toolbar__btn" id="tool-history" title="Comment history" onclick="toggleCommentPanel()">
     <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M13 3c-4.97 0-9 4.03-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42C8.27 19.99 10.51 21 13 21c4.97 0 9-4.03 9-9s-4.03-9-9-9zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z"/></svg>
   </button>
@@ -2534,48 +2538,61 @@ body.comment-mode * { cursor: crosshair !important; }
       broadcastCursor();
     });
 
-    /* ── "Say something" — press / ── */
+    /* ── "Say something" — press / or toolbar button ── */
     var sayBox = null;
+    window.openSayBox = openSayBox; /* expose for toolbar button */
 
+    /* capture=true: fires before browser's own / handler (Firefox quick-find etc.) */
     document.addEventListener('keydown', function(e) {
       if (e.target.tagName === 'TEXTAREA' || e.target.tagName === 'INPUT') return;
-      if (e.key !== '/') return;
-      e.preventDefault();
-      openSayBox();
-    });
+      if (e.key === '/' || e.code === 'Slash') {
+        e.preventDefault();
+        e.stopPropagation();
+        openSayBox();
+      }
+      if ((e.key === 'Escape') && sayBox) closeSayBox();
+    }, true);
 
     function openSayBox() {
-      if (sayBox) return;
+      if (sayBox) { closeSayBox(); return; }
+
       sayBox = document.createElement('div');
-      sayBox.style.cssText = 'position:fixed;z-index:1200;pointer-events:auto;' +
-        'left:' + (myX + 16) + 'px;top:' + (myY + 8) + 'px;';
+      sayBox.id = 'ds-say-box';
+      sayBox.style.cssText =
+        'position:fixed;z-index:1200;pointer-events:auto;' +
+        'left:' + (myX + 20) + 'px;top:' + (myY + 10) + 'px;' +
+        'display:flex;align-items:center;gap:0;';
       sayBox.innerHTML =
-        '<div style="display:flex;align-items:center;gap:8px;background:' + myColor + ';' +
-        'border-radius:20px;padding:6px 14px;box-shadow:0 4px 16px rgba(0,0,0,.25);min-width:120px;">' +
-          '<input id="say-input" autofocus placeholder="Say something…" ' +
+        '<svg width="16" height="20" viewBox="0 0 16 20" fill="none" style="flex-shrink:0;filter:drop-shadow(0 1px 3px rgba(0,0,0,.35))">' +
+          '<path d="M0 0L0 16L4.5 12L7.5 19L9.5 18L6.5 11L12 11Z" fill="' + myColor + '"/>' +
+        '</svg>' +
+        '<div style="background:' + myColor + ';border-radius:0 20px 20px 20px;' +
+          'padding:6px 14px;box-shadow:0 4px 16px rgba(0,0,0,.3);margin-left:2px;">' +
+          '<input id="ds-say-inp" placeholder="Say something…" autocomplete="off" ' +
             'style="border:none;outline:none;background:transparent;color:#fff;' +
             'font-family:Montserrat,sans-serif;font-size:12px;font-weight:600;' +
-            'width:160px;caret-color:#fff;" />' +
+            'width:160px;caret-color:#fff;min-width:80px;" />' +
         '</div>';
+
       document.body.appendChild(sayBox);
 
-      var inp = sayBox.querySelector('#say-input');
-      inp.focus();
+      var inp = document.getElementById('ds-say-inp');
+
+      /* focus after paint so the / doesn't land in the field */
+      requestAnimationFrame(function() {
+        requestAnimationFrame(function() { inp.focus(); });
+      });
 
       inp.addEventListener('input', function() {
         myMsg = inp.value;
         broadcastCursor();
-        /* reposition to follow cursor */
-        sayBox.style.left = (myX + 16) + 'px';
-        sayBox.style.top  = (myY + 8)  + 'px';
-        /* auto-clear after 4s of no typing */
         clearTimeout(msgClearTimer);
-        msgClearTimer = setTimeout(closeSayBox, 4000);
+        if (myMsg) msgClearTimer = setTimeout(closeSayBox, 5000);
       });
 
       inp.addEventListener('keydown', function(e) {
         if (e.key === 'Enter' || e.key === 'Escape') {
-          e.stopPropagation();
+          e.preventDefault(); e.stopPropagation();
           closeSayBox();
         }
       });
@@ -2588,11 +2605,11 @@ body.comment-mode * { cursor: crosshair !important; }
       myRef.update({ msg: null });
     }
 
-    /* keep say-box following mouse */
+    /* keep say-box glued to cursor */
     document.addEventListener('mousemove', function() {
       if (!sayBox) return;
-      sayBox.style.left = (myX + 16) + 'px';
-      sayBox.style.top  = (myY + 8)  + 'px';
+      sayBox.style.left = (myX + 20) + 'px';
+      sayBox.style.top  = (myY + 10) + 'px';
     });
 
     /* ── Listen to others ── */
