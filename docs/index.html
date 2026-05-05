@@ -1762,6 +1762,39 @@ function updatePromo(input) {
 }
 </script>
 
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
+<script>
+/* ── PASTE YOUR FIREBASE CONFIG HERE ──────────────────────────
+   1. Go to https://console.firebase.google.com
+   2. Create project → Add web app → copy firebaseConfig object
+   3. Go to Realtime Database → Create database → start in test mode
+   4. Replace the object below and redeploy
+─────────────────────────────────────────────────────────────── */
+var FIREBASE_CONFIG = null; /* set to your config object to enable sync */
+
+/* Example:
+var FIREBASE_CONFIG = {
+  apiKey: "AIza...",
+  authDomain: "your-app.firebaseapp.com",
+  databaseURL: "https://your-app-default-rtdb.firebaseio.com",
+  projectId: "your-app",
+  storageBucket: "your-app.appspot.com",
+  messagingSenderId: "123456",
+  appId: "1:123:web:abc"
+};
+*/
+
+window.__fbDb = null;
+if (FIREBASE_CONFIG) {
+  try {
+    firebase.initializeApp(FIREBASE_CONFIG);
+    window.__fbDb = firebase.database();
+  } catch(e) { console.warn('Firebase init failed', e); }
+}
+</script>
+
 <!-- ═══ FIGMA-STYLE TOOLBAR ═══ -->
 <div class="ds-toolbar" id="ds-toolbar">
   <button class="ds-toolbar__btn ds-toolbar__btn--active" id="tool-move" title="Move" onclick="setTool('move')">
@@ -1813,9 +1846,9 @@ function updatePromo(input) {
 body.comment-mode { cursor: crosshair !important; }
 body.comment-mode * { cursor: crosshair !important; }
 
-/* ─── Comment layer ─── */
+/* ─── Comment layer — sits inside .main (content area) ─── */
 #comment-layer {
-  position: absolute;
+  position: fixed;
   top: 0; left: 0;
   width: 100%; height: 100%;
   pointer-events: none;
@@ -1966,9 +1999,37 @@ body.comment-mode * { cursor: crosshair !important; }
 (function() {
   /* ── State ── */
   var currentTool = 'move';
-  var comments = JSON.parse(localStorage.getItem('wds_comments') || '[]');
+  var currentSection = 'colors'; /* tracks active section */
+  var comments = [];
   var openPinId = null;
-  var pinCounter = comments.length;
+  var pinCounter = 0;
+  var db = window.__fbDb || null;
+
+  /* ── Track section changes ── */
+  document.querySelectorAll('.sidebar__link').forEach(function(link) {
+    link.addEventListener('click', function() {
+      currentSection = link.dataset.section || 'colors';
+      updatePinVisibility();
+      closeAllPops();
+    });
+  });
+
+  function updatePinVisibility() {
+    comments.forEach(function(c) {
+      var pin = document.getElementById('pin-' + c.id);
+      if (!pin) return;
+      var visible = (c.section === currentSection);
+      pin.style.display = visible ? '' : 'none';
+      if (visible) {
+        /* reposition now that the section is active and has a real rect */
+        setTimeout(function() {
+          var pos = pinScreenPos(c);
+          pin.style.left = pos.left + 'px';
+          pin.style.top  = pos.top  + 'px';
+        }, 20);
+      }
+    });
+  }
 
   /* ── Tool switcher ── */
   window.setTool = function(tool) {
@@ -1990,14 +2051,18 @@ body.comment-mode * { cursor: crosshair !important; }
     if (currentTool !== 'comment') return;
     if (e.target.closest('.ds-comment-pin') || e.target.closest('.ds-toolbar')) return;
 
-    var x = e.pageX;
-    var y = e.pageY;
-    pinCounter++;
+    /* coords relative to the active section element */
+    var activeSection = document.querySelector('.section.active');
+    var rect = activeSection ? activeSection.getBoundingClientRect() : { left: 0, top: 0 };
+    var x = e.clientX - rect.left;
+    var y = e.clientY - rect.top + (activeSection ? activeSection.scrollTop : 0);
 
-    var comment = { id: pinCounter, x: x, y: y, messages: [], resolved: false };
+    pinCounter++;
+    var comment = { id: pinCounter, x: x, y: y, section: currentSection, messages: [], resolved: false, ts: Date.now() };
     comments.push(comment);
-    saveComments();
-    renderPin(comment, true);
+    saveComment(comment);
+    if (!db) renderPin(comment, true); /* Firebase listener handles render when db is active */
+    else renderPin(comment, true);
     setTool('move');
   });
 
@@ -2009,17 +2074,72 @@ body.comment-mode * { cursor: crosshair !important; }
     closeAllPops();
   });
 
-  /* ── Render all saved pins on load ── */
-  comments.forEach(function(c) { renderPin(c, false); });
+  /* ── Load & sync comments ── */
+  if (db) {
+    /* Firebase real-time sync */
+    db.ref('wds_comments').on('value', function(snap) {
+      var data = snap.val() || {};
+      /* remove pins that were deleted remotely */
+      comments.forEach(function(c) {
+        if (!data[c.id]) {
+          var pin = document.getElementById('pin-' + c.id);
+          if (pin) pin.remove();
+        }
+      });
+      comments = Object.values(data);
+      pinCounter = comments.reduce(function(max, c) { return Math.max(max, c.id || 0); }, 0);
+      /* render any new pins */
+      comments.forEach(function(c) {
+        if (!document.getElementById('pin-' + c.id)) renderPin(c, false);
+        else {
+          /* update messages in case someone replied */
+          var msgs = document.getElementById('msgs-' + c.id);
+          if (msgs) msgs.innerHTML = renderMessages(c.messages || []);
+          /* update resolve state */
+          var pin = document.getElementById('pin-' + c.id);
+          if (pin) pin.className = 'ds-comment-pin' + (c.resolved ? ' ds-comment-pin--resolved' : '');
+        }
+      });
+      updatePinVisibility();
+    });
+  } else {
+    /* localStorage fallback */
+    comments = JSON.parse(localStorage.getItem('wds_comments') || '[]');
+    pinCounter = comments.reduce(function(max, c) { return Math.max(max, c.id || 0); }, 0);
+    comments.forEach(function(c) { renderPin(c, false); });
+    updatePinVisibility();
+  }
+
+  /* ── Compute screen position of a pin (section-relative → screen) ── */
+  function pinScreenPos(c) {
+    var sec = document.getElementById('section-' + c.section);
+    if (!sec) return { left: c.x, top: c.y };
+    var r = sec.getBoundingClientRect();
+    return { left: r.left + c.x, top: r.top + c.y };
+  }
+
+  /* ── Reposition all visible pins (called on scroll/resize) ── */
+  function repositionPins() {
+    comments.forEach(function(c) {
+      var pin = document.getElementById('pin-' + c.id);
+      if (!pin || pin.style.display === 'none') return;
+      var pos = pinScreenPos(c);
+      pin.style.left = pos.left + 'px';
+      pin.style.top  = pos.top  + 'px';
+    });
+  }
+  window.addEventListener('scroll', repositionPins, true);
+  window.addEventListener('resize', repositionPins);
 
   /* ── Render a single pin ── */
   function renderPin(c, openImmediately) {
     var layer = document.getElementById('comment-layer');
 
+    var pos = pinScreenPos(c);
     var pin = document.createElement('div');
     pin.className = 'ds-comment-pin' + (c.resolved ? ' ds-comment-pin--resolved' : '');
     pin.id = 'pin-' + c.id;
-    pin.style.cssText = 'left:' + c.x + 'px;top:' + c.y + 'px;';
+    pin.style.cssText = 'left:' + pos.left + 'px;top:' + pos.top + 'px;';
 
     pin.innerHTML =
       '<div class="ds-comment-pin__bubble">' +
@@ -2092,11 +2212,12 @@ body.comment-mode * { cursor: crosshair !important; }
     if (!text) return;
     var c = comments.find(function(c) { return c.id === id; });
     if (!c) return;
+    c.messages = c.messages || [];
     c.messages.push({ author: 'You', text: text, time: timeAgo(Date.now()) });
     inp.value = '';
     document.getElementById('send-' + id).disabled = true;
     document.getElementById('msgs-' + id).innerHTML = renderMessages(c.messages);
-    saveComments();
+    saveComment(c);
   };
 
   window.closePop = function(id, e) {
@@ -2106,8 +2227,12 @@ body.comment-mode * { cursor: crosshair !important; }
 
   window.deletePin = function(id, e) {
     e.stopPropagation();
-    comments = comments.filter(function(c) { return c.id !== id; });
-    saveComments();
+    if (db) {
+      db.ref('wds_comments/' + id).remove();
+    } else {
+      comments = comments.filter(function(c) { return c.id !== id; });
+      localStorage.setItem('wds_comments', JSON.stringify(comments));
+    }
     var pin = document.getElementById('pin-' + id);
     if (pin) pin.remove();
     openPinId = null;
@@ -2117,7 +2242,7 @@ body.comment-mode * { cursor: crosshair !important; }
     var c = comments.find(function(c) { return c.id === id; });
     if (!c) return;
     c.resolved = !c.resolved;
-    saveComments();
+    saveComment(c);
     var pin = document.getElementById('pin-' + id);
     if (!pin) return;
     pin.className = 'ds-comment-pin' + (c.resolved ? ' ds-comment-pin--resolved' : '');
@@ -2170,8 +2295,12 @@ body.comment-mode * { cursor: crosshair !important; }
     openPinId = null;
   }
 
-  function saveComments() {
-    localStorage.setItem('wds_comments', JSON.stringify(comments));
+  function saveComment(c) {
+    if (db) {
+      db.ref('wds_comments/' + c.id).set(c);
+    } else {
+      localStorage.setItem('wds_comments', JSON.stringify(comments));
+    }
   }
 
   function timeAgo(ts) {
