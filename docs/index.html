@@ -1929,14 +1929,20 @@ body.comment-mode * { cursor: crosshair !important; }
 
 .ds-comment-pop__resolve {
   display: flex; align-items: center; gap: 6px;
-  padding: 0 12px 10px;
   font-size: 10px; font-weight: 700; text-transform: uppercase;
   letter-spacing: .6px; color: #988DAC;
   background: none; border: none; cursor: pointer;
   font-family: 'Montserrat', sans-serif;
-  width: 100%;
+  padding: 0;
 }
 .ds-comment-pop__resolve:hover { color: #22C55E; }
+.ds-comment-pop__delete {
+  display: flex; align-items: center; justify-content: center;
+  width: 24px; height: 24px; border-radius: 6px;
+  background: none; border: none; cursor: pointer;
+  color: #988DAC;
+}
+.ds-comment-pop__delete:hover { background: #FEE2E2; color: #EF4444; }
 
 /* dark mode */
 [data-theme="dark"] .ds-comment-pop,
@@ -2024,7 +2030,7 @@ body.comment-mode * { cursor: crosshair !important; }
           '<span class="ds-comment-pop__author">Comment #' + c.id + '</span>' +
           '<div style="display:flex;align-items:center;gap:4px">' +
             '<span class="ds-comment-pop__time">' + timeAgo(Date.now()) + '</span>' +
-            '<button class="ds-comment-pop__close" onclick="deletePin(' + c.id + ',event)" title="Delete">' +
+            '<button class="ds-comment-pop__close" onclick="closePop(' + c.id + ',event)" title="Close">' +
               '<svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>' +
             '</button>' +
           '</div>' +
@@ -2039,9 +2045,16 @@ body.comment-mode * { cursor: crosshair !important; }
             '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>' +
           '</button>' +
         '</div>' +
-        '<button class="ds-comment-pop__resolve" onclick="toggleResolve(' + c.id + ')">' +
-          (c.resolved ? '↩ Reopen' : '✓ Mark as resolved') +
-        '</button>' +
+        '<div style="display:flex;align-items:center;justify-content:space-between;padding:0 12px 10px">' +
+          '<button class="ds-comment-pop__resolve" onclick="toggleResolve(' + c.id + ')">' +
+            (c.resolved ? '↩ Reopen' : '✓ Mark as resolved') +
+          '</button>' +
+          (c.resolved
+            ? '<button class="ds-comment-pop__delete" onclick="deletePin(' + c.id + ',event)" title="Delete pin">' +
+                '<svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>' +
+              '</button>'
+            : '') +
+        '</div>' +
       '</div>';
 
     layer.appendChild(pin);
@@ -2086,6 +2099,11 @@ body.comment-mode * { cursor: crosshair !important; }
     saveComments();
   };
 
+  window.closePop = function(id, e) {
+    e.stopPropagation();
+    closeAllPops();
+  };
+
   window.deletePin = function(id, e) {
     e.stopPropagation();
     comments = comments.filter(function(c) { return c.id !== id; });
@@ -2101,9 +2119,21 @@ body.comment-mode * { cursor: crosshair !important; }
     c.resolved = !c.resolved;
     saveComments();
     var pin = document.getElementById('pin-' + id);
-    if (pin) pin.className = 'ds-comment-pin' + (c.resolved ? ' ds-comment-pin--resolved' : '');
-    var btn = pin.querySelector('.ds-comment-pop__resolve');
-    if (btn) btn.textContent = c.resolved ? '↩ Reopen' : '✓ Mark as resolved';
+    if (!pin) return;
+    pin.className = 'ds-comment-pin' + (c.resolved ? ' ds-comment-pin--resolved' : '');
+    /* rebuild the resolve row so delete button appears/disappears */
+    var resolveRow = pin.querySelector('.ds-comment-pop > div:last-child');
+    if (resolveRow) {
+      resolveRow.innerHTML =
+        '<button class="ds-comment-pop__resolve" onclick="toggleResolve(' + id + ')">' +
+          (c.resolved ? '↩ Reopen' : '✓ Mark as resolved') +
+        '</button>' +
+        (c.resolved
+          ? '<button class="ds-comment-pop__delete" onclick="deletePin(' + id + ',event)" title="Delete pin">' +
+              '<svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>' +
+            '</button>'
+          : '');
+    }
   };
 
   window.handleKey = function(e, id) {
