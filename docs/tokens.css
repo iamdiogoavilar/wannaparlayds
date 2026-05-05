@@ -1,0 +1,97 @@
+/* Wanna Design System — CSS Custom Properties (Light Mode) */
+/* Fonte: variables.json | Formato: W3C DTCG */
+
+:root {
+  /* ─── Colors: Primary ─────────────────────────────── */
+  --color-primary-100: #FFFFFF;
+  --color-primary-200: #F6F4FB;
+  --color-primary-300: #E7DFF4;
+  --color-primary-400: #A874FF;
+  --color-primary-500: #5723B0;
+
+  /* ─── Colors: Neutral ─────────────────────────────── */
+  --color-neutral-100: #F7F6F9;
+  --color-neutral-200: #EAE7F1;
+  --color-neutral-300: #C7C0D4;
+  --color-neutral-400: #988DAC;
+  --color-neutral-500: #706784;
+  --color-neutral-600: #3F3855;
+  --color-neutral-700: #2B263F;
+  --color-neutral-800: #150F2B;
+  --color-neutral-black: #090127;
+  --color-neutral-white: #FFFFFF;
+
+  /* ─── Colors: Semantic ────────────────────────────── */
+  --color-semantic-success: #198F51;
+  --color-semantic-success-dark: #55BC5B;
+  --color-semantic-warning: #F59E0B;
+  --color-semantic-error: #EA3A2E;
+  --color-semantic-error-dark: #FF584D;
+  --color-semantic-info: #5723B0;
+  --color-semantic-info-dark: #A874FF;
+
+  /* ─── Colors: Support ─────────────────────────────── */
+  --color-support-success-20: rgba(25, 143, 81, 0.20);
+  --color-support-warning-20: rgba(252, 165, 18, 0.20);
+  --color-support-error-20: rgba(234, 58, 46, 0.20);
+  --color-support-yellow: #F5CC45;
+  --color-support-yellow-20: rgba(245, 204, 69, 0.20);
+
+  /* ─── Colors: Overlay ─────────────────────────────── */
+  --color-overlay-5: rgba(87, 35, 176, 0.05);
+  --color-overlay-10: rgba(87, 35, 176, 0.10);
+  --color-overlay-20: rgba(87, 35, 176, 0.20);
+
+  /* ─── Colors: Accent ──────────────────────────────── */
+  --color-accent-light: #5723B0;
+  --color-accent-dark: #A874FF;
+
+  /* ─── Spacing ─────────────────────────────────────── */
+  --spacing-1: 4px;
+  --spacing-2: 8px;
+  --spacing-3: 12px;
+  --spacing-4: 16px;
+  --spacing-6: 24px;
+  --spacing-8: 32px;
+  --spacing-12: 48px;
+
+  /* ─── Border Radius ───────────────────────────────── */
+  --radius-small: 4px;
+  --radius-medium: 8px;
+  --radius-large: 12px;
+  --radius-full: 130px;
+
+  /* ─── Typography ──────────────────────────────────── */
+  --font-primary: 'Montserrat', sans-serif;
+  --font-condensed: 'Barlow Condensed', sans-serif;
+
+  /* ─── Shadows ─────────────────────────────────────── */
+  --shadow-bottom-sheet: 0px -10px 25px 0px rgba(9, 1, 39, 0.25);
+  --shadow-card: 0px -10px 25px 0px rgba(9, 1, 39, 0.25);
+}
+
+/* Dark Mode */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-primary-100: #0D0A1A;
+    --color-primary-200: #150F2B;
+    --color-primary-300: #2B1F52;
+    --color-neutral-100: #090127;
+    --color-neutral-200: #150F2B;
+    --color-neutral-300: #221A3C;
+    --color-neutral-400: #2B263F;
+    --color-neutral-500: #706784;
+    --color-neutral-600: #988DAC;
+    --color-neutral-700: #C7C0D4;
+    --color-neutral-800: #EAE7F1;
+    --color-neutral-black: #FFFFFF;
+    --color-neutral-white: #090127;
+    --color-semantic-success: #55BC5B;
+    --color-semantic-error: #FF584D;
+    --color-semantic-info: #A874FF;
+    --color-accent-light: #A874FF;
+    --color-accent-dark: #5723B0;
+    --shadow-bottom-sheet: 0px -30px 50px 0px rgba(9, 1, 39, 0.80);
+    --shadow-card: 0px -10px 25px 0px rgba(9, 1, 39, 0.70);
+  }
+}

@@ -1,0 +1,108 @@
+/* InputEmailOrUsername — Wanna Design System */
+/* Requer: src/tokens.css carregado globalmente */
+/* Fonte: Montserrat (Google Fonts ou @font-face local) */
+
+.input-eou {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-1, 4px);
+  width: 100%;
+}
+
+/* ─── Caixa do input ─────────────────────────────────── */
+
+.input-eou__box {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-1, 4px);
+  padding: var(--spacing-2, 8px);
+  border: 1px solid var(--color-neutral-300, #C7C0D4);
+  border-radius: var(--radius-small, 4px);
+  background: transparent;
+  transition: border-color 0.15s ease;
+  cursor: text;
+}
+
+/* Focused → borda roxa */
+.input-eou--focused .input-eou__box {
+  border-color: var(--color-accent-light, #5723B0);
+}
+
+/* Filled (com valor, focado ou não) → borda roxa */
+.input-eou--filled .input-eou__box {
+  border-color: var(--color-accent-light, #5723B0);
+}
+
+/* Completed → volta à borda neutra */
+.input-eou--completed .input-eou__box {
+  border-color: var(--color-neutral-300, #C7C0D4);
+}
+
+/* Error → borda vermelha */
+.input-eou--error .input-eou__box {
+  border-color: var(--color-semantic-error, #EA3A2E);
+}
+
+/* ─── Label ──────────────────────────────────────────── */
+
+.input-eou__label {
+  font-family: var(--font-primary, 'Montserrat', sans-serif);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0;
+  color: var(--color-neutral-400, #988DAC);
+  cursor: text;
+  user-select: none;
+}
+
+/* Filled e Completed → label roxa */
+.input-eou--filled .input-eou__label,
+.input-eou--completed .input-eou__label {
+  color: var(--color-accent-light, #5723B0);
+}
+
+/* ─── Campo de texto ─────────────────────────────────── */
+
+.input-eou__field {
+  font-family: var(--font-primary, 'Montserrat', sans-serif);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0;
+  color: var(--color-neutral-black, #090127);
+  border: none;
+  outline: none;
+  background: transparent;
+  width: 100%;
+  padding: 0;
+  appearance: none;
+  caret-color: var(--color-neutral-black, #090127);
+}
+
+.input-eou__field::placeholder {
+  color: transparent;
+}
+
+.input-eou__field:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+/* Error → texto do campo em vermelho */
+.input-eou--error .input-eou__field {
+  color: var(--color-semantic-error, #EA3A2E);
+  caret-color: var(--color-semantic-error, #EA3A2E);
+}
+
+/* ─── Mensagem de erro ───────────────────────────────── */
+
+.input-eou__error-msg {
+  font-family: var(--font-primary, 'Montserrat', sans-serif);
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0;
+  color: var(--color-semantic-error, #EA3A2E);
+  margin: 0;
+}
