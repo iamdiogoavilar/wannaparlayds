@@ -20,6 +20,30 @@
     <span class="navbar__badge">v1.0</span>
   </div>
   <nav class="navbar__links">
+    <!-- Download tokens button -->
+    <div class="dl-tokens" id="dl-tokens">
+      <button class="dl-tokens__btn" onclick="toggleDlMenu()" aria-label="Download tokens">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+        Tokens
+        <svg class="dl-tokens__caret" width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg>
+      </button>
+      <div class="dl-tokens__menu" id="dl-menu">
+        <button class="dl-tokens__item" onclick="downloadTokensJSON()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm-1 7V3.5L18.5 9H13z"/></svg>
+          <div>
+            <span class="dl-tokens__item-title">tokens.json</span>
+            <span class="dl-tokens__item-sub">W3C DTCG format</span>
+          </div>
+        </button>
+        <button class="dl-tokens__item" onclick="downloadTokensMD()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm-1 7V3.5L18.5 9H13zM5 21h14v-2H5v2zm0-4h14v-2H5v2zm6-9H5V6h6v2z"/></svg>
+          <div>
+            <span class="dl-tokens__item-title">design.md</span>
+            <span class="dl-tokens__item-sub">Markdown reference</span>
+          </div>
+        </button>
+      </div>
+    </div>
     <!-- Online users avatars -->
     <div class="online-users" id="online-users"></div>
     <button class="theme-toggle" id="theme-toggle" aria-label="Toggle light/dark mode" onclick="toggleTheme()">
@@ -2978,6 +3002,203 @@ body.comment-mode * { cursor: crosshair !important; }
     _origSaveComment(c);
     if (document.getElementById('ds-cpanel').classList.contains('is-open')) refreshCommentPanel();
   };
+})();
+
+/* ══════════════════════════════════════════════════
+   TOKEN DOWNLOADS
+══════════════════════════════════════════════════ */
+(function() {
+
+  /* ── Helper: read a CSS custom property from :root ── */
+  function tv(name) {
+    return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+  }
+
+  /* ── Token definitions (mirrors tokens.css) ── */
+  var TOKEN_DEFS = [
+    /* Colors: Primary */
+    { path: ['color','primary','100'],   cssVar: '--color-primary-100',   type: 'color' },
+    { path: ['color','primary','200'],   cssVar: '--color-primary-200',   type: 'color' },
+    { path: ['color','primary','300'],   cssVar: '--color-primary-300',   type: 'color' },
+    { path: ['color','primary','400'],   cssVar: '--color-primary-400',   type: 'color' },
+    { path: ['color','primary','500'],   cssVar: '--color-primary-500',   type: 'color' },
+    /* Colors: Neutral */
+    { path: ['color','neutral','100'],   cssVar: '--color-neutral-100',   type: 'color' },
+    { path: ['color','neutral','200'],   cssVar: '--color-neutral-200',   type: 'color' },
+    { path: ['color','neutral','300'],   cssVar: '--color-neutral-300',   type: 'color' },
+    { path: ['color','neutral','400'],   cssVar: '--color-neutral-400',   type: 'color' },
+    { path: ['color','neutral','500'],   cssVar: '--color-neutral-500',   type: 'color' },
+    { path: ['color','neutral','600'],   cssVar: '--color-neutral-600',   type: 'color' },
+    { path: ['color','neutral','700'],   cssVar: '--color-neutral-700',   type: 'color' },
+    { path: ['color','neutral','800'],   cssVar: '--color-neutral-800',   type: 'color' },
+    { path: ['color','neutral','black'], cssVar: '--color-neutral-black', type: 'color' },
+    { path: ['color','neutral','white'], cssVar: '--color-neutral-white', type: 'color' },
+    /* Colors: Semantic */
+    { path: ['color','semantic','success'],      cssVar: '--color-semantic-success',      type: 'color' },
+    { path: ['color','semantic','success-dark'], cssVar: '--color-semantic-success-dark', type: 'color' },
+    { path: ['color','semantic','warning'],      cssVar: '--color-semantic-warning',      type: 'color' },
+    { path: ['color','semantic','error'],        cssVar: '--color-semantic-error',        type: 'color' },
+    { path: ['color','semantic','error-dark'],   cssVar: '--color-semantic-error-dark',   type: 'color' },
+    { path: ['color','semantic','info'],         cssVar: '--color-semantic-info',         type: 'color' },
+    { path: ['color','semantic','info-dark'],    cssVar: '--color-semantic-info-dark',    type: 'color' },
+    /* Colors: Support */
+    { path: ['color','support','success-20'], cssVar: '--color-support-success-20', type: 'color' },
+    { path: ['color','support','warning-20'], cssVar: '--color-support-warning-20', type: 'color' },
+    { path: ['color','support','error-20'],   cssVar: '--color-support-error-20',   type: 'color' },
+    { path: ['color','support','yellow'],     cssVar: '--color-support-yellow',     type: 'color' },
+    { path: ['color','support','yellow-20'],  cssVar: '--color-support-yellow-20',  type: 'color' },
+    /* Colors: Overlay */
+    { path: ['color','overlay','5'],  cssVar: '--color-overlay-5',  type: 'color' },
+    { path: ['color','overlay','10'], cssVar: '--color-overlay-10', type: 'color' },
+    { path: ['color','overlay','20'], cssVar: '--color-overlay-20', type: 'color' },
+    /* Colors: Overlay Accent */
+    { path: ['color','overlay-accent','5'],  cssVar: '--color-overlay-accent-5',  type: 'color' },
+    { path: ['color','overlay-accent','10'], cssVar: '--color-overlay-accent-10', type: 'color' },
+    { path: ['color','overlay-accent','20'], cssVar: '--color-overlay-accent-20', type: 'color' },
+    /* Colors: Accent */
+    { path: ['color','accent','light'], cssVar: '--color-accent-light', type: 'color' },
+    { path: ['color','accent','dark'],  cssVar: '--color-accent-dark',  type: 'color' },
+    /* Gradients */
+    { path: ['gradient','gold'],   cssVar: '--gradient-gold',   type: 'other' },
+    { path: ['gradient','silver'], cssVar: '--gradient-silver', type: 'other' },
+    /* Spacing */
+    { path: ['spacing','1'],  cssVar: '--spacing-1',  type: 'dimension' },
+    { path: ['spacing','2'],  cssVar: '--spacing-2',  type: 'dimension' },
+    { path: ['spacing','3'],  cssVar: '--spacing-3',  type: 'dimension' },
+    { path: ['spacing','4'],  cssVar: '--spacing-4',  type: 'dimension' },
+    { path: ['spacing','6'],  cssVar: '--spacing-6',  type: 'dimension' },
+    { path: ['spacing','8'],  cssVar: '--spacing-8',  type: 'dimension' },
+    { path: ['spacing','12'], cssVar: '--spacing-12', type: 'dimension' },
+    /* Border Radius */
+    { path: ['radius','small'],  cssVar: '--radius-small',  type: 'dimension' },
+    { path: ['radius','medium'], cssVar: '--radius-medium', type: 'dimension' },
+    { path: ['radius','large'],  cssVar: '--radius-large',  type: 'dimension' },
+    { path: ['radius','full'],   cssVar: '--radius-full',   type: 'dimension' },
+    /* Typography */
+    { path: ['font','primary'],   cssVar: '--font-primary',   type: 'fontFamily' },
+    { path: ['font','condensed'], cssVar: '--font-condensed', type: 'fontFamily' },
+    /* Shadows */
+    { path: ['shadow','bottom-sheet'], cssVar: '--shadow-bottom-sheet', type: 'shadow' },
+    { path: ['shadow','card'],         cssVar: '--shadow-card',         type: 'shadow' },
+  ];
+
+  /* ── Build nested JSON object ── */
+  function buildJSON() {
+    var root = {};
+    TOKEN_DEFS.forEach(function(t) {
+      var val = tv(t.cssVar);
+      var node = root;
+      for (var i = 0; i < t.path.length - 1; i++) {
+        if (!node[t.path[i]]) node[t.path[i]] = {};
+        node = node[t.path[i]];
+      }
+      var leaf = t.path[t.path.length - 1];
+      node[leaf] = { '$value': val, '$type': t.type };
+    });
+    return root;
+  }
+
+  /* ── Generate Markdown ── */
+  function buildMD() {
+    var now = new Date().toISOString().slice(0,10);
+    var lines = [
+      '# Wanna Design System — Design Tokens',
+      '',
+      '> Auto-generated on ' + now + '  ',
+      '> Source: [wanna-design-system.vercel.app](https://wanna-design-system.vercel.app)',
+      '',
+      '---',
+      '',
+      '## Color Tokens',
+      '',
+      '### Primary',
+      '',
+      '| Token | CSS Variable | Value (Light) |',
+      '|-------|-------------|---------------|',
+    ];
+    var primary = TOKEN_DEFS.filter(function(t){ return t.path[0]==='color' && t.path[1]==='primary'; });
+    primary.forEach(function(t){ lines.push('| `color.primary.' + t.path[2] + '` | `' + t.cssVar + '` | `' + tv(t.cssVar) + '` |'); });
+
+    lines.push('','### Neutral','','| Token | CSS Variable | Value (Light) |','|-------|-------------|---------------|');
+    var neutral = TOKEN_DEFS.filter(function(t){ return t.path[0]==='color' && t.path[1]==='neutral'; });
+    neutral.forEach(function(t){ lines.push('| `color.neutral.' + t.path[2] + '` | `' + t.cssVar + '` | `' + tv(t.cssVar) + '` |'); });
+
+    lines.push('','### Semantic','','| Token | CSS Variable | Value (Light) |','|-------|-------------|---------------|');
+    var semantic = TOKEN_DEFS.filter(function(t){ return t.path[0]==='color' && t.path[1]==='semantic'; });
+    semantic.forEach(function(t){ lines.push('| `color.semantic.' + t.path[2] + '` | `' + t.cssVar + '` | `' + tv(t.cssVar) + '` |'); });
+
+    lines.push('','### Support','','| Token | CSS Variable | Value |','|-------|-------------|-------|');
+    var support = TOKEN_DEFS.filter(function(t){ return t.path[0]==='color' && t.path[1]==='support'; });
+    support.forEach(function(t){ lines.push('| `color.support.' + t.path[2] + '` | `' + t.cssVar + '` | `' + tv(t.cssVar) + '` |'); });
+
+    lines.push('','### Overlay','','| Token | CSS Variable | Value |','|-------|-------------|-------|');
+    var overlay = TOKEN_DEFS.filter(function(t){ return t.path[0]==='color' && (t.path[1]==='overlay' || t.path[1]==='overlay-accent'); });
+    overlay.forEach(function(t){ lines.push('| `color.' + t.path[1] + '.' + t.path[2] + '` | `' + t.cssVar + '` | `' + tv(t.cssVar) + '` |'); });
+
+    lines.push('','### Accent + Gradient','','| Token | CSS Variable | Value |','|-------|-------------|-------|');
+    var accent = TOKEN_DEFS.filter(function(t){ return (t.path[0]==='color' && t.path[1]==='accent') || t.path[0]==='gradient'; });
+    accent.forEach(function(t){ lines.push('| `' + t.path.join('.') + '` | `' + t.cssVar + '` | `' + tv(t.cssVar) + '` |'); });
+
+    lines.push('','---','','## Spacing','','| Token | CSS Variable | Value |','|-------|-------------|-------|');
+    var spacing = TOKEN_DEFS.filter(function(t){ return t.path[0]==='spacing'; });
+    spacing.forEach(function(t){ lines.push('| `spacing.' + t.path[1] + '` | `' + t.cssVar + '` | `' + tv(t.cssVar) + '` |'); });
+
+    lines.push('','---','','## Border Radius','','| Token | CSS Variable | Value |','|-------|-------------|-------|');
+    var radius = TOKEN_DEFS.filter(function(t){ return t.path[0]==='radius'; });
+    radius.forEach(function(t){ lines.push('| `radius.' + t.path[1] + '` | `' + t.cssVar + '` | `' + tv(t.cssVar) + '` |'); });
+
+    lines.push('','---','','## Typography','','| Token | CSS Variable | Value |','|-------|-------------|-------|');
+    var fonts = TOKEN_DEFS.filter(function(t){ return t.path[0]==='font'; });
+    fonts.forEach(function(t){ lines.push('| `font.' + t.path[1] + '` | `' + t.cssVar + '` | `' + tv(t.cssVar) + '` |'); });
+
+    lines.push('','---','','## Shadows','','| Token | CSS Variable | Value |','|-------|-------------|-------|');
+    var shadows = TOKEN_DEFS.filter(function(t){ return t.path[0]==='shadow'; });
+    shadows.forEach(function(t){ lines.push('| `shadow.' + t.path[1] + '` | `' + t.cssVar + '` | `' + tv(t.cssVar) + '` |'); });
+
+    lines.push('','---','','## Usage','','### CSS','','```css','/* Import from CDN or copy tokens.css */',':root {','  /* Example: */',
+      '  background: var(--color-primary-100);',
+      '  color: var(--color-neutral-black);',
+      '  font-family: var(--font-primary);',
+      '}','```','','### JavaScript / Tailwind / Style Dictionary','','```js','// tokens.json is in W3C DTCG format — compatible with Style Dictionary, Theo, etc.',
+      'import tokens from \'./tokens.json\';','```'
+    );
+    return lines.join('\n');
+  }
+
+  /* ── Trigger file download ── */
+  function download(filename, content, mime) {
+    var blob = new Blob([content], { type: mime });
+    var url  = URL.createObjectURL(blob);
+    var a    = document.createElement('a');
+    a.href = url; a.download = filename;
+    document.body.appendChild(a); a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
+
+  window.downloadTokensJSON = function() {
+    var json = JSON.stringify(buildJSON(), null, 2);
+    download('wanna-tokens.json', json, 'application/json');
+    closeDlMenu();
+  };
+
+  window.downloadTokensMD = function() {
+    download('wanna-design.md', buildMD(), 'text/markdown');
+    closeDlMenu();
+  };
+
+  window.toggleDlMenu = function() {
+    document.getElementById('dl-tokens').classList.toggle('is-open');
+  };
+  function closeDlMenu() {
+    document.getElementById('dl-tokens').classList.remove('is-open');
+  }
+
+  /* close on outside click */
+  document.addEventListener('click', function(e) {
+    if (!e.target.closest('#dl-tokens')) closeDlMenu();
+  });
+
 })();
 </script>
 </body>

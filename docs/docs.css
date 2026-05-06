@@ -239,6 +239,66 @@ body {
   :root:not([data-theme="light"]) .theme-toggle .icon-moon { display: none; }
 }
 
+/* ─── Download Tokens Button ─────────────────────────────────── */
+.dl-tokens {
+  position: relative;
+}
+.dl-tokens__btn {
+  display: flex; align-items: center; gap: 6px;
+  height: 36px; padding: 0 14px;
+  border: 1px solid var(--dbd);
+  border-radius: 99px;
+  background: var(--ds);
+  cursor: pointer;
+  color: var(--dt2);
+  font-size: 12px; font-weight: 700;
+  font-family: 'Montserrat', sans-serif;
+  letter-spacing: .3px;
+  transition: color .15s, background .15s, border-color .15s;
+  white-space: nowrap;
+}
+.dl-tokens__btn:hover { color: var(--da); border-color: var(--da); background: var(--dat); }
+.dl-tokens__btn svg { flex-shrink: 0; }
+.dl-tokens__caret { transition: transform .15s; }
+.dl-tokens.is-open .dl-tokens__caret { transform: rotate(180deg); }
+
+.dl-tokens__menu {
+  position: absolute;
+  top: calc(100% + 6px); right: 0;
+  width: 200px;
+  background: var(--ds);
+  border: 1px solid var(--dbd);
+  border-radius: 12px;
+  box-shadow: var(--sha);
+  overflow: hidden;
+  display: none;
+  flex-direction: column;
+  z-index: 500;
+}
+.dl-tokens.is-open .dl-tokens__menu { display: flex; }
+
+.dl-tokens__item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 14px;
+  background: none; border: none; cursor: pointer;
+  text-align: left;
+  color: var(--dt);
+  transition: background .12s;
+  font-family: 'Montserrat', sans-serif;
+}
+.dl-tokens__item:hover { background: var(--dat); }
+.dl-tokens__item svg { flex-shrink: 0; color: var(--da); fill: var(--da); }
+.dl-tokens__item-title {
+  display: block;
+  font-size: 12px; font-weight: 700;
+  color: var(--dt);
+}
+.dl-tokens__item-sub {
+  display: block;
+  font-size: 10px; color: var(--dtm);
+  margin-top: 1px;
+}
+
 /* ═══════════════════════════════════════════════════════════════
    LAYOUT
 ═══════════════════════════════════════════════════════════════ */
