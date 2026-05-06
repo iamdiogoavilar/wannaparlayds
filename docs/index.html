@@ -2056,13 +2056,6 @@ body.comment-mode * { cursor: crosshair !important; }
 .ds-comment-pin:hover .ds-comment-pin__bubble { transform: rotate(-45deg) scale(1.1); }
 .ds-comment-pin__bubble:active { cursor: grabbing; }
 .ds-comment-pin--resolved .ds-comment-pin__bubble { background: #22C55E; }
-.ds-comment-pin__num {
-  transform: rotate(45deg);
-  font-size: 9px; font-weight: 800;
-  font-family: 'Montserrat', sans-serif;
-  color: #fff;
-  line-height: 1;
-}
 
 /* ─── Comment popover ─── */
 .ds-comment-pop {
@@ -2207,6 +2200,15 @@ body.comment-mode * { cursor: crosshair !important; }
 </style>
 
 <script>
+/* ── Shared identity (uid + color) available to all modules ── */
+(function() {
+  var uid = localStorage.getItem('wds_uid');
+  if (!uid) { uid = 'u' + Math.random().toString(36).slice(2,9); localStorage.setItem('wds_uid', uid); }
+  var COLORS = ['#A855F7','#3B82F6','#EF4444','#FCA512','#10B981','#EC4899','#06B6D4','#F97316'];
+  var n = 0; for (var i = 0; i < uid.length; i++) n += uid.charCodeAt(i);
+  window.__wdsMyColor = COLORS[n % COLORS.length];
+})();
+
 (function() {
   /* ── State ── */
   var currentTool = 'move';
@@ -2282,7 +2284,7 @@ body.comment-mode * { cursor: crosshair !important; }
     var y = e.clientY - rect.top;
 
     pinCounter++;
-    var comment = { id: pinCounter, x: x, y: y, section: currentSection, messages: [], resolved: false, ts: Date.now() };
+    var comment = { id: pinCounter, x: x, y: y, section: currentSection, messages: [], resolved: false, ts: Date.now(), color: window.__wdsMyColor || '#2563EB', author: localStorage.getItem('wds_name') || 'You' };
     comments.push(comment);
     saveComment(comment);
     renderPin(comment, true);
@@ -2347,13 +2349,13 @@ body.comment-mode * { cursor: crosshair !important; }
     pin.id = 'pin-' + c.id;
     pin.style.cssText = 'left:' + c.x + 'px;top:' + c.y + 'px;' + (c.resolved ? 'display:none;' : '');
 
-pin.innerHTML =
-      '<div class="ds-comment-pin__bubble">' +
-        '<span class="ds-comment-pin__num">' + c.id + '</span>' +
+    var pinColor = c.color || '#2563EB';
+    pin.innerHTML =
+      '<div class="ds-comment-pin__bubble" style="background:' + pinColor + '">' +
       '</div>' +
       '<div class="ds-comment-pop" id="pop-' + c.id + '">' +
         '<div class="ds-comment-pop__header">' +
-          '<span class="ds-comment-pop__author">Comment #' + c.id + '</span>' +
+          '<span class="ds-comment-pop__author"><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:' + pinColor + ';margin-right:5px;vertical-align:middle"></span>' + (c.author || localStorage.getItem('wds_name') || 'Comment') + '</span>' +
           '<div style="display:flex;align-items:center;gap:4px">' +
             '<span class="ds-comment-pop__time">' + timeAgo(Date.now()) + '</span>' +
             '<button class="ds-comment-pop__close" onclick="closePop(' + c.id + ',event)" title="Close">' +
@@ -2452,12 +2454,13 @@ pin.innerHTML =
       : [];
     if (!arr.length) return '<span style="font-size:11px;color:#C7C0D4;font-family:Montserrat,sans-serif">No comments yet…</span>';
     return arr.map(function(m, i) {
+      var authorColor = m.color || '#5723B0';
       var editBtn = cid !== undefined
         ? '<button class="ds-comment-msg__edit" onclick="startEditMsg(' + cid + ',' + i + ',event)" title="Edit"><svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg></button>'
         : '';
       return '<div class="ds-comment-pop__msg">' +
         '<div style="display:flex;align-items:flex-start;justify-content:space-between;gap:4px">' +
-          '<strong style="font-size:10px;color:#5723B0;font-family:Montserrat,sans-serif;display:block;margin-bottom:2px">' + m.author + ' · <span style="font-weight:400;color:#988DAC">' + m.time + '</span></strong>' +
+          '<strong style="font-size:10px;color:' + authorColor + ';font-family:Montserrat,sans-serif;display:block;margin-bottom:2px">' + m.author + ' · <span style="font-weight:400;color:#988DAC">' + m.time + '</span></strong>' +
           editBtn +
         '</div>' +
         '<span class="ds-comment-msg__text">' + escHtml(m.text) + '</span>' +
@@ -2476,7 +2479,7 @@ pin.innerHTML =
       ? (Array.isArray(c.messages) ? c.messages : Object.values(c.messages))
       : [];
     var myName = localStorage.getItem('wds_name') || 'You';
-    c.messages.push({ author: myName, text: text, time: timeAgo(Date.now()) });
+    c.messages.push({ author: myName, text: text, time: timeAgo(Date.now()), color: window.__wdsMyColor || '#5723B0' });
     inp.value = '';
     document.getElementById('send-' + id).disabled = true;
     document.getElementById('msgs-' + id).innerHTML = renderMessages(c.messages, id);
@@ -2498,9 +2501,10 @@ pin.innerHTML =
     if (!msgDiv) return;
 
     var safeText = msg.text.replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&quot;/g,'"').replace(/&#39;/g,"'");
+    var editColor = msg.color || '#5723B0';
     msgDiv.innerHTML =
       '<div style="display:flex;flex-direction:column;gap:6px">' +
-        '<strong style="font-size:10px;color:#5723B0;font-family:Montserrat,sans-serif">' + msg.author + ' · <span style="font-weight:400;color:#988DAC">' + msg.time + '</span></strong>' +
+        '<strong style="font-size:10px;color:' + editColor + ';font-family:Montserrat,sans-serif">' + msg.author + ' · <span style="font-weight:400;color:#988DAC">' + msg.time + '</span></strong>' +
         '<textarea class="ds-comment-msg__edit-area" rows="2">' + safeText + '</textarea>' +
         '<div style="display:flex;gap:6px;justify-content:flex-end">' +
           '<button class="ds-comment-pop__resolve" onclick="cancelEditMsg(' + cid + ',' + idx + ',event)">Cancel</button>' +
