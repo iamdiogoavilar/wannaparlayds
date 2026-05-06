@@ -1058,7 +1058,7 @@ body {
 /* Link */
 .wds-btn--link {
   height: 48px; background: transparent; border: none;
-  color: var(--color-primary-500, #5723B0); font-size: 12px; width: auto;
+  color: var(--color-accent-light); font-size: 12px; width: auto;
 }
 /* Compact Accent — text always dark regardless of theme */
 .wds-btn--compact-accent {
