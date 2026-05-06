@@ -427,6 +427,13 @@ body {
   color: #706784;
 }
 .color-dual__header svg { flex-shrink: 0; }
+.color-dual__invert {
+  margin-left: auto;
+  font-size: 9px; font-weight: 700; letter-spacing: .4px;
+  color: #3A2E68; background: #2B1F52;
+  padding: 2px 6px; border-radius: 4px;
+  text-transform: uppercase;
+}
 
 /* individual row */
 .color-row {
