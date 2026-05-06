@@ -410,7 +410,7 @@ body {
   background: var(--ds);
 }
 .color-dual__panel--dark {
-  background: #0D0A1A;
+  background: #090127;
   border-color: #2B1F52;
 }
 .color-dual__header {
@@ -446,7 +446,7 @@ body {
 }
 .color-row:last-child { border-bottom: none; }
 .color-row:hover { background: rgba(87,35,176,.05); }
-.color-dual__panel--dark .color-row { border-color: #1E1538; }
+.color-dual__panel--dark .color-row { border-color: #150F2B; }
 .color-dual__panel--dark .color-row:hover { background: rgba(168,116,255,.07); }
 
 .color-row__dot {
