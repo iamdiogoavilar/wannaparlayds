@@ -188,7 +188,7 @@ Todos os pesos de **Regular → ExtraBold** nos tamanhos `10 · 12 · 14 · 16 �
 | **Variables — Colors** | 29 tokens + neutral/white, shadow colors, gradient stops |
 | **Variables — Spacing & Radius** | 11 tokens |
 | **Variables — Components** | Buttons (height, type, style, state) + shadow floats |
-| **Text Styles** | 30 estilos Montserrat + 18 estilos Barlow Condensed + 16 estilos semânticos |
+| **Text Styles** | 18 estilos Montserrat + 12 estilos Barlow Condensed + 16 estilos semânticos |
 | **Effect Styles** | `shadow/bottomSheet/light`, `shadow/bottomSheet/dark` |
 | **Paint Styles** | `gradient/gold`, `gradient/silver` |
 | **Componentes** | 19 button components na página Buttons |
