@@ -470,46 +470,6 @@ body {
   background: #1E1538; color: #706784; border-color: #2B1F52;
 }
 
-/* ─── Neutral Color Cards (Figma design) ──────────────────── */
-.cn-list { display: flex; flex-direction: column; gap: 8px; }
-.cn-row {
-  display: grid;
-  grid-template-columns: 130px 1fr 1fr;
-  gap: 10px; align-items: center;
-}
-.cn-row__name {
-  font-family: 'SF Mono', ui-monospace, monospace;
-  font-size: 11px; font-weight: 600; color: var(--dtm);
-}
-.cn-card {
-  display: flex; align-items: center; gap: 12px;
-  padding: 10px 12px; border-radius: 12px;
-  cursor: pointer; transition: opacity .12s;
-}
-.cn-card--light { background: #F7F6F9; border: 1px solid #EAE7F1; }
-.cn-card--dark  { background: #150F2B; border: 1px solid #221A38; }
-.cn-card:hover  { opacity: .8; }
-.cn-card__swatch {
-  width: 52px; height: 42px; border-radius: 8px; flex-shrink: 0;
-}
-.cn-card__info { display: flex; flex-direction: column; gap: 5px; }
-.cn-card__badge {
-  font-size: 9px; font-weight: 700; letter-spacing: .5px;
-  text-transform: uppercase; padding: 2px 7px; border-radius: 99px;
-  display: inline-block; width: fit-content;
-}
-.cn-card__badge--light { background: #EBE5F7; color: #5723B0; }
-.cn-card__badge--dark  { background: #331A66; color: #B28CFF; }
-.cn-card__hex {
-  font-family: 'SF Mono', ui-monospace, monospace;
-  font-size: 11px; font-weight: 600; color: var(--dt);
-}
-.cn-card--dark .cn-card__hex { color: #988DAC; }
-@media (max-width: 720px) {
-  .cn-row { grid-template-columns: 100px 1fr 1fr; gap: 6px; }
-  .cn-card__swatch { width: 36px; height: 36px; }
-}
-
 /* toast */
 .copy-toast {
   position: fixed; bottom: 28px; right: 28px;
