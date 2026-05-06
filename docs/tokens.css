@@ -76,9 +76,9 @@
 @media (prefers-color-scheme: dark) {
   :root {
     --color-neutral-100: #150F2B;
-    --color-neutral-200: #150F2B;
-    --color-neutral-300: #221A3C;
-    --color-neutral-400: #2B263F;
+    --color-neutral-200: #2B263F;
+    --color-neutral-300: #3F3855;
+    --color-neutral-400: #706784;
     --color-neutral-500: #706784;
     --color-neutral-600: #988DAC;
     --color-neutral-700: #C7C0D4;
