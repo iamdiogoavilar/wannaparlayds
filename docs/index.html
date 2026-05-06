@@ -87,62 +87,6 @@
   <h1 class="section__title">Colors</h1>
   <p class="section__subtitle">All design tokens that define the Wanna visual language. Every value supports Light and Dark mode via CSS custom properties.</p>
 
-  <!-- Primary -->
-  <div class="token-group">
-    <div class="token-group__header">
-      <h2 class="token-group__title">Primary</h2>
-      <span class="token-group__count">5 tokens</span>
-    </div>
-    <p class="token-group__desc">Core brand purple scale — from lightest surface to deepest accent.</p>
-    <div class="color-table">
-      <div class="color-tr" onclick="copyColor('--color-primary-100')">
-        <div class="color-tr__swatches">
-          <div class="color-tr__dot" style="background:#FFFFFF;border:1px solid #eee"></div>
-          <div class="color-tr__dot color-tr__dot--dark" style="background:#0D0A1A"></div>
-        </div>
-        <span class="color-tr__name">primary/100</span>
-        <span class="color-tr__hex color-tr__hex--l">#FFFFFF</span>
-        <span class="color-tr__hex color-tr__hex--d">#0D0A1A</span>
-      </div>
-      <div class="color-tr" onclick="copyColor('--color-primary-200')">
-        <div class="color-tr__swatches">
-          <div class="color-tr__dot" style="background:#F6F4FB"></div>
-          <div class="color-tr__dot color-tr__dot--dark" style="background:#150F2B"></div>
-        </div>
-        <span class="color-tr__name">primary/200</span>
-        <span class="color-tr__hex color-tr__hex--l">#F6F4FB</span>
-        <span class="color-tr__hex color-tr__hex--d">#150F2B</span>
-      </div>
-      <div class="color-tr" onclick="copyColor('--color-primary-300')">
-        <div class="color-tr__swatches">
-          <div class="color-tr__dot" style="background:#E7DFF4"></div>
-          <div class="color-tr__dot color-tr__dot--dark" style="background:#2B1F52"></div>
-        </div>
-        <span class="color-tr__name">primary/300</span>
-        <span class="color-tr__hex color-tr__hex--l">#E7DFF4</span>
-        <span class="color-tr__hex color-tr__hex--d">#2B1F52</span>
-      </div>
-      <div class="color-tr" onclick="copyColor('--color-primary-400')">
-        <div class="color-tr__swatches">
-          <div class="color-tr__dot" style="background:#A874FF"></div>
-          <div class="color-tr__dot color-tr__dot--dark" style="background:#A874FF"></div>
-        </div>
-        <span class="color-tr__name">primary/400</span>
-        <span class="color-tr__hex color-tr__hex--l">#A874FF</span>
-        <span class="color-tr__hex color-tr__hex--d">#A874FF</span>
-      </div>
-      <div class="color-tr" onclick="copyColor('--color-primary-500')">
-        <div class="color-tr__swatches">
-          <div class="color-tr__dot" style="background:#5723B0"></div>
-          <div class="color-tr__dot color-tr__dot--dark" style="background:#5723B0"></div>
-        </div>
-        <span class="color-tr__name">primary/500</span>
-        <span class="color-tr__hex color-tr__hex--l">#5723B0</span>
-        <span class="color-tr__hex color-tr__hex--d">#5723B0</span>
-      </div>
-    </div>
-  </div>
-
   <!-- Neutral -->
   <div class="token-group">
     <div class="token-group__header">
@@ -3025,12 +2969,6 @@ body.comment-mode * { cursor: crosshair !important; }
 
   /* ── Token definitions (mirrors tokens.css) ── */
   var TOKEN_DEFS = [
-    /* Colors: Primary */
-    { path: ['color','primary','100'],   cssVar: '--color-primary-100',   type: 'color' },
-    { path: ['color','primary','200'],   cssVar: '--color-primary-200',   type: 'color' },
-    { path: ['color','primary','300'],   cssVar: '--color-primary-300',   type: 'color' },
-    { path: ['color','primary','400'],   cssVar: '--color-primary-400',   type: 'color' },
-    { path: ['color','primary','500'],   cssVar: '--color-primary-500',   type: 'color' },
     /* Colors: Neutral */
     { path: ['color','neutral','100'],   cssVar: '--color-neutral-100',   type: 'color' },
     { path: ['color','neutral','200'],   cssVar: '--color-neutral-200',   type: 'color' },
@@ -3120,15 +3058,11 @@ body.comment-mode * { cursor: crosshair !important; }
       '',
       '## Color Tokens',
       '',
-      '### Primary',
+      '### Neutral',
       '',
       '| Token | CSS Variable | Value (Light) |',
       '|-------|-------------|---------------|',
     ];
-    var primary = TOKEN_DEFS.filter(function(t){ return t.path[0]==='color' && t.path[1]==='primary'; });
-    primary.forEach(function(t){ lines.push('| `color.primary.' + t.path[2] + '` | `' + t.cssVar + '` | `' + tv(t.cssVar) + '` |'); });
-
-    lines.push('','### Neutral','','| Token | CSS Variable | Value (Light) |','|-------|-------------|---------------|');
     var neutral = TOKEN_DEFS.filter(function(t){ return t.path[0]==='color' && t.path[1]==='neutral'; });
     neutral.forEach(function(t){ lines.push('| `color.neutral.' + t.path[2] + '` | `' + t.cssVar + '` | `' + tv(t.cssVar) + '` |'); });
 

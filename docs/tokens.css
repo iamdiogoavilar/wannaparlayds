@@ -2,13 +2,6 @@
 /* Fonte: variables.json | Formato: W3C DTCG */
 
 :root {
-  /* ─── Colors: Primary ─────────────────────────────── */
-  --color-primary-100: #FFFFFF;
-  --color-primary-200: #F6F4FB;
-  --color-primary-300: #E7DFF4;
-  --color-primary-400: #A874FF;
-  --color-primary-500: #5723B0;
-
   /* ─── Colors: Neutral ─────────────────────────────── */
   --color-neutral-100: #F7F6F9;
   --color-neutral-200: #EAE7F1;
@@ -82,9 +75,6 @@
 /* Dark Mode */
 @media (prefers-color-scheme: dark) {
   :root {
-    --color-primary-100: #0D0A1A;
-    --color-primary-200: #150F2B;
-    --color-primary-300: #2B1F52;
     --color-neutral-100: #090127;
     --color-neutral-200: #150F2B;
     --color-neutral-300: #221A3C;
