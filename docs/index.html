@@ -2778,86 +2778,117 @@ body.comment-mode * { cursor: crosshair !important; }
   }
 
   /* ── Token definitions (mirrors tokens.css) ── */
+  /*
+   * TOKEN_DEFS — hardcoded light + dark values for every token.
+   * light: value used in default (light) mode
+   * dark:  value used in dark mode  (null = same as light)
+   */
   var TOKEN_DEFS = [
-    /* Colors: Neutral */
-    { path: ['color','neutral','100'],   cssVar: '--color-neutral-100',   type: 'color' },
-    { path: ['color','neutral','200'],   cssVar: '--color-neutral-200',   type: 'color' },
-    { path: ['color','neutral','300'],   cssVar: '--color-neutral-300',   type: 'color' },
-    { path: ['color','neutral','400'],   cssVar: '--color-neutral-400',   type: 'color' },
-    { path: ['color','neutral','500'],   cssVar: '--color-neutral-500',   type: 'color' },
-    { path: ['color','neutral','600'],   cssVar: '--color-neutral-600',   type: 'color' },
-    { path: ['color','neutral','700'],   cssVar: '--color-neutral-700',   type: 'color' },
-    { path: ['color','neutral','800'],   cssVar: '--color-neutral-800',   type: 'color' },
-    { path: ['color','neutral','black'], cssVar: '--color-neutral-black', type: 'color' },
-    { path: ['color','neutral','white'], cssVar: '--color-neutral-white', type: 'color' },
-    /* Colors: Semantic */
-    { path: ['color','semantic','success'],      cssVar: '--color-semantic-success',      type: 'color' },
-    { path: ['color','semantic','success-dark'], cssVar: '--color-semantic-success-dark', type: 'color' },
-    { path: ['color','semantic','warning'],      cssVar: '--color-semantic-warning',      type: 'color' },
-    { path: ['color','semantic','error'],        cssVar: '--color-semantic-error',        type: 'color' },
-    { path: ['color','semantic','error-dark'],   cssVar: '--color-semantic-error-dark',   type: 'color' },
-    { path: ['color','semantic','info'],         cssVar: '--color-semantic-info',         type: 'color' },
-    { path: ['color','semantic','info-dark'],    cssVar: '--color-semantic-info-dark',    type: 'color' },
-    /* Colors: Support */
-    { path: ['color','support','success-20'], cssVar: '--color-support-success-20', type: 'color' },
-    { path: ['color','support','warning-20'], cssVar: '--color-support-warning-20', type: 'color' },
-    { path: ['color','support','error-20'],   cssVar: '--color-support-error-20',   type: 'color' },
-    { path: ['color','support','yellow'],     cssVar: '--color-support-yellow',     type: 'color' },
-    { path: ['color','support','yellow-20'],  cssVar: '--color-support-yellow-20',  type: 'color' },
-    /* Colors: Overlay */
-    { path: ['color','overlay','5'],  cssVar: '--color-overlay-5',  type: 'color' },
-    { path: ['color','overlay','10'], cssVar: '--color-overlay-10', type: 'color' },
-    { path: ['color','overlay','20'], cssVar: '--color-overlay-20', type: 'color' },
-    /* Colors: Overlay Accent */
-    { path: ['color','overlay-accent','5'],  cssVar: '--color-overlay-accent-5',  type: 'color' },
-    { path: ['color','overlay-accent','10'], cssVar: '--color-overlay-accent-10', type: 'color' },
-    { path: ['color','overlay-accent','20'], cssVar: '--color-overlay-accent-20', type: 'color' },
-    /* Colors: Accent */
-    { path: ['color','accent','light'], cssVar: '--color-accent-light', type: 'color' },
-    { path: ['color','accent','dark'],  cssVar: '--color-accent-dark',  type: 'color' },
-    /* Gradients */
-    { path: ['gradient','gold'],   cssVar: '--gradient-gold',   type: 'other' },
-    { path: ['gradient','silver'], cssVar: '--gradient-silver', type: 'other' },
-    /* Spacing */
-    { path: ['spacing','1'],  cssVar: '--spacing-1',  type: 'dimension' },
-    { path: ['spacing','2'],  cssVar: '--spacing-2',  type: 'dimension' },
-    { path: ['spacing','3'],  cssVar: '--spacing-3',  type: 'dimension' },
-    { path: ['spacing','4'],  cssVar: '--spacing-4',  type: 'dimension' },
-    { path: ['spacing','6'],  cssVar: '--spacing-6',  type: 'dimension' },
-    { path: ['spacing','8'],  cssVar: '--spacing-8',  type: 'dimension' },
-    { path: ['spacing','12'], cssVar: '--spacing-12', type: 'dimension' },
-    /* Border Radius */
-    { path: ['radius','small'],  cssVar: '--radius-small',  type: 'dimension' },
-    { path: ['radius','medium'], cssVar: '--radius-medium', type: 'dimension' },
-    { path: ['radius','large'],  cssVar: '--radius-large',  type: 'dimension' },
-    { path: ['radius','full'],   cssVar: '--radius-full',   type: 'dimension' },
-    /* Typography */
-    { path: ['font','primary'],   cssVar: '--font-primary',   type: 'fontFamily' },
-    { path: ['font','condensed'], cssVar: '--font-condensed', type: 'fontFamily' },
-    /* Shadows */
-    { path: ['shadow','bottom-sheet'], cssVar: '--shadow-bottom-sheet', type: 'shadow' },
-    { path: ['shadow','card'],         cssVar: '--shadow-card',         type: 'shadow' },
+    /* ── Neutral ─────────────────────────────────────────────── */
+    { path: ['color','neutral','white'], cssVar: '--color-neutral-white', type: 'color', light: '#FFFFFF',                              dark: '#090127' },
+    { path: ['color','neutral','100'],   cssVar: '--color-neutral-100',   type: 'color', light: '#F7F6F9',                              dark: '#150F2B' },
+    { path: ['color','neutral','200'],   cssVar: '--color-neutral-200',   type: 'color', light: '#EAE7F1',                              dark: '#2B263F' },
+    { path: ['color','neutral','300'],   cssVar: '--color-neutral-300',   type: 'color', light: '#C7C0D4',                              dark: '#3F3855' },
+    { path: ['color','neutral','400'],   cssVar: '--color-neutral-400',   type: 'color', light: '#988DAC',                              dark: '#706784' },
+    { path: ['color','neutral','500'],   cssVar: '--color-neutral-500',   type: 'color', light: '#706784',                              dark: '#988DAC' },
+    { path: ['color','neutral','600'],   cssVar: '--color-neutral-600',   type: 'color', light: '#3F3855',                              dark: '#C7C0D4' },
+    { path: ['color','neutral','700'],   cssVar: '--color-neutral-700',   type: 'color', light: '#2B263F',                              dark: '#EAE7F1' },
+    { path: ['color','neutral','800'],   cssVar: '--color-neutral-800',   type: 'color', light: '#150F2B',                              dark: '#F7F6F9' },
+    { path: ['color','neutral','black'], cssVar: '--color-neutral-black', type: 'color', light: '#090127',                              dark: '#FFFFFF'  },
+    /* ── Semantic ─────────────────────────────────────────────── */
+    { path: ['color','semantic','success'],      cssVar: '--color-semantic-success',      type: 'color', light: '#198F51', dark: '#55BC5B' },
+    { path: ['color','semantic','success-dark'], cssVar: '--color-semantic-success-dark', type: 'color', light: '#55BC5B', dark: null },
+    { path: ['color','semantic','warning'],      cssVar: '--color-semantic-warning',      type: 'color', light: '#FCA512', dark: null },
+    { path: ['color','semantic','error'],        cssVar: '--color-semantic-error',        type: 'color', light: '#EA3A2E', dark: '#FF584D' },
+    { path: ['color','semantic','error-dark'],   cssVar: '--color-semantic-error-dark',   type: 'color', light: '#FF584D', dark: null },
+    { path: ['color','semantic','info'],         cssVar: '--color-semantic-info',         type: 'color', light: '#5723B0', dark: '#A874FF' },
+    { path: ['color','semantic','info-dark'],    cssVar: '--color-semantic-info-dark',    type: 'color', light: '#A874FF', dark: null },
+    /* ── Support ──────────────────────────────────────────────── */
+    { path: ['color','support','success-20'], cssVar: '--color-support-success-20', type: 'color', light: 'rgba(25,143,81,0.20)',   dark: null },
+    { path: ['color','support','warning-20'], cssVar: '--color-support-warning-20', type: 'color', light: 'rgba(252,165,18,0.20)',  dark: null },
+    { path: ['color','support','error-20'],   cssVar: '--color-support-error-20',   type: 'color', light: 'rgba(234,58,46,0.20)',   dark: null },
+    { path: ['color','support','yellow'],     cssVar: '--color-support-yellow',     type: 'color', light: '#F5CC45',                dark: null },
+    { path: ['color','support','yellow-20'],  cssVar: '--color-support-yellow-20',  type: 'color', light: 'rgba(245,204,69,0.20)', dark: null },
+    /* ── Overlay ──────────────────────────────────────────────── */
+    { path: ['color','overlay','5'],  cssVar: '--color-overlay-5',  type: 'color', light: 'rgba(87,35,176,0.05)',  dark: null },
+    { path: ['color','overlay','10'], cssVar: '--color-overlay-10', type: 'color', light: 'rgba(87,35,176,0.10)',  dark: null },
+    { path: ['color','overlay','20'], cssVar: '--color-overlay-20', type: 'color', light: 'rgba(87,35,176,0.20)',  dark: null },
+    /* ── Overlay Accent ───────────────────────────────────────── */
+    { path: ['color','overlay-accent','5'],  cssVar: '--color-overlay-accent-5',  type: 'color', light: 'rgba(168,116,255,0.05)',  dark: null },
+    { path: ['color','overlay-accent','10'], cssVar: '--color-overlay-accent-10', type: 'color', light: 'rgba(168,116,255,0.10)',  dark: null },
+    { path: ['color','overlay-accent','20'], cssVar: '--color-overlay-accent-20', type: 'color', light: 'rgba(168,116,255,0.20)',  dark: null },
+    /* ── Accent ───────────────────────────────────────────────── */
+    { path: ['color','accent','light'], cssVar: '--color-accent-light', type: 'color', light: '#5723B0', dark: '#A874FF' },
+    { path: ['color','accent','dark'],  cssVar: '--color-accent-dark',  type: 'color', light: '#A874FF', dark: '#5723B0' },
+    /* ── Gradients ────────────────────────────────────────────── */
+    { path: ['gradient','gold'],   cssVar: '--gradient-gold',   type: 'other', light: 'linear-gradient(90deg, #F8BD4F 0%, #FCFDC9 50%, #F8BD4F 100%)', dark: null },
+    { path: ['gradient','silver'], cssVar: '--gradient-silver', type: 'other', light: 'linear-gradient(90deg, #C0C0C0 0%, #F6F3F6 50%, #C0C0C0 100%)', dark: null },
+    /* ── Spacing ──────────────────────────────────────────────── */
+    { path: ['spacing','1'],  cssVar: '--spacing-1',  type: 'dimension', light: '4px',  dark: null },
+    { path: ['spacing','2'],  cssVar: '--spacing-2',  type: 'dimension', light: '8px',  dark: null },
+    { path: ['spacing','3'],  cssVar: '--spacing-3',  type: 'dimension', light: '12px', dark: null },
+    { path: ['spacing','4'],  cssVar: '--spacing-4',  type: 'dimension', light: '16px', dark: null },
+    { path: ['spacing','6'],  cssVar: '--spacing-6',  type: 'dimension', light: '24px', dark: null },
+    { path: ['spacing','8'],  cssVar: '--spacing-8',  type: 'dimension', light: '32px', dark: null },
+    { path: ['spacing','12'], cssVar: '--spacing-12', type: 'dimension', light: '48px', dark: null },
+    /* ── Border Radius ────────────────────────────────────────── */
+    { path: ['radius','small'],  cssVar: '--radius-small',  type: 'dimension', light: '4px',   dark: null },
+    { path: ['radius','medium'], cssVar: '--radius-medium', type: 'dimension', light: '8px',   dark: null },
+    { path: ['radius','large'],  cssVar: '--radius-large',  type: 'dimension', light: '12px',  dark: null },
+    { path: ['radius','full'],   cssVar: '--radius-full',   type: 'dimension', light: '130px', dark: null },
+    /* ── Typography ───────────────────────────────────────────── */
+    { path: ['font','primary'],   cssVar: '--font-primary',   type: 'fontFamily', light: "'Montserrat', sans-serif",       dark: null },
+    { path: ['font','condensed'], cssVar: '--font-condensed', type: 'fontFamily', light: "'Barlow Condensed', sans-serif", dark: null },
+    /* ── Shadows ──────────────────────────────────────────────── */
+    { path: ['shadow','bottom-sheet'], cssVar: '--shadow-bottom-sheet', type: 'shadow', light: '0px -10px 25px 0px rgba(9,1,39,0.25)', dark: '0px -30px 50px 0px rgba(9,1,39,0.80)' },
+    { path: ['shadow','card'],         cssVar: '--shadow-card',         type: 'shadow', light: '0px -10px 25px 0px rgba(9,1,39,0.25)', dark: '0px -10px 25px 0px rgba(9,1,39,0.70)' },
   ];
 
-  /* ── Build nested JSON object ── */
+  /* ── Build nested JSON (W3C DTCG, dual-mode) ── */
   function buildJSON() {
     var root = {};
     TOKEN_DEFS.forEach(function(t) {
-      var val = tv(t.cssVar);
       var node = root;
       for (var i = 0; i < t.path.length - 1; i++) {
         if (!node[t.path[i]]) node[t.path[i]] = {};
         node = node[t.path[i]];
       }
       var leaf = t.path[t.path.length - 1];
-      node[leaf] = { '$value': val, '$type': t.type };
+      var darkVal = t.dark !== null ? t.dark : t.light;
+      if (t.dark !== null) {
+        /* adaptive token — expose both modes */
+        node[leaf] = {
+          'light': { '$value': t.light, '$type': t.type },
+          'dark':  { '$value': darkVal,  '$type': t.type }
+        };
+      } else {
+        /* static token — single value */
+        node[leaf] = { '$value': t.light, '$type': t.type };
+      }
     });
     return root;
   }
 
-  /* ── Generate Markdown ── */
+  /* ── Generate Markdown (dual-mode) ── */
   function buildMD() {
     var now = new Date().toISOString().slice(0,10);
+
+    function mdRow(t) {
+      var key = '`' + t.path.join('.') + '`';
+      var cssv = '`' + t.cssVar + '`';
+      var l = '`' + t.light + '`';
+      var d = t.dark !== null ? '`' + t.dark + '`' : '—';
+      return '| ' + key + ' | ' + cssv + ' | ' + l + ' | ' + d + ' |';
+    }
+    function mdRowSingle(t) {
+      var key = '`' + t.path.join('.') + '`';
+      var cssv = '`' + t.cssVar + '`';
+      return '| ' + key + ' | ' + cssv + ' | `' + t.light + '` |';
+    }
+
+    var dualHeader   = ['| Token | CSS Variable | Light | Dark |', '|-------|-------------|-------|------|'];
+    var singleHeader = ['| Token | CSS Variable | Value |', '|-------|-------------|-------|'];
+
     var lines = [
       '# Wanna Design System — Design Tokens',
       '',
@@ -2869,51 +2900,76 @@ body.comment-mode * { cursor: crosshair !important; }
       '## Color Tokens',
       '',
       '### Neutral',
+      '> Values invert between Light and Dark mode.',
       '',
-      '| Token | CSS Variable | Value (Light) |',
-      '|-------|-------------|---------------|',
-    ];
-    var neutral = TOKEN_DEFS.filter(function(t){ return t.path[0]==='color' && t.path[1]==='neutral'; });
-    neutral.forEach(function(t){ lines.push('| `color.neutral.' + t.path[2] + '` | `' + t.cssVar + '` | `' + tv(t.cssVar) + '` |'); });
+    ].concat(dualHeader);
+    TOKEN_DEFS.filter(function(t){ return t.path[0]==='color' && t.path[1]==='neutral'; })
+      .forEach(function(t){ lines.push(mdRow(t)); });
 
-    lines.push('','### Semantic','','| Token | CSS Variable | Value (Light) |','|-------|-------------|---------------|');
-    var semantic = TOKEN_DEFS.filter(function(t){ return t.path[0]==='color' && t.path[1]==='semantic'; });
-    semantic.forEach(function(t){ lines.push('| `color.semantic.' + t.path[2] + '` | `' + t.cssVar + '` | `' + tv(t.cssVar) + '` |'); });
+    lines.push('', '### Semantic', '> `-dark` variants are fixed — use them on dark backgrounds regardless of theme.', '');
+    lines = lines.concat(dualHeader);
+    TOKEN_DEFS.filter(function(t){ return t.path[0]==='color' && t.path[1]==='semantic'; })
+      .forEach(function(t){ lines.push(mdRow(t)); });
 
-    lines.push('','### Support','','| Token | CSS Variable | Value |','|-------|-------------|-------|');
-    var support = TOKEN_DEFS.filter(function(t){ return t.path[0]==='color' && t.path[1]==='support'; });
-    support.forEach(function(t){ lines.push('| `color.support.' + t.path[2] + '` | `' + t.cssVar + '` | `' + tv(t.cssVar) + '` |'); });
+    lines.push('', '### Accent', '');
+    lines = lines.concat(dualHeader);
+    TOKEN_DEFS.filter(function(t){ return t.path[0]==='color' && t.path[1]==='accent'; })
+      .forEach(function(t){ lines.push(mdRow(t)); });
 
-    lines.push('','### Overlay','','| Token | CSS Variable | Value |','|-------|-------------|-------|');
-    var overlay = TOKEN_DEFS.filter(function(t){ return t.path[0]==='color' && (t.path[1]==='overlay' || t.path[1]==='overlay-accent'); });
-    overlay.forEach(function(t){ lines.push('| `color.' + t.path[1] + '.' + t.path[2] + '` | `' + t.cssVar + '` | `' + tv(t.cssVar) + '` |'); });
+    lines.push('', '### Support', '> Same value in both modes.', '');
+    lines = lines.concat(singleHeader);
+    TOKEN_DEFS.filter(function(t){ return t.path[0]==='color' && t.path[1]==='support'; })
+      .forEach(function(t){ lines.push(mdRowSingle(t)); });
 
-    lines.push('','### Accent + Gradient','','| Token | CSS Variable | Value |','|-------|-------------|-------|');
-    var accent = TOKEN_DEFS.filter(function(t){ return (t.path[0]==='color' && t.path[1]==='accent') || t.path[0]==='gradient'; });
-    accent.forEach(function(t){ lines.push('| `' + t.path.join('.') + '` | `' + t.cssVar + '` | `' + tv(t.cssVar) + '` |'); });
+    lines.push('', '### Overlay', '> Same value in both modes.', '');
+    lines = lines.concat(singleHeader);
+    TOKEN_DEFS.filter(function(t){ return t.path[0]==='color' && (t.path[1]==='overlay' || t.path[1]==='overlay-accent'); })
+      .forEach(function(t){ lines.push(mdRowSingle(t)); });
 
-    lines.push('','---','','## Spacing','','| Token | CSS Variable | Value |','|-------|-------------|-------|');
-    var spacing = TOKEN_DEFS.filter(function(t){ return t.path[0]==='spacing'; });
-    spacing.forEach(function(t){ lines.push('| `spacing.' + t.path[1] + '` | `' + t.cssVar + '` | `' + tv(t.cssVar) + '` |'); });
+    lines.push('', '### Gradient', '> Same value in both modes.', '');
+    lines = lines.concat(singleHeader);
+    TOKEN_DEFS.filter(function(t){ return t.path[0]==='gradient'; })
+      .forEach(function(t){ lines.push(mdRowSingle(t)); });
 
-    lines.push('','---','','## Border Radius','','| Token | CSS Variable | Value |','|-------|-------------|-------|');
-    var radius = TOKEN_DEFS.filter(function(t){ return t.path[0]==='radius'; });
-    radius.forEach(function(t){ lines.push('| `radius.' + t.path[1] + '` | `' + t.cssVar + '` | `' + tv(t.cssVar) + '` |'); });
+    lines.push('', '---', '', '## Spacing', '');
+    lines = lines.concat(singleHeader);
+    TOKEN_DEFS.filter(function(t){ return t.path[0]==='spacing'; })
+      .forEach(function(t){ lines.push(mdRowSingle(t)); });
 
-    lines.push('','---','','## Typography','','| Token | CSS Variable | Value |','|-------|-------------|-------|');
-    var fonts = TOKEN_DEFS.filter(function(t){ return t.path[0]==='font'; });
-    fonts.forEach(function(t){ lines.push('| `font.' + t.path[1] + '` | `' + t.cssVar + '` | `' + tv(t.cssVar) + '` |'); });
+    lines.push('', '---', '', '## Border Radius', '');
+    lines = lines.concat(singleHeader);
+    TOKEN_DEFS.filter(function(t){ return t.path[0]==='radius'; })
+      .forEach(function(t){ lines.push(mdRowSingle(t)); });
 
-    lines.push('','---','','## Shadows','','| Token | CSS Variable | Value |','|-------|-------------|-------|');
-    var shadows = TOKEN_DEFS.filter(function(t){ return t.path[0]==='shadow'; });
-    shadows.forEach(function(t){ lines.push('| `shadow.' + t.path[1] + '` | `' + t.cssVar + '` | `' + tv(t.cssVar) + '` |'); });
+    lines.push('', '---', '', '## Typography', '');
+    lines = lines.concat(singleHeader);
+    TOKEN_DEFS.filter(function(t){ return t.path[0]==='font'; })
+      .forEach(function(t){ lines.push(mdRowSingle(t)); });
 
-    lines.push('','---','','## Usage','','### CSS','','```css','/* Import from CDN or copy tokens.css */',':root {','  /* Example: */',
-      '  background: var(--color-primary-100);',
+    lines.push('', '---', '', '## Shadows', '');
+    lines = lines.concat(dualHeader);
+    TOKEN_DEFS.filter(function(t){ return t.path[0]==='shadow'; })
+      .forEach(function(t){ lines.push(mdRow(t)); });
+
+    lines.push(
+      '', '---', '', '## Usage', '', '### CSS', '',
+      '```css',
+      '/* Copy tokens.css to your project */',
+      ':root {',
+      '  background: var(--color-neutral-100);',
       '  color: var(--color-neutral-black);',
       '  font-family: var(--font-primary);',
-      '}','```','','### JavaScript / Tailwind / Style Dictionary','','```js','// tokens.json is in W3C DTCG format — compatible with Style Dictionary, Theo, etc.',
-      'import tokens from \'./tokens.json\';','```'
+      '}',
+      '```',
+      '', '### JavaScript / Style Dictionary', '',
+      '```js',
+      '// tokens.json uses W3C DTCG format.',
+      '// Adaptive tokens expose { light, dark } sub-keys.',
+      '// Static tokens expose a single $value.',
+      "import tokens from './wanna-tokens.json';",
+      "// e.g. tokens.color.neutral['100'].light.$value  → '#F7F6F9'",
+      "//      tokens.color.neutral['100'].dark.$value   → '#150F2B'",
+      '```'
     );
     return lines.join('\n');
   }
