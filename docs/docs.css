@@ -427,6 +427,16 @@ body {
   color: #706784;
 }
 .color-dual__header svg { flex-shrink: 0; }
+.color-dual__base {
+  margin-left: 6px;
+  font-size: 9px; font-weight: 600; letter-spacing: .3px;
+  color: #988DAC; background: rgba(255,255,255,.06);
+  padding: 2px 6px; border-radius: 4px;
+  text-transform: none; font-family: 'Montserrat', monospace;
+}
+.color-dual__panel--dark .color-dual__base {
+  color: #706784; background: rgba(255,255,255,.04);
+}
 .color-dual__invert {
   margin-left: auto;
   font-size: 9px; font-weight: 700; letter-spacing: .4px;
