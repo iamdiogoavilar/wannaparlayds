@@ -3501,6 +3501,11 @@ body.comment-mode * { cursor: crosshair !important; }
     dark:   ppInner('#150F2B',  '#BCBCBC', '#090127'),
     purple: ppInner('white',    '#E4E4E4', '#F7F6F9')
   };
+  /* Dark-mode variants (from dark/ Figma export) */
+  var PP_DARK = {
+    white:  ppInner('#090127',  '#3F3855', '#150F2B'),
+    light:  ppInner('#3F3855',  '#706784', '#3F3855')
+  };
   var ICONS = [
     { key:'apple',    label:'Apple Pay'     },
     { key:'credit',   label:'Credit Card'   },
@@ -3513,10 +3518,20 @@ body.comment-mode * { cursor: crosshair !important; }
   ];
   var PREFIX = 'wl';
   var uid = 7000;
+  function svgWrap(inner, cls) {
+    return '<svg'+(cls?' class="'+cls+'"':'')+' width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">'+inner+'</svg>';
+  }
   function render(icon, variant) {
     uid++;
-    var inner = (icon.key === 'paypal' ? PP[variant] : D[icon.key]).replace(/\{ID\}/g, uid);
-    return '<div class="sport-icon" title="'+icon.label+'" onclick="copyText(\''+icon.label.toLowerCase()+'\')"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">'+inner+'</svg><span class="sport-icon__tip">'+icon.label+'</span></div>';
+    if (icon.key === 'paypal') {
+      var lightInner = PP[variant].replace(/\{ID\}/g, uid);
+      uid++;
+      var darkDef = PP_DARK[variant];
+      var darkSvg = darkDef ? svgWrap(darkDef.replace(/\{ID\}/g, uid), 'pp-dark') : '';
+      return '<div class="sport-icon" title="PayPal" onclick="copyText(\'paypal\')">'+svgWrap(lightInner,'pp-light')+darkSvg+'<span class="sport-icon__tip">PayPal</span></div>';
+    }
+    var inner = D[icon.key].replace(/\{ID\}/g, uid);
+    return '<div class="sport-icon" title="'+icon.label+'" onclick="copyText(\''+icon.label.toLowerCase()+'\')">'+svgWrap(inner)+'<span class="sport-icon__tip">'+icon.label+'</span></div>';
   }
   ['white','light','dark','purple'].forEach(function(v) {
     var el = document.getElementById(PREFIX+'-grid-'+v);

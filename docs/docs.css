@@ -507,6 +507,11 @@ body {
 [data-variant="yellow"] .sport-icon svg { color: #E0A200; }
 [data-variant="red"]    .sport-icon svg { color: #EA3A2E; }
 
+/* ── PayPal dual-SVG dark-mode toggle ── */
+.pp-dark { display: none; }
+[data-theme="dark"] .pp-light { display: none; }
+[data-theme="dark"] .pp-dark  { display: block; }
+
 /* ── Dark mode overrides ── */
 [data-theme="dark"] [data-variant="dark"]   .sport-icon svg { color: #EAE7F1; }
 [data-theme="dark"] [data-variant="grey"]   .sport-icon svg { color: #C7C0D4; }
@@ -528,6 +533,8 @@ body {
   :root:not([data-theme="light"]) [data-variant="yellow"] .sport-icon svg { color: #F5C518; }
   :root:not([data-theme="light"]) [data-variant="red"]    .sport-icon svg { color: #FF584D; }
   :root:not([data-theme="light"]) .icon-variant--on-dark { background: #F7F6F9; border-color: #EAE7F1; }
+  :root:not([data-theme="light"]) .pp-light { display: none; }
+  :root:not([data-theme="light"]) .pp-dark  { display: block; }
 }
 .icon-variant__label {
   font-size: 10px; font-weight: 700; letter-spacing: .6px;
