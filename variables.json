@@ -16,7 +16,8 @@
       "600":   { "$value": "#3F3855", "$type": "color" },
       "700":   { "$value": "#2B263F", "$type": "color" },
       "800":   { "$value": "#150F2B", "$type": "color" },
-      "black": { "$value": "#090127", "$type": "color" }
+      "black": { "$value": "#090127", "$type": "color" },
+      "white": { "$value": "#FFFFFF", "$type": "color" }
     },
     "semantic": {
       "success":    { "$value": "#198F51", "$type": "color" },
@@ -43,9 +44,18 @@
       }
     },
     "overlay": {
-      "5":  { "$value": "rgba(87, 35, 176, 0.05)", "$type": "color" },
-      "10": { "$value": "rgba(87, 35, 176, 0.10)", "$type": "color" },
-      "20": { "$value": "rgba(87, 35, 176, 0.20)", "$type": "color" }
+      "5": {
+        "light": { "$value": "rgba(87, 35, 176, 0.05)",  "$type": "color" },
+        "dark":  { "$value": "rgba(168, 116, 255, 0.05)", "$type": "color" }
+      },
+      "10": {
+        "light": { "$value": "rgba(87, 35, 176, 0.10)",  "$type": "color" },
+        "dark":  { "$value": "rgba(168, 116, 255, 0.10)", "$type": "color" }
+      },
+      "20": {
+        "light": { "$value": "rgba(87, 35, 176, 0.20)",  "$type": "color" },
+        "dark":  { "$value": "rgba(168, 116, 255, 0.20)", "$type": "color" }
+      }
     },
     "gradient": {
       "gold": {
@@ -57,11 +67,26 @@
         "start": { "$value": "#C0C0C0", "$type": "color" },
         "mid":   { "$value": "#F6F3F6", "$type": "color" },
         "end":   { "$value": "#C0C0C0", "$type": "color" }
+      },
+      "brand": {
+        "light": {
+          "start": { "$value": "#5723B0", "$type": "color" },
+          "end":   { "$value": "#2C1357", "$type": "color" }
+        },
+        "dark": { "$value": "#A874FF", "$type": "color" }
       }
     },
     "accent": {
       "light": { "$value": "#5723B0", "$type": "color" },
-      "dark":  { "$value": "#A874FF", "$type": "color" }
+      "dark":  { "$value": "#A874FF", "$type": "color" },
+      "secondary": {
+        "light": { "$value": "#EFE9F8", "$type": "color" },
+        "dark":  { "$value": "#150F2B", "$type": "color" }
+      },
+      "tertiary": {
+        "light": { "$value": "#E1D5F2", "$type": "color" },
+        "dark":  { "$value": "#2B263F", "$type": "color" }
+      }
     }
   },
   "shadow": {
