@@ -3437,26 +3437,41 @@ body.comment-mode * { cursor: crosshair !important; }
 <!-- ── Picks Section Icons ────────────────────────────────────── -->
 <script>
 (function() {
-  var D = {
-    left:  '<path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" fill="currentColor"/>',
-    right: '<path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" fill="currentColor"/>',
-    up:    '<path d="M12 8l-6 6 1.41 1.41L12 10.83l4.59 4.58L18 14z" fill="currentColor"/>',
-    down:  '<path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z" fill="currentColor"/>'
-  };
-  var ICONS = [
-    { key:'left',  label:'Left'  },
-    { key:'right', label:'Right' },
-    { key:'up',    label:'Up'    },
-    { key:'down',  label:'Down'  }
+  /* Plain arrows — use currentColor (dark / custom variants) */
+  var PLAIN = [
+    { label:'Left',  inner:'<path d="M14 18L8 12L14 6L15.4 7.4L10.8 12L15.4 16.6L14 18Z" fill="currentColor"/>' },
+    { label:'Right', inner:'<path d="M12.6 12L8 7.4L9.4 6L15.4 12L9.4 18L8 16.6L12.6 12Z" fill="currentColor"/>' },
+    { label:'Up',    inner:'<path d="M16.59 15L12 10.42L7.41 15L6 13.59L12 7.59L18 13.59L16.59 15Z" fill="currentColor"/>' },
+    { label:'Down',  inner:'<path d="M7.41 9L12 13.58L16.59 9L18 10.41L12 16.41L6 10.41L7.41 9Z" fill="currentColor"/>' }
   ];
-  var PREFIX = 'pk';
-  function render(icon) {
-    return '<div class="sport-icon" title="'+icon.label+'" onclick="copyText(\''+icon.label.toLowerCase()+'\')"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">'+D[icon.key]+'</svg><span class="sport-icon__tip">'+icon.label+'</span></div>';
+
+  /* Yellow pill icons — hardcoded colours (Up/Down only) */
+  var YELLOW = [
+    { label:'Up',   inner:'<rect width="24" height="24" rx="12" transform="matrix(1 0 0 -1 0 24)" fill="#F5CC45"/><g clip-path="url(#sci{ID})"><path d="M16.59 15L12 10.42L7.41 15L6 13.59L12 7.59L18 13.59L16.59 15Z" fill="#090127"/></g><defs><clipPath id="sci{ID}"><rect width="20" height="20" fill="white" transform="matrix(-1 8.74228e-08 8.74228e-08 1 22 2)"/></clipPath></defs>' },
+    { label:'Down', inner:'<rect width="24" height="24" rx="12" transform="matrix(1 0 0 -1 0 24)" fill="#F5CC45"/><g clip-path="url(#sci{ID})"><g clip-path="url(#sci2{ID})"><path d="M7.41 9L12 13.58L16.59 9L18 10.41L12 16.41L6 10.41L7.41 9Z" fill="#090127"/></g></g><defs><clipPath id="sci{ID}"><rect width="20" height="20" fill="white" transform="matrix(-1 8.74228e-08 8.74228e-08 1 22 2)"/></clipPath><clipPath id="sci2{ID}"><rect width="20" height="20" fill="white" transform="matrix(-1 8.74228e-08 8.74228e-08 1 22 2)"/></clipPath></defs>' }
+  ];
+
+  /* Red/Error pill icons — hardcoded colours (Up/Down only) */
+  var RED = [
+    { label:'Up',   inner:'<rect width="24" height="24" rx="12" transform="matrix(1 0 0 -1 0 24)" fill="#EA3A2E"/><g clip-path="url(#sci{ID})"><path d="M16.59 15L12 10.42L7.41 15L6 13.59L12 7.59L18 13.59L16.59 15Z" fill="white"/></g><defs><clipPath id="sci{ID}"><rect width="20" height="20" fill="white" transform="matrix(-1 8.74228e-08 8.74228e-08 1 22 2)"/></clipPath></defs>' },
+    { label:'Down', inner:'<rect width="24" height="24" rx="12" transform="matrix(1 0 0 -1 0 24)" fill="#EA3A2E"/><g clip-path="url(#sci{ID})"><g clip-path="url(#sci2{ID})"><path d="M7.41 9L12 13.58L16.59 9L18 10.41L12 16.41L6 10.41L7.41 9Z" fill="white"/></g></g><defs><clipPath id="sci{ID}"><rect width="20" height="20" fill="white" transform="matrix(-1 8.74228e-08 8.74228e-08 1 22 2)"/></clipPath><clipPath id="sci2{ID}"><rect width="20" height="20" fill="white" transform="matrix(-1 8.74228e-08 8.74228e-08 1 22 2)"/></clipPath></defs>' }
+  ];
+
+  var uid = 6000;
+  function renderItem(item) {
+    uid++;
+    var inner = item.inner.replace(/\{ID\}/g, uid);
+    return '<div class="sport-icon" title="'+item.label+'" onclick="copyText(\''+item.label.toLowerCase()+'\')"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">'+inner+'</svg><span class="sport-icon__tip">'+item.label+'</span></div>';
   }
-  ['dark','purple','yellow','red'].forEach(function(v) {
-    var el = document.getElementById(PREFIX+'-grid-'+v);
-    if (el) el.innerHTML = ICONS.map(render).join('');
+
+  ['dark','purple'].forEach(function(v) {
+    var el = document.getElementById('pk-grid-'+v);
+    if (el) el.innerHTML = PLAIN.map(renderItem).join('');
   });
+  var yelEl = document.getElementById('pk-grid-yellow');
+  if (yelEl) yelEl.innerHTML = YELLOW.map(renderItem).join('');
+  var redEl = document.getElementById('pk-grid-red');
+  if (redEl) redEl.innerHTML = RED.map(renderItem).join('');
 })();
 </script>
 
@@ -3464,12 +3479,12 @@ body.comment-mode * { cursor: crosshair !important; }
 <script>
 (function() {
   var D = {
-    apple:    '<path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83zM13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z" fill="currentColor"/>',
-    credit:   '<path d="M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z" fill="currentColor"/>',
-    debit:    '<path d="M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z" fill="currentColor"/><circle cx="7" cy="15" r="1.5" fill="currentColor"/>',
-    bank:     '<path d="M4 10v7h3v-7H4zm6 0v7h3v-7h-3zM2 22h19v-3H2v3zm14-12v7h3v-7h-3zM11.5 1L2 6v2h19V6l-9.5-5z" fill="currentColor"/>',
-    venmo:    '<path d="M19.5 3.5L18 2l-1.5 1.5L15 2l-1.5 1.5L12 2l-1.5 1.5L9 2 7.5 3.5 6 2 4.5 3.5 3 2v20l1.5-1.5L6 22l1.5-1.5L9 22l1.5-1.5L12 22l1.5-1.5L15 22l1.5-1.5L18 22l1.5-1.5L21 22V2l-1.5 1.5zM19 19.09H5V4.91h14v14.18zM6 15h2.22l1.63-5.1L11 15h2.17l1.61-5.06L16.02 15H18l-2.61-8h-2.08l-1.27 4.06L10.67 7H8.59z" fill="currentColor"/>',
-    paypal:   '<path d="M9.93 12.09c.07.36.12.75.12 1.16 0 2.62-2.12 4.75-4.75 4.75H4v3H1V7h5.25c2.62 0 4.75 2.13 4.75 4.75 0 .12-.02.24-.03.36l-.04-.02zM6.25 9H4v4.15c.08.01.17.01.25.01 1.16 0 2.1-.94 2.1-2.1C6.35 10.17 6.31 9.55 6.25 9zm15.5 1.75c0 2.62-2.12 4.75-4.75 4.75h-1.3v4.5h-3V5h4.3c2.62 0 4.75 2.13 4.75 4.75zm-3.1 0c0-1.16-.94-2.1-2.1-2.1h-.85v4.15c.08.01.17.01.25.01h.6c1.16 0 2.1-.94 2.1-2.1v.04z" fill="currentColor"/>'
+    apple:  '<path d="M16.047 6.47967C16.1977 6.47967 16.431 6.49761 16.7468 6.5335C17.0698 6.56221 17.4358 6.64116 17.845 6.77035C18.2541 6.89954 18.6703 7.10768 19.0938 7.39478C19.5173 7.68187 19.9084 8.08381 20.2673 8.60058C20.2314 8.62211 20.0951 8.719 19.8582 8.89126C19.6285 9.06352 19.3666 9.31472 19.0723 9.64488C18.778 9.96786 18.5196 10.3806 18.2971 10.883C18.0818 11.3782 17.9741 11.9703 17.9741 12.6594C17.9741 13.4489 18.1105 14.1164 18.3833 14.6619C18.6632 15.2073 18.9862 15.6487 19.3522 15.9861C19.7254 16.3234 20.0556 16.571 20.3427 16.7289C20.6369 16.8797 20.7948 16.9586 20.8164 16.9658C20.8092 16.9945 20.7554 17.156 20.6549 17.4503C20.5544 17.7374 20.3965 18.1106 20.1812 18.5699C19.973 19.0221 19.7003 19.4958 19.363 19.9911C19.0543 20.4289 18.7349 20.8487 18.4048 21.2507C18.0818 21.6526 17.7265 21.9792 17.3389 22.2304C16.9585 22.4888 16.5279 22.618 16.047 22.618C15.681 22.618 15.3688 22.5749 15.1104 22.4888C14.852 22.4026 14.6044 22.3022 14.3675 22.1873C14.1378 22.0797 13.883 21.9828 13.6031 21.8966C13.3232 21.8105 12.9751 21.7674 12.5588 21.7674C12.0133 21.7674 11.5576 21.8392 11.1915 21.9828C10.8327 22.1335 10.4917 22.2806 10.1688 22.4242C9.84578 22.5677 9.46538 22.6395 9.02756 22.6395C8.36007 22.6395 7.77152 22.3739 7.26193 21.8428C6.75951 21.3117 6.24274 20.6765 5.71162 19.9372C5.30251 19.3487 4.92929 18.6704 4.59195 17.9024C4.25461 17.1345 3.98546 16.3198 3.7845 15.4585C3.58353 14.5973 3.48305 13.736 3.48305 12.8747C3.48305 11.4966 3.74502 10.3375 4.26897 9.39726C4.79292 8.45703 5.464 7.74647 6.28222 7.26559C7.10044 6.7847 7.95096 6.54426 8.83377 6.54426C9.3003 6.54426 9.73812 6.61962 10.1472 6.77035C10.5635 6.92107 10.9511 7.07539 11.31 7.23329C11.6688 7.38401 11.9954 7.45938 12.2897 7.45938C12.5696 7.45938 12.8997 7.38042 13.2801 7.22252C13.6605 7.05744 14.0804 6.89236 14.5398 6.72728C15.0063 6.56221 15.5087 6.47967 16.047 6.47967ZM15.2934 4.73557C14.9345 5.17339 14.4824 5.53584 13.9369 5.82294C13.3986 6.11003 12.889 6.25358 12.4081 6.25358C12.3076 6.25358 12.2107 6.24281 12.1174 6.22128C12.1102 6.19257 12.0995 6.14233 12.0851 6.07056C12.0779 5.99878 12.0744 5.91983 12.0744 5.8337C12.0744 5.28822 12.1928 4.7571 12.4296 4.24033C12.6665 3.72356 12.9392 3.29292 13.2479 2.9484C13.6283 2.49623 14.1091 2.11942 14.6905 1.81797C15.279 1.51652 15.8425 1.35503 16.3808 1.3335C16.4023 1.45551 16.4131 1.59547 16.4131 1.75337C16.4131 2.30603 16.309 2.84433 16.1009 3.36828C15.8927 3.88505 15.6236 4.34081 15.2934 4.73557Z" fill="currentColor"/>',
+    credit: '<mask id="scm{ID}" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24"><rect width="24" height="24" fill="#D9D9D9"/></mask><g mask="url(#scm{ID})"><path d="M22 6V18C22 18.55 21.8042 19.0208 21.4125 19.4125C21.0208 19.8042 20.55 20 20 20H4C3.45 20 2.97917 19.8042 2.5875 19.4125C2.19583 19.0208 2 18.55 2 18V6C2 5.45 2.19583 4.97917 2.5875 4.5875C2.97917 4.19583 3.45 4 4 4H20C20.55 4 21.0208 4.19583 21.4125 4.5875C21.8042 4.97917 22 5.45 22 6ZM4 8H20V6H4V8ZM4 12V18H20V12H4Z" fill="currentColor"/></g>',
+    debit:  '<mask id="scm{ID}" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24"><rect width="24" height="24" fill="#D9D9D9"/></mask><g mask="url(#scm{ID})"><path d="M22 6V18C22 18.55 21.8042 19.0208 21.4125 19.4125C21.0208 19.8042 20.55 20 20 20H4C3.45 20 2.97917 19.8042 2.5875 19.4125C2.19583 19.0208 2 18.55 2 18V6C2 5.45 2.19583 4.97917 2.5875 4.5875C2.97917 4.19583 3.45 4 4 4H20C20.55 4 21.0208 4.19583 21.4125 4.5875C21.8042 4.97917 22 5.45 22 6ZM4 8H20V6H4V8ZM4 12V18H20V12H4Z" fill="currentColor"/></g>',
+    bank:   '<mask id="scm{ID}" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24"><rect width="24" height="24" fill="#D9D9D9"/></mask><g mask="url(#scm{ID})"><path d="M5 17V10H7V17H5ZM11 17V10H13V17H11ZM2 21V19H22V21H2ZM17 17V10H19V17H17ZM2 8V6L12 1L22 6V8H2ZM6.45 6H17.55L12 3.25L6.45 6Z" fill="currentColor"/></g>',
+    venmo:  '<path d="M20.8205 1.5H3.29438C2.33672 1.5 1.5 2.18906 1.5 3.13547V20.7C1.5 21.652 2.33672 22.5 3.29438 22.5H20.8153C21.7781 22.5 22.5 21.6469 22.5 20.7005V3.13547C22.5056 2.18906 21.7781 1.5 20.8205 1.5ZM13.0313 18.1406H8.17125L6.22266 6.48938L10.4766 6.08531L11.5078 14.3761C12.4702 12.8081 13.6584 10.3448 13.6584 8.66344C13.6584 7.74375 13.5009 7.11656 13.2548 6.60094L17.1281 5.81719C17.5763 6.55687 17.7778 7.31719 17.7778 8.28141C17.7773 11.3517 15.1566 15.3403 13.0313 18.1406Z" fill="currentColor"/>',
+    paypal: '<g clip-path="url(#sci{ID})"><path d="M10.9332 5.83309C11.04 5.77668 11.1569 5.74745 11.2753 5.74753H16.2395C16.8274 5.74753 17.3757 5.78994 17.8767 5.87933C18.0169 5.90411 18.1564 5.93369 18.295 5.96804C18.4913 6.01608 18.6855 6.07487 18.8766 6.1442C19.1229 6.23539 19.3523 6.34159 19.5631 6.46596C19.8116 4.70847 19.5614 3.51329 18.7041 2.43062C17.7601 1.23859 16.0552 0.727539 13.8735 0.727539H7.54085C7.09499 0.727539 6.71569 1.08735 6.64582 1.57521L4.00925 20.1107C3.95685 20.4768 4.21218 20.8074 4.54584 20.8074H8.45559L10.4925 6.48908C10.5125 6.34834 10.5631 6.2151 10.6398 6.10083C10.7166 5.98656 10.8173 5.89468 10.9332 5.83309Z" fill="currentColor"/></g><defs><clipPath id="sci{ID}"><rect width="17.3333" height="22.6667" fill="white" transform="translate(4 0.666504)"/></clipPath></defs>'
   };
   var ICONS = [
     { key:'apple',  label:'Apple Pay'     },
@@ -3480,8 +3495,11 @@ body.comment-mode * { cursor: crosshair !important; }
     { key:'paypal', label:'PayPal'        }
   ];
   var PREFIX = 'wl';
+  var uid = 7000;
   function render(icon) {
-    return '<div class="sport-icon" title="'+icon.label+'" onclick="copyText(\''+icon.label.toLowerCase()+'\')"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">'+D[icon.key]+'</svg><span class="sport-icon__tip">'+icon.label+'</span></div>';
+    uid++;
+    var inner = D[icon.key].replace(/\{ID\}/g, uid);
+    return '<div class="sport-icon" title="'+icon.label+'" onclick="copyText(\''+icon.label.toLowerCase()+'\')"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">'+inner+'</svg><span class="sport-icon__tip">'+icon.label+'</span></div>';
   }
   ['white','light','dark','purple'].forEach(function(v) {
     var el = document.getElementById(PREFIX+'-grid-'+v);
