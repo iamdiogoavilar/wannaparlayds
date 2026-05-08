@@ -498,23 +498,23 @@ body {
 }
 
 /* ── Icon colors per variant — light mode ── */
-[data-variant="dark"]   .sport-icon svg { color: #555555; }
+[data-variant="dark"]   .sport-icon svg { color: #090127; }
 [data-variant="white"]  .sport-icon svg { color: #FFFFFF; }
 [data-variant="purple"] .sport-icon svg { color: #5723B0; }
 [data-variant="grey"]   .sport-icon svg { color: #988DAC; }
 
 /* ── Dark mode overrides ── */
-[data-theme="dark"] [data-variant="dark"]   .sport-icon svg,
+[data-theme="dark"] [data-variant="dark"]   .sport-icon svg { color: #EAE7F1; }
 [data-theme="dark"] [data-variant="grey"]   .sport-icon svg { color: #C7C0D4; }
 [data-theme="dark"] [data-variant="purple"] .sport-icon svg { color: #A874FF; }
-[data-theme="dark"] [data-variant="white"]  .sport-icon svg { color: #150F2B; }
+[data-theme="dark"] [data-variant="white"]  .sport-icon svg { color: #090127; }
 [data-theme="dark"] .icon-variant--on-dark { background: #F7F6F9; border-color: #EAE7F1; }
 
 @media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) [data-variant="dark"]   .sport-icon svg,
+  :root:not([data-theme="light"]) [data-variant="dark"]   .sport-icon svg { color: #EAE7F1; }
   :root:not([data-theme="light"]) [data-variant="grey"]   .sport-icon svg { color: #C7C0D4; }
   :root:not([data-theme="light"]) [data-variant="purple"] .sport-icon svg { color: #A874FF; }
-  :root:not([data-theme="light"]) [data-variant="white"]  .sport-icon svg { color: #150F2B; }
+  :root:not([data-theme="light"]) [data-variant="white"]  .sport-icon svg { color: #090127; }
   :root:not([data-theme="light"]) .icon-variant--on-dark { background: #F7F6F9; border-color: #EAE7F1; }
 }
 .icon-variant__label {
