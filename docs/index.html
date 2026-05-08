@@ -3516,7 +3516,8 @@ body.comment-mode * { cursor: crosshair !important; }
   }
   ['white','light','dark','purple'].forEach(function(v) {
     var el = document.getElementById(PREFIX+'-grid-'+v);
-    if (el) el.innerHTML = ICONS.map(function(icon) { return render(icon, v); }).join('');
+    var icons = v === 'purple' ? ICONS.filter(function(i) { return i.key !== 'paypal'; }) : ICONS;
+    if (el) el.innerHTML = icons.map(function(icon) { return render(icon, v); }).join('');
   });
 })();
 </script>
