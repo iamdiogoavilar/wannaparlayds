@@ -387,19 +387,19 @@
     <p class="token-group__desc">Soccer, MMA, Football, E-Sports, Baseball, Basketball, Volleyball, Tennis, Motorsports, Hockey, Golf.</p>
 
     <div class="icon-section">
-      <div class="icon-variant">
+      <div class="icon-variant" data-variant="dark">
         <span class="icon-variant__label">Dark</span>
         <div class="icon-grid" id="icon-grid-dark"></div>
       </div>
-      <div class="icon-variant icon-variant--on-dark">
+      <div class="icon-variant icon-variant--on-dark" data-variant="white">
         <span class="icon-variant__label icon-variant__label--light">White</span>
         <div class="icon-grid" id="icon-grid-white"></div>
       </div>
-      <div class="icon-variant">
+      <div class="icon-variant" data-variant="purple">
         <span class="icon-variant__label">Purple</span>
         <div class="icon-grid" id="icon-grid-purple"></div>
       </div>
-      <div class="icon-variant">
+      <div class="icon-variant" data-variant="grey">
         <span class="icon-variant__label">Grey</span>
         <div class="icon-grid" id="icon-grid-grey"></div>
       </div>
@@ -3081,21 +3081,19 @@ body.comment-mode * { cursor: crosshair !important; }
 
   var uid = 0;
 
-  function renderIcon(sport, color) {
+  function renderIcon(sport) {
     uid++;
     var inner = D[sport.key].replace(/\{ID\}/g, uid);
     return '<div class="sport-icon" title="' + sport.label + '" onclick="copyText(\'' + sport.label.toLowerCase() + '\')">'
-      + '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="color:' + color + '">' + inner + '</svg>'
+      + '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">' + inner + '</svg>'
       + '<span class="sport-icon__tip">' + sport.label + '</span>'
       + '</div>';
   }
 
   function buildGrid(variantId) {
-    var v = VARIANTS.filter(function(x){ return x.id === variantId; })[0];
-    if (!v) return;
     var el = document.getElementById('icon-grid-' + variantId);
     if (!el) return;
-    el.innerHTML = SPORTS.map(function(s){ return renderIcon(s, v.color); }).join('');
+    el.innerHTML = SPORTS.map(function(s){ return renderIcon(s); }).join('');
   }
 
   VARIANTS.forEach(function(v){ buildGrid(v.id); });
