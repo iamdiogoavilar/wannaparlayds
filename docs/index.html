@@ -3492,20 +3492,8 @@ body.comment-mode * { cursor: crosshair !important; }
   var PP_P2 = 'M19.4983 6.87641C18.6636 11.6289 15.8062 13.2727 12.1568 13.2727H10.2986C9.85278 13.2727 9.47625 13.6326 9.40699 14.1205L8.1856 22.7034C8.13996 23.0233 8.36313 23.3132 8.65509 23.3132H11.9505C12.1392 23.3131 12.3218 23.2384 12.4653 23.1025C12.6088 22.9666 12.7039 22.7783 12.7334 22.5716L12.7655 22.3855L13.3865 18.0221L13.4266 17.781C13.4561 17.5743 13.5511 17.3861 13.6946 17.2501C13.8381 17.1142 14.0206 17.0395 14.2094 17.0394H14.7026C17.8948 17.0394 20.3944 15.6018 21.1249 11.444C21.4298 9.70652 21.272 8.25585 20.4655 7.2369C20.2208 6.92827 19.917 6.67339 19.5631 6.46533C19.5439 6.59968 19.5232 6.73583 19.4983 6.87641Z';
   var PP_P3 = 'M18.6895 6.07803C18.5594 6.0359 18.428 5.9986 18.2956 5.9662C18.157 5.93241 18.0175 5.90302 17.8773 5.87808C17.3758 5.78809 16.8279 5.74561 16.2395 5.74561H11.2759C11.1574 5.74531 11.0404 5.7748 10.9337 5.83185C10.8177 5.89325 10.7169 5.98507 10.6401 6.09938C10.5633 6.21368 10.5128 6.34701 10.4929 6.48783L9.43791 13.9031L9.40744 14.1193C9.47684 13.6314 9.8533 13.2715 10.2992 13.2715H12.1573C15.8067 13.2715 18.6641 11.6284 19.4988 6.87519C19.5237 6.73461 19.5445 6.59839 19.5637 6.46411C19.3523 6.34042 19.1235 6.23354 18.8771 6.14295C18.815 6.1201 18.7524 6.09846 18.6896 6.07803';
   var PP_DEFS = '<defs><clipPath id="sci{ID}"><rect width="17.3333" height="22.6667" fill="white" transform="translate(4 0.666504)"/></clipPath></defs>';
-  function ppInner(c1, c2, c3) {
-    return '<g clip-path="url(#sci{ID})"><path d="'+PP_P1+'" fill="'+c1+'"/><path d="'+PP_P2+'" fill="'+c2+'"/><path d="'+PP_P3+'" fill="'+c3+'"/></g>'+PP_DEFS;
-  }
-  var PP = {
-    white:  ppInner('white',    '#E4E4E4', '#F7F6F9'),
-    light:  ppInner('#C7C0D4',  '#C7C0D4', '#988DAC'),
-    dark:   ppInner('#150F2B',  '#BCBCBC', '#090127'),
-    purple: ppInner('white',    '#E4E4E4', '#F7F6F9')
-  };
-  /* Dark-mode variants (from dark/ Figma export) */
-  var PP_DARK = {
-    white:  ppInner('#090127',  '#3F3855', '#150F2B'),
-    light:  ppInner('#3F3855',  '#706784', '#3F3855')
-  };
+  /* PayPal: single SVG, colours driven by CSS custom properties --pp-c1/c2/c3 */
+  var PP_INNER = '<g clip-path="url(#sci{ID})"><path d="'+PP_P1+'" style="fill:var(--pp-c1,white)"/><path d="'+PP_P2+'" style="fill:var(--pp-c2,#E4E4E4)"/><path d="'+PP_P3+'" style="fill:var(--pp-c3,#F7F6F9)"/></g>'+PP_DEFS;
   var ICONS = [
     { key:'apple',    label:'Apple Pay'     },
     { key:'credit',   label:'Credit Card'   },
@@ -3518,20 +3506,10 @@ body.comment-mode * { cursor: crosshair !important; }
   ];
   var PREFIX = 'wl';
   var uid = 7000;
-  function svgWrap(inner, cls) {
-    return '<svg'+(cls?' class="'+cls+'"':'')+' width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">'+inner+'</svg>';
-  }
   function render(icon, variant) {
     uid++;
-    if (icon.key === 'paypal') {
-      var lightInner = PP[variant].replace(/\{ID\}/g, uid);
-      uid++;
-      var darkDef = PP_DARK[variant];
-      var darkSvg = darkDef ? svgWrap(darkDef.replace(/\{ID\}/g, uid), 'pp-dark') : '';
-      return '<div class="sport-icon" title="PayPal" onclick="copyText(\'paypal\')">'+svgWrap(lightInner,'pp-light')+darkSvg+'<span class="sport-icon__tip">PayPal</span></div>';
-    }
-    var inner = D[icon.key].replace(/\{ID\}/g, uid);
-    return '<div class="sport-icon" title="'+icon.label+'" onclick="copyText(\''+icon.label.toLowerCase()+'\')">'+svgWrap(inner)+'<span class="sport-icon__tip">'+icon.label+'</span></div>';
+    var inner = (icon.key === 'paypal' ? PP_INNER : D[icon.key]).replace(/\{ID\}/g, uid);
+    return '<div class="sport-icon" title="'+icon.label+'" onclick="copyText(\''+icon.label.toLowerCase()+'\')"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">'+inner+'</svg><span class="sport-icon__tip">'+icon.label+'</span></div>';
   }
   ['white','light','dark','purple'].forEach(function(v) {
     var el = document.getElementById(PREFIX+'-grid-'+v);
