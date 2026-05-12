@@ -74,6 +74,7 @@
       <span class="sidebar__section-title">Components</span>
       <ul class="sidebar__list">
         <li><a href="#" class="sidebar__link" data-section="inputs"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="opacity:.7;flex-shrink:0"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>Inputs</a></li>
+        <li><a href="#" class="sidebar__link" data-section="input-label"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="opacity:.7;flex-shrink:0"><path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"/></svg>Input Label</a></li>
         <li><a href="#" class="sidebar__link" data-section="buttons"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="opacity:.7;flex-shrink:0"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm7 13H5v-.23c0-.62.28-1.2.76-1.58C7.47 15.82 9.64 15 12 15s4.53.82 6.24 2.19c.48.38.76.97.76 1.58V19z"/></svg>Buttons</a></li>
       </ul>
     </div>
@@ -1204,6 +1205,393 @@
 
 </section>
 
+<!-- ══════════════════════════════════════════ INPUT LABEL -->
+<section id="section-input-label" class="section">
+  <p class="section__eyebrow">Components</p>
+  <h1 class="section__title">Input Label</h1>
+  <p class="section__subtitle">Six input component variants. All use Montserrat SemiBold — 12px label · 14px value. Barlow Condensed Bold 24px for code fields.</p>
+
+  <!-- ─── 1. Input / Data ─────────────────────── -->
+  <div class="input-card">
+    <div class="input-card__header">
+      <span class="input-card__name">Input / Data</span>
+      <span class="input-card__tag">5 states</span>
+    </div>
+    <div class="input-card__body">
+      <div class="input-card__live">
+        <div class="input-card__live-label">Live demo</div>
+        <div class="wds-input" id="il-data-wrap">
+          <div class="wds-input__box">
+            <span class="wds-input__label">Label</span>
+            <input class="wds-input__field" type="text" placeholder="" onblur="validateLiveInput(this)" oninput="clearLiveErr(this)" data-validate="minlen" data-error="Error message." />
+          </div>
+          <span class="wds-input__error" style="display:none">Error message.</span>
+        </div>
+      </div>
+      <div class="input-card__states">
+        <div class="input-card__states-label">All states</div>
+        <div class="states-grid">
+          <div class="state-item">
+            <span class="state-tag">Default</span>
+            <div class="wds-input"><div class="wds-input__box"><span class="wds-input__label">Label</span><span class="wds-input__field" style="color:transparent">·</span></div></div>
+          </div>
+          <div class="state-item">
+            <span class="state-tag">Focused</span>
+            <div class="wds-input wds-input--filled"><div class="wds-input__box"><span class="wds-input__label">Label</span><span class="wds-input__field">|</span></div></div>
+          </div>
+          <div class="state-item">
+            <span class="state-tag">Filled</span>
+            <div class="wds-input wds-input--filled"><div class="wds-input__box"><span class="wds-input__label">Label</span><span class="wds-input__field">Input</span></div></div>
+          </div>
+          <div class="state-item">
+            <span class="state-tag">Completed</span>
+            <div class="wds-input wds-input--completed"><div class="wds-input__box"><span class="wds-input__label">Label</span><span class="wds-input__field">Input</span></div></div>
+          </div>
+          <div class="state-item">
+            <span class="state-tag">Error</span>
+            <div class="wds-input wds-input--error"><div class="wds-input__box"><span class="wds-input__label">Label</span><span class="wds-input__field">Input</span></div><span class="wds-input__error">Error message</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── 2. Input / Password ──────────────────── -->
+  <div class="input-card">
+    <div class="input-card__header">
+      <span class="input-card__name">Input / Password</span>
+      <span class="input-card__tag">5 states</span>
+    </div>
+    <div class="input-card__body">
+      <div class="input-card__live">
+        <div class="input-card__live-label">Live demo</div>
+        <div class="wds-input" id="il-pwd-wrap">
+          <div class="wds-input__box wds-input__box--row">
+            <div class="wds-input__inner">
+              <span class="wds-input__label">Label</span>
+              <input class="wds-input__field" id="il-pwd" type="password"
+                oninput="checkPwdFor('il-pwd')"
+                onfocus="showPwdListFor('il-pwd-list')"
+                onblur="hidePwdListFor('il-pwd','il-pwd-list')" />
+            </div>
+            <button class="wds-input__eye" onclick="togglePwd('il-pwd',this)"><svg viewBox="0 0 24 24"><path d="M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.83l2.92 2.92c1.51-1.26 2.7-2.89 3.43-4.75-1.73-4.39-6-7.5-11-7.5-1.4 0-2.74.25-3.98.7l2.16 2.16C10.74 7.13 11.35 7 12 7zM2 4.27l2.28 2.28.46.46A11.804 11.804 0 001 12c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l.42.42L19.73 22 21 20.73 3.27 3 2 4.27zM7.53 9.8l1.55 1.55c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3 .22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53-2.76 0-5-2.24-5-5 0-.79.2-1.53.53-2.2zm4.31-.78l3.15 3.15.02-.16c0-1.66-1.34-3-3-3l-.17.01z"/></svg></button>
+          </div>
+          <div class="pwd-list" id="il-pwd-list" style="display:none">
+            <div class="pwd-check" id="il-pwd-lower"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>A lowercase letter</div>
+            <div class="pwd-check" id="il-pwd-upper"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>An uppercase letter</div>
+            <div class="pwd-check" id="il-pwd-num"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>One number</div>
+            <div class="pwd-check" id="il-pwd-len"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>At least 8 characters</div>
+          </div>
+        </div>
+      </div>
+      <div class="input-card__states">
+        <div class="input-card__states-label">Default</div>
+        <div class="wds-input" style="margin-bottom:16px">
+          <div class="wds-input__box wds-input__box--row">
+            <div class="wds-input__inner"><span class="wds-input__label">Label</span><span class="wds-input__field" style="color:transparent">·</span></div>
+            <span class="wds-input__eye" style="pointer-events:none"><svg viewBox="0 0 24 24"><path d="M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.83l2.92 2.92c1.51-1.26 2.7-2.89 3.43-4.75-1.73-4.39-6-7.5-11-7.5-1.4 0-2.74.25-3.98.7l2.16 2.16C10.74 7.13 11.35 7 12 7zM2 4.27l2.28 2.28.46.46A11.804 11.804 0 001 12c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l.42.42L19.73 22 21 20.73 3.27 3 2 4.27zM7.53 9.8l1.55 1.55c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3 .22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53-2.76 0-5-2.24-5-5 0-.79.2-1.53.53-2.2zm4.31-.78l3.15 3.15.02-.16c0-1.66-1.34-3-3-3l-.17.01z"/></svg></span>
+          </div>
+        </div>
+        <div class="input-card__states-label">Focused (checklist visible)</div>
+        <div class="wds-input wds-input--filled" style="margin-bottom:16px">
+          <div class="wds-input__box wds-input__box--row">
+            <div class="wds-input__inner"><span class="wds-input__label">Label</span><span class="wds-input__field">|</span></div>
+            <span class="wds-input__eye" style="pointer-events:none"><svg viewBox="0 0 24 24"><path d="M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.83l2.92 2.92c1.51-1.26 2.7-2.89 3.43-4.75-1.73-4.39-6-7.5-11-7.5-1.4 0-2.74.25-3.98.7l2.16 2.16C10.74 7.13 11.35 7 12 7zM2 4.27l2.28 2.28.46.46A11.804 11.804 0 001 12c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l.42.42L19.73 22 21 20.73 3.27 3 2 4.27zM7.53 9.8l1.55 1.55c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3 .22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53-2.76 0-5-2.24-5-5 0-.79.2-1.53.53-2.2zm4.31-.78l3.15 3.15.02-.16c0-1.66-1.34-3-3-3l-.17.01z"/></svg></span>
+          </div>
+          <div class="pwd-list">
+            <div class="pwd-check"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>A lowercase letter</div>
+            <div class="pwd-check"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>An uppercase letter</div>
+            <div class="pwd-check"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>One number</div>
+            <div class="pwd-check"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>At least 8 characters</div>
+          </div>
+        </div>
+        <div class="input-card__states-label">Filled (all checks passing)</div>
+        <div class="wds-input wds-input--filled" style="margin-bottom:16px">
+          <div class="wds-input__box wds-input__box--row">
+            <div class="wds-input__inner"><span class="wds-input__label">Label</span><span class="wds-input__field">••••••••••••••••</span></div>
+            <span class="wds-input__eye" style="pointer-events:none"><svg viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zm0 12.5c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg></span>
+          </div>
+          <div class="pwd-list">
+            <div class="pwd-check ok"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>A lowercase letter</div>
+            <div class="pwd-check ok"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>An uppercase letter</div>
+            <div class="pwd-check ok"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>One number</div>
+            <div class="pwd-check ok"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>At least 8 characters</div>
+          </div>
+        </div>
+        <div class="input-card__states-label">Completed</div>
+        <div class="wds-input wds-input--completed" style="margin-bottom:16px">
+          <div class="wds-input__box wds-input__box--row">
+            <div class="wds-input__inner"><span class="wds-input__label">Label</span><span class="wds-input__field">••••••••••••••••</span></div>
+            <span class="wds-input__eye" style="pointer-events:none"><svg viewBox="0 0 24 24"><path d="M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.83l2.92 2.92c1.51-1.26 2.7-2.89 3.43-4.75-1.73-4.39-6-7.5-11-7.5-1.4 0-2.74.25-3.98.7l2.16 2.16C10.74 7.13 11.35 7 12 7zM2 4.27l2.28 2.28.46.46A11.804 11.804 0 001 12c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l.42.42L19.73 22 21 20.73 3.27 3 2 4.27zM7.53 9.8l1.55 1.55c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3 .22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53-2.76 0-5-2.24-5-5 0-.79.2-1.53.53-2.2zm4.31-.78l3.15 3.15.02-.16c0-1.66-1.34-3-3-3l-.17.01z"/></svg></span>
+          </div>
+        </div>
+        <div class="input-card__states-label">Error (mixed checks)</div>
+        <div class="wds-input wds-input--filled wds-input--error">
+          <div class="wds-input__box wds-input__box--row">
+            <div class="wds-input__inner"><span class="wds-input__label">Label</span><span class="wds-input__field">rena123</span></div>
+            <span class="wds-input__eye" style="pointer-events:none"><svg viewBox="0 0 24 24"><path d="M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.83l2.92 2.92c1.51-1.26 2.7-2.89 3.43-4.75-1.73-4.39-6-7.5-11-7.5-1.4 0-2.74.25-3.98.7l2.16 2.16C10.74 7.13 11.35 7 12 7zM2 4.27l2.28 2.28.46.46A11.804 11.804 0 001 12c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l.42.42L19.73 22 21 20.73 3.27 3 2 4.27zM7.53 9.8l1.55 1.55c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3 .22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53-2.76 0-5-2.24-5-5 0-.79.2-1.53.53-2.2zm4.31-.78l3.15 3.15.02-.16c0-1.66-1.34-3-3-3l-.17.01z"/></svg></span>
+          </div>
+          <div class="pwd-list">
+            <div class="pwd-check ok"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>A lowercase letter</div>
+            <div class="pwd-check fail"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>An uppercase letter</div>
+            <div class="pwd-check ok"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>One number</div>
+            <div class="pwd-check fail"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>At least 8 characters</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── 3. Input / Date of Birth ─────────────── -->
+  <div class="input-card">
+    <div class="input-card__header">
+      <span class="input-card__name">Input / Date of Birth</span>
+      <span class="input-card__tag">6 states</span>
+    </div>
+    <div class="input-card__body">
+      <div class="input-card__live">
+        <div class="input-card__live-label">Live demo</div>
+        <div class="wds-dob" id="il-dob-live">
+          <div class="wds-dob__seg" id="il-dob-seg-m"><span class="wds-dob__float">Month</span><input class="wds-dob__input" id="il-dob-m" type="text" maxlength="2" placeholder="MM" oninput="checkILDob()" /></div>
+          <div class="wds-dob__seg" id="il-dob-seg-d"><span class="wds-dob__float">Day</span><input class="wds-dob__input" id="il-dob-d" type="text" maxlength="2" placeholder="DD" oninput="checkILDob()" /></div>
+          <div class="wds-dob__seg" id="il-dob-seg-y"><span class="wds-dob__float">Year</span><input class="wds-dob__input" id="il-dob-y" type="text" maxlength="4" placeholder="YYYY" oninput="checkILDob()" /></div>
+        </div>
+        <p class="wds-dob__error" id="il-dob-error" style="display:none">Invalid date of birth.</p>
+      </div>
+      <div class="input-card__states">
+        <div class="input-card__states-label">Default</div>
+        <div class="wds-dob" style="margin-bottom:16px">
+          <div class="wds-dob__seg"><span class="wds-dob__float">Month</span><span class="wds-dob__ph">MM</span></div>
+          <div class="wds-dob__seg"><span class="wds-dob__float">Day</span><span class="wds-dob__ph">DD</span></div>
+          <div class="wds-dob__seg"><span class="wds-dob__float">Year</span><span class="wds-dob__ph">YYYY</span></div>
+        </div>
+        <div class="input-card__states-label">Month focused</div>
+        <div class="wds-dob" style="margin-bottom:16px">
+          <div class="wds-dob__seg is-focused"><span class="wds-dob__float">Month</span><span class="wds-dob__ph">MM |</span></div>
+          <div class="wds-dob__seg"><span class="wds-dob__float">Day</span><span class="wds-dob__ph">DD</span></div>
+          <div class="wds-dob__seg"><span class="wds-dob__float">Year</span><span class="wds-dob__ph">YYYY</span></div>
+        </div>
+        <div class="input-card__states-label">Day focused</div>
+        <div class="wds-dob" style="margin-bottom:16px">
+          <div class="wds-dob__seg is-filled"><span class="wds-dob__float">Month</span><span class="wds-dob__input" style="display:block;color:var(--color-neutral-black,#090127)">12</span></div>
+          <div class="wds-dob__seg is-focused"><span class="wds-dob__float">Day</span><span class="wds-dob__ph">DD |</span></div>
+          <div class="wds-dob__seg"><span class="wds-dob__float">Year</span><span class="wds-dob__ph">YYYY</span></div>
+        </div>
+        <div class="input-card__states-label">Year focused</div>
+        <div class="wds-dob" style="margin-bottom:16px">
+          <div class="wds-dob__seg is-filled"><span class="wds-dob__float">Month</span><span class="wds-dob__input" style="display:block;color:var(--color-neutral-black,#090127)">12</span></div>
+          <div class="wds-dob__seg is-filled"><span class="wds-dob__float">Day</span><span class="wds-dob__input" style="display:block;color:var(--color-neutral-black,#090127)">30</span></div>
+          <div class="wds-dob__seg is-focused"><span class="wds-dob__float">Year</span><span class="wds-dob__ph">YYYY |</span></div>
+        </div>
+        <div class="input-card__states-label">Completed</div>
+        <div class="wds-dob" style="margin-bottom:16px">
+          <div class="wds-dob__seg is-filled"><span class="wds-dob__float">Month</span><span class="wds-dob__input" style="display:block;color:var(--color-neutral-black,#090127)">12</span></div>
+          <div class="wds-dob__seg is-filled"><span class="wds-dob__float">Day</span><span class="wds-dob__input" style="display:block;color:var(--color-neutral-black,#090127)">30</span></div>
+          <div class="wds-dob__seg is-filled"><span class="wds-dob__float">Year</span><span class="wds-dob__input" style="display:block;color:var(--color-neutral-black,#090127)">1999</span></div>
+        </div>
+        <div class="input-card__states-label">Error</div>
+        <div>
+          <div class="wds-dob">
+            <div class="wds-dob__seg is-error"><span class="wds-dob__float">Month</span><span class="wds-dob__input" style="display:block;color:var(--color-semantic-error,#EA3A2E)">12</span></div>
+            <div class="wds-dob__seg is-error"><span class="wds-dob__float">Day</span><span class="wds-dob__input" style="display:block;color:var(--color-semantic-error,#EA3A2E)">30</span></div>
+            <div class="wds-dob__seg is-error"><span class="wds-dob__float">Year</span><span class="wds-dob__input" style="display:block;color:var(--color-semantic-error,#EA3A2E)">2025</span></div>
+          </div>
+          <p class="wds-dob__error">Error message</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── 4. Input / State ─────────────────────── -->
+  <div class="input-card">
+    <div class="input-card__header">
+      <span class="input-card__name">Input / State</span>
+      <span class="input-card__tag">3 states</span>
+    </div>
+    <div class="input-card__body">
+      <div class="input-card__live">
+        <div class="input-card__live-label">Live demo</div>
+        <div class="wds-state" id="il-state-live">
+          <div class="wds-state__box" onclick="toggleILState()">
+            <div class="wds-state__inner">
+              <span class="wds-state__label">Label</span>
+              <span class="wds-state__value" id="il-state-value"></span>
+            </div>
+            <svg class="wds-state__chevron" id="il-state-chevron" viewBox="0 0 24 24"><path d="M17.77 3.77 16 2 6 12l10 10 1.77-1.77L9.54 12z"/></svg>
+          </div>
+          <div class="wds-state__dropdown">
+            <div class="wds-state__option" onclick="pickILState('AL')">AL — Alabama</div>
+            <div class="wds-state__option" onclick="pickILState('FL')">FL — Florida</div>
+            <div class="wds-state__option" onclick="pickILState('NY')">NY — New York</div>
+            <div class="wds-state__option" onclick="pickILState('TX')">TX — Texas</div>
+          </div>
+        </div>
+      </div>
+      <div class="input-card__states">
+        <div class="input-card__states-label">Default</div>
+        <div class="wds-state" style="max-width:343px;margin-bottom:16px">
+          <div class="wds-state__box">
+            <div class="wds-state__inner">
+              <span class="wds-state__label">Label</span>
+              <span class="wds-state__value" style="color:transparent">·</span>
+            </div>
+            <svg class="wds-state__chevron" viewBox="0 0 24 24"><path d="M17.77 3.77 16 2 6 12l10 10 1.77-1.77L9.54 12z"/></svg>
+          </div>
+        </div>
+        <div class="input-card__states-label">Open / Focused</div>
+        <div class="wds-state wds-state--open" style="max-width:343px;margin-bottom:16px">
+          <div class="wds-state__box">
+            <div class="wds-state__inner">
+              <span class="wds-state__label">Label</span>
+              <span class="wds-state__value" style="color:transparent">·</span>
+            </div>
+            <svg class="wds-state__chevron" viewBox="0 0 24 24"><path d="M17.77 3.77 16 2 6 12l10 10 1.77-1.77L9.54 12z"/></svg>
+          </div>
+          <div class="wds-state__dropdown" style="position:static;box-shadow:none;border:1px solid var(--color-neutral-300,#C7C0D4);border-top:none">
+            <div class="wds-state__option">AL — Alabama</div>
+            <div class="wds-state__option">FL — Florida</div>
+            <div class="wds-state__option">NY — New York</div>
+            <div class="wds-state__option">TX — Texas</div>
+          </div>
+        </div>
+        <div class="input-card__states-label">Completed</div>
+        <div class="wds-state wds-state--completed" style="max-width:343px">
+          <div class="wds-state__box">
+            <div class="wds-state__inner">
+              <span class="wds-state__label">Label</span>
+              <span class="wds-state__value">FL</span>
+            </div>
+            <svg class="wds-state__chevron" viewBox="0 0 24 24"><path d="M17.77 3.77 16 2 6 12l10 10 1.77-1.77L9.54 12z"/></svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── 5. Input / Gender ────────────────────── -->
+  <div class="input-card">
+    <div class="input-card__header">
+      <span class="input-card__name">Input / Gender</span>
+      <span class="input-card__tag">4 states</span>
+    </div>
+    <div class="input-card__body">
+      <div class="input-card__live">
+        <div class="input-card__live-label">Live demo</div>
+        <div class="wds-gender-wrap">
+          <span class="wds-il-label">Label</span>
+          <div class="wds-gender" id="il-gender-live">
+            <div class="wds-gender__option" onclick="selectGender(this)"><svg viewBox="0 0 18 18"><path d="M9 1C4.58 1 1 4.58 1 9s3.58 8 8 8 8-3.58 8-8-3.58-8-8-8zm0 14.4c-3.53 0-6.4-2.87-6.4-6.4S5.47 2.6 9 2.6s6.4 2.87 6.4 6.4-2.87 6.4-6.4 6.4z"/></svg>Male</div>
+            <div class="wds-gender__option" onclick="selectGender(this)"><svg viewBox="0 0 18 18"><path d="M9 1C4.58 1 1 4.58 1 9s3.58 8 8 8 8-3.58 8-8-3.58-8-8-8zm0 14.4c-3.53 0-6.4-2.87-6.4-6.4S5.47 2.6 9 2.6s6.4 2.87 6.4 6.4-2.87 6.4-6.4 6.4z"/></svg>Female</div>
+            <div class="wds-gender__option" onclick="selectGender(this)"><svg viewBox="0 0 18 18"><path d="M9 1C4.58 1 1 4.58 1 9s3.58 8 8 8 8-3.58 8-8-3.58-8-8-8zm0 14.4c-3.53 0-6.4-2.87-6.4-6.4S5.47 2.6 9 2.6s6.4 2.87 6.4 6.4-2.87 6.4-6.4 6.4z"/></svg>Other</div>
+          </div>
+        </div>
+      </div>
+      <div class="input-card__states">
+        <div class="input-card__states-label">Default</div>
+        <div class="wds-gender-wrap" style="margin-bottom:16px">
+          <span class="wds-il-label">Label</span>
+          <div class="wds-gender">
+            <div class="wds-gender__option"><svg viewBox="0 0 18 18"><path d="M9 1C4.58 1 1 4.58 1 9s3.58 8 8 8 8-3.58 8-8-3.58-8-8-8zm0 14.4c-3.53 0-6.4-2.87-6.4-6.4S5.47 2.6 9 2.6s6.4 2.87 6.4 6.4-2.87 6.4-6.4 6.4z"/></svg>Male</div>
+            <div class="wds-gender__option"><svg viewBox="0 0 18 18"><path d="M9 1C4.58 1 1 4.58 1 9s3.58 8 8 8 8-3.58 8-8-3.58-8-8-8zm0 14.4c-3.53 0-6.4-2.87-6.4-6.4S5.47 2.6 9 2.6s6.4 2.87 6.4 6.4-2.87 6.4-6.4 6.4z"/></svg>Female</div>
+            <div class="wds-gender__option"><svg viewBox="0 0 18 18"><path d="M9 1C4.58 1 1 4.58 1 9s3.58 8 8 8 8-3.58 8-8-3.58-8-8-8zm0 14.4c-3.53 0-6.4-2.87-6.4-6.4S5.47 2.6 9 2.6s6.4 2.87 6.4 6.4-2.87 6.4-6.4 6.4z"/></svg>Other</div>
+          </div>
+        </div>
+        <div class="input-card__states-label">Male selected</div>
+        <div class="wds-gender-wrap" style="margin-bottom:16px">
+          <span class="wds-il-label">Label</span>
+          <div class="wds-gender">
+            <div class="wds-gender__option sel"><svg viewBox="0 0 18 18"><path d="M9 1C4.58 1 1 4.58 1 9s3.58 8 8 8 8-3.58 8-8-3.58-8-8-8zm0 14.4c-3.53 0-6.4-2.87-6.4-6.4S5.47 2.6 9 2.6s6.4 2.87 6.4 6.4-2.87 6.4-6.4 6.4zm0-10.4c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4z"/></svg>Male</div>
+            <div class="wds-gender__option"><svg viewBox="0 0 18 18"><path d="M9 1C4.58 1 1 4.58 1 9s3.58 8 8 8 8-3.58 8-8-3.58-8-8-8zm0 14.4c-3.53 0-6.4-2.87-6.4-6.4S5.47 2.6 9 2.6s6.4 2.87 6.4 6.4-2.87 6.4-6.4 6.4z"/></svg>Female</div>
+            <div class="wds-gender__option"><svg viewBox="0 0 18 18"><path d="M9 1C4.58 1 1 4.58 1 9s3.58 8 8 8 8-3.58 8-8-3.58-8-8-8zm0 14.4c-3.53 0-6.4-2.87-6.4-6.4S5.47 2.6 9 2.6s6.4 2.87 6.4 6.4-2.87 6.4-6.4 6.4z"/></svg>Other</div>
+          </div>
+        </div>
+        <div class="input-card__states-label">Female selected</div>
+        <div class="wds-gender-wrap" style="margin-bottom:16px">
+          <span class="wds-il-label">Label</span>
+          <div class="wds-gender">
+            <div class="wds-gender__option"><svg viewBox="0 0 18 18"><path d="M9 1C4.58 1 1 4.58 1 9s3.58 8 8 8 8-3.58 8-8-3.58-8-8-8zm0 14.4c-3.53 0-6.4-2.87-6.4-6.4S5.47 2.6 9 2.6s6.4 2.87 6.4 6.4-2.87 6.4-6.4 6.4z"/></svg>Male</div>
+            <div class="wds-gender__option sel"><svg viewBox="0 0 18 18"><path d="M9 1C4.58 1 1 4.58 1 9s3.58 8 8 8 8-3.58 8-8-3.58-8-8-8zm0 14.4c-3.53 0-6.4-2.87-6.4-6.4S5.47 2.6 9 2.6s6.4 2.87 6.4 6.4-2.87 6.4-6.4 6.4zm0-10.4c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4z"/></svg>Female</div>
+            <div class="wds-gender__option"><svg viewBox="0 0 18 18"><path d="M9 1C4.58 1 1 4.58 1 9s3.58 8 8 8 8-3.58 8-8-3.58-8-8-8zm0 14.4c-3.53 0-6.4-2.87-6.4-6.4S5.47 2.6 9 2.6s6.4 2.87 6.4 6.4-2.87 6.4-6.4 6.4z"/></svg>Other</div>
+          </div>
+        </div>
+        <div class="input-card__states-label">Other selected</div>
+        <div class="wds-gender-wrap">
+          <span class="wds-il-label">Label</span>
+          <div class="wds-gender">
+            <div class="wds-gender__option"><svg viewBox="0 0 18 18"><path d="M9 1C4.58 1 1 4.58 1 9s3.58 8 8 8 8-3.58 8-8-3.58-8-8-8zm0 14.4c-3.53 0-6.4-2.87-6.4-6.4S5.47 2.6 9 2.6s6.4 2.87 6.4 6.4-2.87 6.4-6.4 6.4z"/></svg>Male</div>
+            <div class="wds-gender__option"><svg viewBox="0 0 18 18"><path d="M9 1C4.58 1 1 4.58 1 9s3.58 8 8 8 8-3.58 8-8-3.58-8-8-8zm0 14.4c-3.53 0-6.4-2.87-6.4-6.4S5.47 2.6 9 2.6s6.4 2.87 6.4 6.4-2.87 6.4-6.4 6.4z"/></svg>Female</div>
+            <div class="wds-gender__option sel"><svg viewBox="0 0 18 18"><path d="M9 1C4.58 1 1 4.58 1 9s3.58 8 8 8 8-3.58 8-8-3.58-8-8-8zm0 14.4c-3.53 0-6.4-2.87-6.4-6.4S5.47 2.6 9 2.6s6.4 2.87 6.4 6.4-2.87 6.4-6.4 6.4zm0-10.4c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4z"/></svg>Other</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── 6. Input / Code ──────────────────────── -->
+  <div class="input-card">
+    <div class="input-card__header">
+      <span class="input-card__name">Input / Code</span>
+      <span class="input-card__tag">6 states</span>
+    </div>
+    <div class="input-card__body">
+      <div class="input-card__live">
+        <div class="input-card__live-label">Live demo — type WANNA25 for success</div>
+        <div class="wds-input" id="il-code-wrap">
+          <div class="wds-input__box wds-input__box--promo">
+            <div class="wds-input__inner">
+              <span class="wds-input__label">Label</span>
+              <input class="wds-input__field" type="text" id="il-code-input" oninput="updateILCode(this)" />
+            </div>
+          </div>
+          <span class="wds-input__error"  id="il-code-err"     style="display:none">Error message.</span>
+          <span class="wds-input__success" id="il-code-success" style="display:none">Sucess message</span>
+        </div>
+      </div>
+      <div class="input-card__states">
+        <div class="input-card__states-label">Default</div>
+        <div class="wds-input" style="margin-bottom:16px">
+          <div class="wds-input__box wds-input__box--promo">
+            <div class="wds-input__inner"><span class="wds-input__label">Label</span><span class="wds-input__field" style="color:transparent">·</span></div>
+          </div>
+        </div>
+        <div class="input-card__states-label">Focused</div>
+        <div class="wds-input wds-input--filled" style="margin-bottom:16px">
+          <div class="wds-input__box wds-input__box--promo">
+            <div class="wds-input__inner"><span class="wds-input__label">Label</span><span class="wds-input__field" style="font-family:'Barlow Condensed',sans-serif;font-size:24px;font-weight:700;letter-spacing:.03em">|</span></div>
+          </div>
+        </div>
+        <div class="input-card__states-label">Filled</div>
+        <div class="wds-input wds-input--filled" style="margin-bottom:16px">
+          <div class="wds-input__box wds-input__box--promo">
+            <div class="wds-input__inner"><span class="wds-input__label">Label</span><span class="wds-input__field">WANNA25</span></div>
+          </div>
+        </div>
+        <div class="input-card__states-label">Completed</div>
+        <div class="wds-input wds-input--completed" style="margin-bottom:16px">
+          <div class="wds-input__box wds-input__box--promo">
+            <div class="wds-input__inner"><span class="wds-input__label">Label</span><span class="wds-input__field">WANNA25</span></div>
+          </div>
+        </div>
+        <div class="input-card__states-label">Success</div>
+        <div class="wds-input wds-input--completed" style="margin-bottom:16px">
+          <div class="wds-input__box wds-input__box--promo">
+            <div class="wds-input__inner"><span class="wds-input__label">Label</span><span class="wds-input__field">WANNA25</span></div>
+          </div>
+          <span class="wds-input__success">Sucess message</span>
+        </div>
+        <div class="input-card__states-label">Error</div>
+        <div class="wds-input wds-input--error">
+          <div class="wds-input__box wds-input__box--promo">
+            <div class="wds-input__inner"><span class="wds-input__label">Label</span><span class="wds-input__field">WANNA25</span></div>
+          </div>
+          <span class="wds-input__error">Error message</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
 <!-- ══════════════════════════════════════════ BUTTONS -->
 <section id="section-buttons" class="section">
   <p class="section__eyebrow">Components</p>
@@ -1995,6 +2383,66 @@ function updatePromo(input) {
   wrap.classList.remove('wds-input--filled','wds-input--error');
   if (!input.value) return;
   wrap.classList.add('wds-input--filled');
+}
+
+/* ── Input Label section — State dropdown ── */
+function toggleILState() {
+  document.getElementById('il-state-live').classList.toggle('wds-state--open');
+}
+function pickILState(val) {
+  const el   = document.getElementById('il-state-live');
+  const valEl= document.getElementById('il-state-value');
+  el.classList.remove('wds-state--open');
+  if (val) { valEl.textContent = val; el.classList.add('wds-state--completed'); }
+  else     { valEl.textContent = '';  el.classList.remove('wds-state--completed'); }
+}
+document.addEventListener('click', function(e) {
+  const dd = document.getElementById('il-state-live');
+  if (dd && !dd.contains(e.target)) dd.classList.remove('wds-state--open');
+});
+
+/* ── Input Label section — Date of Birth ── */
+function checkILDob() {
+  ['m','d','y'].forEach(function(seg) {
+    const inp = document.getElementById('il-dob-' + seg);
+    const box = document.getElementById('il-dob-seg-' + seg);
+    if (!inp || !box) return;
+    box.classList.toggle('is-filled', inp.value.length > 0);
+  });
+  var m = parseInt(document.getElementById('il-dob-m').value,10);
+  var d = parseInt(document.getElementById('il-dob-d').value,10);
+  var y = parseInt(document.getElementById('il-dob-y').value,10);
+  var errEl = document.getElementById('il-dob-error');
+  var allFilled = document.getElementById('il-dob-m').value && document.getElementById('il-dob-d').value && document.getElementById('il-dob-y').value;
+  if (allFilled) {
+    var now = new Date(); var age = now.getFullYear()-y - (now < new Date(y,m-1,d) ? 1 : 0);
+    var invalid = m<1||m>12||d<1||d>31||y<1900||y>now.getFullYear()||age<18;
+    errEl.style.display = invalid ? '' : 'none';
+    ['m','d','y'].forEach(function(s){
+      var b = document.getElementById('il-dob-seg-'+s);
+      b.classList.toggle('is-error', invalid); b.classList.toggle('is-filled', !invalid);
+    });
+  } else { errEl.style.display = 'none'; }
+}
+
+/* ── Input Label section — Code input ── */
+function updateILCode(input) {
+  var wrap    = document.getElementById('il-code-wrap');
+  var errEl   = document.getElementById('il-code-err');
+  var sucEl   = document.getElementById('il-code-success');
+  var v = input.value.trim().toUpperCase();
+  wrap.classList.remove('wds-input--filled','wds-input--completed','wds-input--error');
+  errEl.style.display = 'none'; sucEl.style.display = 'none';
+  if (!v) return;
+  if (v === 'WANNA25') {
+    wrap.classList.add('wds-input--completed');
+    sucEl.style.display = '';
+  } else if (v.length >= 4) {
+    wrap.classList.add('wds-input--error');
+    errEl.style.display = '';
+  } else {
+    wrap.classList.add('wds-input--filled');
+  }
 }
 </script>
 

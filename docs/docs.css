@@ -957,6 +957,9 @@ body {
 /* Filled (has value, not focused) */
 .wds-dob__seg.is-filled { border-color: var(--color-neutral-300, #C7C0D4); }
 .wds-dob__seg.is-filled .wds-dob__float { color: var(--color-accent-light, #5723B0); }
+/* Focused (static — no actual :focus-within) */
+.wds-dob__seg.is-focused { border-color: var(--color-accent-light, #5723B0); }
+.wds-dob__seg.is-focused .wds-dob__float { color: var(--color-accent-light, #5723B0); }
 /* Error */
 .wds-dob__seg.is-error { border-color: var(--color-semantic-error, #EA3A2E); }
 .wds-dob__seg.is-error .wds-dob__float { color: var(--color-semantic-error, #EA3A2E); }
@@ -964,6 +967,20 @@ body {
 .wds-dob__error {
   font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 600;
   color: var(--color-semantic-error, #EA3A2E); margin-top: 4px;
+}
+/* Input / Code success message */
+.wds-input__success {
+  font-family: 'Montserrat', sans-serif; font-size: 10px; font-weight: 600;
+  color: var(--color-accent-light, #5723B0); margin-top: 2px;
+}
+/* Gender label wrapper */
+.wds-gender-wrap { display: flex; flex-direction: column; gap: 4px; width: 343px; max-width: 100%; }
+.wds-gender-wrap .wds-gender { width: 100%; }
+.states-grid .wds-gender-wrap,
+.input-card__live .wds-gender-wrap { width: 100%; }
+.wds-il-label {
+  font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 600;
+  color: var(--color-neutral-400, #988DAC);
 }
 
 /* Gender — radio button design (Figma node 57-11586) */
