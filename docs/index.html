@@ -1643,6 +1643,94 @@ function makeStandardCard(name, label, errorMsg, container) {
   </div>`;
 }
 
+/* ── Password input card builder (eye button + pwd checklist) ── */
+function makePasswordCard(name, label, isConfirm, container) {
+  var safeId   = 'live-' + name.toLowerCase().replace(/[^a-z0-9]/g, '-');
+  var listId   = safeId + '-list';
+  var CHECK_D  = 'M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z';
+  var EYE_HIDE = 'M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.83l2.92 2.92c1.51-1.26 2.7-2.89 3.43-4.75-1.73-4.39-6-7.5-11-7.5-1.4 0-2.74.25-3.98.7l2.16 2.16C10.74 7.13 11.35 7 12 7zM2 4.27l2.28 2.28.46.46A11.804 11.804 0 001 12c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l.42.42L19.73 22 21 20.73 3.27 3 2 4.27zM7.53 9.8l1.55 1.55c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3 .22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53-2.76 0-5-2.24-5-5 0-.79.2-1.53.53-2.2zm4.31-.78l3.15 3.15.02-.16c0-1.66-1.34-3-3-3l-.17.01z';
+  var EYE_SHOW = 'M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zm0 12.5c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z';
+
+  function eyeSvg(d) { return '<svg viewBox="0 0 24 24"><path d="' + d + '"/></svg>'; }
+  function chkSvg()  { return '<svg viewBox="0 0 24 24"><path d="' + CHECK_D + '"/></svg>'; }
+  function pwdList(lo, up, nu, ln) {
+    function cls(v) { return 'pwd-check' + (v === true ? ' ok' : v === false ? ' fail' : ''); }
+    return '<div class="pwd-list">' +
+      '<div class="' + cls(lo) + '">' + chkSvg() + 'A lowercase letter</div>' +
+      '<div class="' + cls(up) + '">' + chkSvg() + 'An uppercase letter</div>' +
+      '<div class="' + cls(nu) + '">' + chkSvg() + 'One number</div>' +
+      '<div class="' + cls(ln) + '">' + chkSvg() + 'At least 8 characters</div>' +
+      '</div>';
+  }
+
+  var inputCb = isConfirm
+    ? 'oninput="checkConfirmPwd(\'' + safeId + '\',\'live-new-password\')" onfocus="showPwdListFor(\'' + listId + '\')" onblur="hidePwdListFor(\'' + safeId + '\',\'' + listId + '\')"'
+    : 'oninput="checkPwdFor(\'' + safeId + '\')" onfocus="showPwdListFor(\'' + listId + '\')" onblur="hidePwdListFor(\'' + safeId + '\',\'' + listId + '\')"';
+
+  var liveMatchErr = isConfirm
+    ? '<span class="wds-input__error" id="' + safeId + '-match-err" style="display:none">Passwords do not match.</span>'
+    : '';
+  var staticMatchErr = isConfirm
+    ? '<span class="wds-input__error">Passwords do not match.</span>'
+    : '';
+
+  container.innerHTML += `
+  <div class="input-card">
+    <div class="input-card__header">
+      <span class="input-card__name">Input / ${name}</span>
+      <span class="input-card__tag">3 states</span>
+    </div>
+    <div class="input-card__body">
+      <div class="input-card__live">
+        <div class="input-card__live-label">Live demo</div>
+        <div class="wds-input" id="${safeId}-wrap">
+          <div class="wds-input__box wds-input__box--row">
+            <div class="wds-input__inner">
+              <span class="wds-input__label">${label}</span>
+              <input class="wds-input__field" id="${safeId}" type="password" ${inputCb} />
+            </div>
+            <button class="wds-input__eye" onclick="togglePwd('${safeId}',this)">${eyeSvg(EYE_HIDE)}</button>
+          </div>
+          <div class="pwd-list" id="${listId}" style="display:none">
+            <div class="pwd-check" id="${safeId}-lower">${chkSvg()}A lowercase letter</div>
+            <div class="pwd-check" id="${safeId}-upper">${chkSvg()}An uppercase letter</div>
+            <div class="pwd-check" id="${safeId}-num">${chkSvg()}One number</div>
+            <div class="pwd-check" id="${safeId}-len">${chkSvg()}At least 8 characters</div>
+          </div>
+          ${liveMatchErr}
+        </div>
+      </div>
+      <div class="input-card__states">
+        <div class="input-card__states-label">Focused (checklist visible)</div>
+        <div class="wds-input wds-input--filled" style="margin-bottom:16px">
+          <div class="wds-input__box wds-input__box--row">
+            <div class="wds-input__inner"><span class="wds-input__label">${label}</span><span class="wds-input__field">|</span></div>
+            <span class="wds-input__eye" style="pointer-events:none">${eyeSvg(EYE_HIDE)}</span>
+          </div>
+          ${pwdList(null, null, null, null)}
+        </div>
+        <div class="input-card__states-label">Filled (checks passing)</div>
+        <div class="wds-input wds-input--filled" style="margin-bottom:16px">
+          <div class="wds-input__box wds-input__box--row">
+            <div class="wds-input__inner"><span class="wds-input__label">${label}</span><span class="wds-input__field">••••••••••••••••</span></div>
+            <span class="wds-input__eye" style="pointer-events:none">${eyeSvg(EYE_SHOW)}</span>
+          </div>
+          ${pwdList(true, true, true, true)}
+        </div>
+        <div class="input-card__states-label">Error (mixed checks)</div>
+        <div class="wds-input wds-input--filled wds-input--error">
+          <div class="wds-input__box wds-input__box--row">
+            <div class="wds-input__inner"><span class="wds-input__label">${label}</span><span class="wds-input__field">rena123</span></div>
+            <span class="wds-input__eye" style="pointer-events:none">${eyeSvg(EYE_HIDE)}</span>
+          </div>
+          ${pwdList(true, false, true, false)}
+          ${staticMatchErr}
+        </div>
+      </div>
+    </div>
+  </div>`;
+}
+
 /* ── Spec panel HTML (shared across all input cards) ── */
 function makeSpecPanel() {
   const dot  = (color, style) => `<span class="spec-token-dot" style="background:${color}"></span>`;
@@ -1715,8 +1803,8 @@ makeStandardCard('Username','Username','Username already taken.',g2);
 const g3 = document.getElementById('standard-inputs-3');
 makeStandardCard('Email (Forgot Password)','Email','No account associated with this email.',g3);
 makeStandardCard('Temporary Password','Temporary Password','Incorrect temporary password.',g3);
-makeStandardCard('New Password','New Password','Password does not meet requirements.',g3);
-makeStandardCard('Confirm Password','Confirm Password','Passwords do not match.',g3);
+makePasswordCard('New Password','New Password',false,g3);
+makePasswordCard('Confirm Password','Confirm Password',true,g3);
 
 /* ── DOB segment state management ── */
 document.querySelectorAll('.input-card__live .wds-dob__input').forEach(function(input) {
@@ -1823,6 +1911,48 @@ function checkPwd(input) {
     /* neutral while typing unless the rule is already met */
     document.getElementById(id).className = 'pwd-check' + (ok ? ' ok' : '');
   }
+}
+
+/* ── Generic pwd checklist helpers (New Password / Confirm Password cards) ── */
+function showPwdListFor(listId) {
+  var el = document.getElementById(listId);
+  if (el) el.style.display = 'flex';
+}
+function hidePwdListFor(inputId, listId) {
+  var inp = document.getElementById(inputId);
+  var el  = document.getElementById(listId);
+  if (inp && el && !inp.value.length) el.style.display = 'none';
+}
+function checkPwdFor(inputId) {
+  var inp = document.getElementById(inputId);
+  if (!inp) return;
+  var v = inp.value;
+  function set(sfx, ok) {
+    var el = document.getElementById(inputId + sfx);
+    if (el) el.className = 'pwd-check' + (ok ? ' ok' : '');
+  }
+  set('-lower', /[a-z]/.test(v));
+  set('-upper', /[A-Z]/.test(v));
+  set('-num',   /[0-9]/.test(v));
+  set('-len',   v.length >= 8);
+  /* mirror wrap state */
+  var wrap = inp.closest('.wds-input');
+  if (wrap) {
+    var allOk = /[a-z]/.test(v) && /[A-Z]/.test(v) && /[0-9]/.test(v) && v.length >= 8;
+    wrap.classList.toggle('wds-input--completed', allOk && v.length > 0);
+  }
+}
+function checkConfirmPwd(confirmId, sourceId) {
+  checkPwdFor(confirmId);
+  var src = document.getElementById(sourceId);
+  var cnf = document.getElementById(confirmId);
+  if (!cnf) return;
+  var v = cnf.value;
+  var noMatch = v.length > 0 && src && v !== src.value;
+  var matchErr = document.getElementById(confirmId + '-match-err');
+  if (matchErr) matchErr.style.display = noMatch ? '' : 'none';
+  var wrap = cnf.closest('.wds-input');
+  if (wrap) wrap.classList.toggle('wds-input--error', !!noMatch);
 }
 
 /* ── Gender selection ── */
