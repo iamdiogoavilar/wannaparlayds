@@ -287,8 +287,8 @@
 
   <!-- Barlow Condensed scale -->
   <div class="token-group">
-    <div class="token-group__header"><h2 class="token-group__title">Barlow Condensed Scale</h2><span class="token-group__count">12 styles</span></div>
-    <p class="token-group__desc">2 weights × 6 sizes — SemiBold, Bold. 16px to 40px. Used for compact high-impact display text (promo codes, banners, scores).</p>
+    <div class="token-group__header"><h2 class="token-group__title">Barlow Condensed Scale</h2><span class="token-group__count">20 styles</span></div>
+    <p class="token-group__desc">2 weights × 10 sizes — SemiBold, Bold. 16px to 40px. Bold heading styles (30–40px) use uppercase · line-height 30px · letter-spacing 3%.</p>
     <div id="barlow-scale"></div>
   </div>
 
@@ -2145,17 +2145,25 @@ const bWeights = [
   {name:'SemiBold', w:600},
   {name:'Bold',     w:700},
 ];
-const bSizes = [16,20,24,28,32,40];
+const bSizes = [16,20,24,28,30,32,34,36,38,40];
 const bContainer = document.getElementById('barlow-scale');
 bWeights.forEach(({name, w}) => {
-  const rows = bSizes.map(s => `
+  const isBold = w === 700;
+  const rows = bSizes.map(s => {
+    const isHeading = isBold && s >= 30;
+    const spec = isHeading
+      ? `${s}px · ${name} · lh 30px · tracking 3% · uppercase`
+      : `${s}px · ${name} · Auto`;
+    const previewStyle = `font-size:${s}px;font-weight:${w};font-family:'Barlow Condensed',sans-serif;letter-spacing:.03em${isHeading ? ';text-transform:uppercase;line-height:30px' : ''}`;
+    return `
     <div class="type-size-row">
       <div>
-        <div class="type-size-name">Barlow Condensed/${name}/${s}</div>
-        <div class="type-size-spec">${s}px · ${name} · Auto</div>
+        <div class="type-size-name">Barlow/${name}/${s}</div>
+        <div class="type-size-spec">${spec}</div>
       </div>
-      <span class="type-size-preview" style="font-size:${s}px;font-weight:${w};font-family:'Barlow Condensed',sans-serif;letter-spacing:.03em">THE QUICK BROWN FOX</span>
-    </div>`).join('');
+      <span class="type-size-preview" style="${previewStyle}">The Quick Brown Fox</span>
+    </div>`;
+  }).join('');
   bContainer.innerHTML += `
     <div class="type-weight-group">
       <div class="type-weight-header">
