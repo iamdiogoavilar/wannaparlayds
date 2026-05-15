@@ -1118,6 +1118,45 @@ body {
 }
 
 /* ═══════════════════════════════════════════════════════════════
+   WDS HEADER — Exact Figma specs
+═══════════════════════════════════════════════════════════════ */
+.wds-header-title {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 8px 16px;
+  width: 343px; max-width: 100%;
+  box-sizing: border-box;
+}
+.wds-header-title__back {
+  display: flex; align-items: center;
+  background: none; border: none; cursor: pointer; padding: 0;
+  color: var(--color-neutral-black, #090127);
+}
+.wds-header-title__back svg { fill: currentColor; display: block; }
+.wds-header-title__logo { width: 36px; height: 36px; object-fit: contain; display: block; }
+.wds-header-title__spacer { width: 24px; height: 24px; visibility: hidden; }
+
+.wds-header-description {
+  display: flex; flex-direction: column;
+  gap: 16px; padding: 16px;
+  width: 343px; max-width: 100%;
+  box-sizing: border-box;
+}
+.wds-header-description__title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700; font-size: 36px;
+  line-height: 30px; letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--color-neutral-black, #090127);
+  margin: 0; white-space: nowrap;
+}
+.wds-header-description__desc {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600; font-size: 14px; line-height: 1.4;
+  color: var(--color-neutral-400, #988dac);
+  margin: 0;
+}
+
+/* ═══════════════════════════════════════════════════════════════
    WDS BUTTON — Exact Figma specs
 ═══════════════════════════════════════════════════════════════ */
 .wds-btn {
