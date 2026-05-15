@@ -1204,6 +1204,182 @@
     <div id="standard-inputs-3"></div>
   </div>
 
+  <!-- ─── INPUT TOKEN REFERENCE ─────────────────────── -->
+  <div class="input-token-ref">
+    <div class="input-token-ref__header">
+      <h2 class="input-token-ref__title">Token Reference</h2>
+      <span class="input-token-ref__count">16 tokens</span>
+    </div>
+    <p class="input-token-ref__desc">Semantic color tokens used across all Input states. Each semantic token aliases a primitive token, which resolves to different HEX values in Light and Dark mode.</p>
+
+    <div class="input-token-table-wrap">
+      <table class="input-token-table">
+        <thead>
+          <tr>
+            <th>Element · State</th>
+            <th>Semantic Token</th>
+            <th>Primitive Token</th>
+            <th>HEX · Light / Dark</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Label -->
+          <tr class="itr-group"><td colspan="4">Label</td></tr>
+          <tr>
+            <td>Label · Default</td>
+            <td><span class="itr-semantic">semantic/input/label/default</span></td>
+            <td><span class="itr-primitive">neutral/400</span></td>
+            <td><div class="itr-hex-pair">
+              <div class="itr-hex-item"><span class="itr-mode-label">L</span><span class="itr-swatch" style="background:#988DAC"></span><span class="itr-hex-val">#988DAC</span></div>
+              <div class="itr-hex-item"><span class="itr-mode-label">D</span><span class="itr-swatch" style="background:#706784"></span><span class="itr-hex-val">#706784</span></div>
+            </div></td>
+          </tr>
+          <tr>
+            <td>Label · Active</td>
+            <td><span class="itr-semantic">semantic/input/label/active</span></td>
+            <td><span class="itr-primitive">accent/light · accent/dark</span></td>
+            <td><div class="itr-hex-pair">
+              <div class="itr-hex-item"><span class="itr-mode-label">L</span><span class="itr-swatch" style="background:#5723B0"></span><span class="itr-hex-val">#5723B0</span></div>
+              <div class="itr-hex-item"><span class="itr-mode-label">D</span><span class="itr-swatch" style="background:#A874FF"></span><span class="itr-hex-val">#A874FF</span></div>
+            </div></td>
+          </tr>
+          <tr>
+            <td>Label · Error</td>
+            <td><span class="itr-semantic">semantic/input/label/error</span></td>
+            <td><span class="itr-primitive">semantic/error · error-dark</span></td>
+            <td><div class="itr-hex-pair">
+              <div class="itr-hex-item"><span class="itr-mode-label">L</span><span class="itr-swatch" style="background:#EA3A2E"></span><span class="itr-hex-val">#EA3A2E</span></div>
+              <div class="itr-hex-item"><span class="itr-mode-label">D</span><span class="itr-swatch" style="background:#FF584D"></span><span class="itr-hex-val">#FF584D</span></div>
+            </div></td>
+          </tr>
+
+          <!-- Border -->
+          <tr class="itr-group"><td colspan="4">Border</td></tr>
+          <tr>
+            <td>Border · Default</td>
+            <td><span class="itr-semantic">semantic/input/border/default</span></td>
+            <td><span class="itr-primitive">neutral/400 · neutral/600</span></td>
+            <td><div class="itr-hex-pair">
+              <div class="itr-hex-item"><span class="itr-mode-label">L</span><span class="itr-swatch" style="background:#988DAC"></span><span class="itr-hex-val">#988DAC</span></div>
+              <div class="itr-hex-item"><span class="itr-mode-label">D</span><span class="itr-swatch" style="background:#3F3855"></span><span class="itr-hex-val">#3F3855</span></div>
+            </div></td>
+          </tr>
+          <tr>
+            <td>Border · Focused</td>
+            <td><span class="itr-semantic">semantic/input/border/focused</span></td>
+            <td><span class="itr-primitive">accent/light · accent/dark</span></td>
+            <td><div class="itr-hex-pair">
+              <div class="itr-hex-item"><span class="itr-mode-label">L</span><span class="itr-swatch" style="background:#5723B0"></span><span class="itr-hex-val">#5723B0</span></div>
+              <div class="itr-hex-item"><span class="itr-mode-label">D</span><span class="itr-swatch" style="background:#A874FF"></span><span class="itr-hex-val">#A874FF</span></div>
+            </div></td>
+          </tr>
+          <tr>
+            <td>Border · Error</td>
+            <td><span class="itr-semantic">semantic/input/border/error</span></td>
+            <td><span class="itr-primitive">semantic/error · error-dark</span></td>
+            <td><div class="itr-hex-pair">
+              <div class="itr-hex-item"><span class="itr-mode-label">L</span><span class="itr-swatch" style="background:#EA3A2E"></span><span class="itr-hex-val">#EA3A2E</span></div>
+              <div class="itr-hex-item"><span class="itr-mode-label">D</span><span class="itr-swatch" style="background:#FF584D"></span><span class="itr-hex-val">#FF584D</span></div>
+            </div></td>
+          </tr>
+
+          <!-- Placeholder -->
+          <tr class="itr-group"><td colspan="4">Placeholder</td></tr>
+          <tr>
+            <td>Placeholder · Filled</td>
+            <td><span class="itr-semantic">semantic/input/placeholder/filled</span></td>
+            <td><span class="itr-primitive">neutral/black · neutral/white</span></td>
+            <td><div class="itr-hex-pair">
+              <div class="itr-hex-item"><span class="itr-mode-label">L</span><span class="itr-swatch" style="background:#090127"></span><span class="itr-hex-val">#090127</span></div>
+              <div class="itr-hex-item"><span class="itr-mode-label">D</span><span class="itr-swatch" style="background:#FFFFFF;border-color:#555"></span><span class="itr-hex-val">#FFFFFF</span></div>
+            </div></td>
+          </tr>
+          <tr>
+            <td>Placeholder · Error</td>
+            <td><span class="itr-semantic">semantic/input/placeholder/error</span></td>
+            <td><span class="itr-primitive">semantic/error · error-dark</span></td>
+            <td><div class="itr-hex-pair">
+              <div class="itr-hex-item"><span class="itr-mode-label">L</span><span class="itr-swatch" style="background:#EA3A2E"></span><span class="itr-hex-val">#EA3A2E</span></div>
+              <div class="itr-hex-item"><span class="itr-mode-label">D</span><span class="itr-swatch" style="background:#FF584D"></span><span class="itr-hex-val">#FF584D</span></div>
+            </div></td>
+          </tr>
+
+          <!-- Messages -->
+          <tr class="itr-group"><td colspan="4">Messages</td></tr>
+          <tr>
+            <td>Message · Error</td>
+            <td><span class="itr-semantic">semantic/input/message/error</span></td>
+            <td><span class="itr-primitive">semantic/error · error-dark</span></td>
+            <td><div class="itr-hex-pair">
+              <div class="itr-hex-item"><span class="itr-mode-label">L</span><span class="itr-swatch" style="background:#EA3A2E"></span><span class="itr-hex-val">#EA3A2E</span></div>
+              <div class="itr-hex-item"><span class="itr-mode-label">D</span><span class="itr-swatch" style="background:#FF584D"></span><span class="itr-hex-val">#FF584D</span></div>
+            </div></td>
+          </tr>
+          <tr>
+            <td>Message · Success</td>
+            <td><span class="itr-semantic">semantic/input/message/success</span></td>
+            <td><span class="itr-primitive">semantic/success · success-dark</span></td>
+            <td><div class="itr-hex-pair">
+              <div class="itr-hex-item"><span class="itr-mode-label">L</span><span class="itr-swatch" style="background:#198F51"></span><span class="itr-hex-val">#198F51</span></div>
+              <div class="itr-hex-item"><span class="itr-mode-label">D</span><span class="itr-swatch" style="background:#55BC5B"></span><span class="itr-hex-val">#55BC5B</span></div>
+            </div></td>
+          </tr>
+
+          <!-- Password Check -->
+          <tr class="itr-group"><td colspan="4">Password Check</td></tr>
+          <tr>
+            <td>Check · Empty</td>
+            <td><span class="itr-semantic">semantic/input/check/empty</span></td>
+            <td><span class="itr-primitive">neutral/300 · neutral/600</span></td>
+            <td><div class="itr-hex-pair">
+              <div class="itr-hex-item"><span class="itr-mode-label">L</span><span class="itr-swatch" style="background:#C7C0D4"></span><span class="itr-hex-val">#C7C0D4</span></div>
+              <div class="itr-hex-item"><span class="itr-mode-label">D</span><span class="itr-swatch" style="background:#3F3855"></span><span class="itr-hex-val">#3F3855</span></div>
+            </div></td>
+          </tr>
+          <tr>
+            <td>Check · Success</td>
+            <td><span class="itr-semantic">semantic/input/check/success</span></td>
+            <td><span class="itr-primitive">semantic/success · success-dark</span></td>
+            <td><div class="itr-hex-pair">
+              <div class="itr-hex-item"><span class="itr-mode-label">L</span><span class="itr-swatch" style="background:#198F51"></span><span class="itr-hex-val">#198F51</span></div>
+              <div class="itr-hex-item"><span class="itr-mode-label">D</span><span class="itr-swatch" style="background:#55BC5B"></span><span class="itr-hex-val">#55BC5B</span></div>
+            </div></td>
+          </tr>
+          <tr>
+            <td>Check · Error</td>
+            <td><span class="itr-semantic">semantic/input/check/error</span></td>
+            <td><span class="itr-primitive">semantic/error · error-dark</span></td>
+            <td><div class="itr-hex-pair">
+              <div class="itr-hex-item"><span class="itr-mode-label">L</span><span class="itr-swatch" style="background:#EA3A2E"></span><span class="itr-hex-val">#EA3A2E</span></div>
+              <div class="itr-hex-item"><span class="itr-mode-label">D</span><span class="itr-swatch" style="background:#FF584D"></span><span class="itr-hex-val">#FF584D</span></div>
+            </div></td>
+          </tr>
+
+          <!-- Background -->
+          <tr class="itr-group"><td colspan="4">Background</td></tr>
+          <tr>
+            <td>BG · Label Chip</td>
+            <td><span class="itr-semantic">semantic/input/bg/label-chip</span></td>
+            <td><span class="itr-primitive">neutral/100 · neutral/700</span></td>
+            <td><div class="itr-hex-pair">
+              <div class="itr-hex-item"><span class="itr-mode-label">L</span><span class="itr-swatch" style="background:#F7F6F9;border-color:#ddd"></span><span class="itr-hex-val">#F7F6F9</span></div>
+              <div class="itr-hex-item"><span class="itr-mode-label">D</span><span class="itr-swatch" style="background:#2B263F"></span><span class="itr-hex-val">#2B263F</span></div>
+            </div></td>
+          </tr>
+          <tr>
+            <td>BG · Option Active</td>
+            <td><span class="itr-semantic">semantic/input/bg/option/active</span></td>
+            <td><span class="itr-primitive">overlay/10</span></td>
+            <td><div class="itr-hex-pair">
+              <div class="itr-hex-item"><span class="itr-mode-label">L</span><span class="itr-swatch" style="background:rgba(87,35,176,.1);border-color:#ccc"></span><span class="itr-hex-val">rgba(87,35,176,.10)</span></div>
+              <div class="itr-hex-item"><span class="itr-mode-label">D</span><span class="itr-swatch" style="background:rgba(87,35,176,.1);border-color:#555"></span><span class="itr-hex-val">rgba(87,35,176,.10)</span></div>
+            </div></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
 </section>
 
 <!-- ══════════════════════════════════════════ INPUT LABEL -->
