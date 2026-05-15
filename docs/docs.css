@@ -711,14 +711,14 @@ body {
 
 /* Token spec panel — right column */
 .input-card__spec {
-  width: 260px; min-width: 260px;
-  padding: 16px 14px;
-  display: flex; flex-direction: column; gap: 8px;
+  width: 316px; min-width: 316px;
+  padding: 14px 12px;
+  display: flex; flex-direction: column; gap: 7px;
   background: var(--db);
   overflow: visible;
 }
 .spec-state-block {
-  display: flex; flex-direction: column; gap: 4px;
+  display: flex; flex-direction: column;
   padding: 8px 10px 9px;
   background: var(--ds);
   border-radius: 8px;
@@ -727,7 +727,7 @@ body {
 .spec-state-title {
   font-size: 7px; font-weight: 800; letter-spacing: 1.4px;
   text-transform: uppercase;
-  margin-bottom: 5px;
+  margin-bottom: 6px;
   display: flex; align-items: center; gap: 5px;
 }
 .spec-state-title::before {
@@ -739,7 +739,49 @@ body {
 .spec-state-block[data-state="filled"]   .spec-state-title { color: var(--color-accent-light, #5723B0); }
 .spec-state-block[data-state="completed"].spec-state-title { color: var(--color-semantic-success, #198F51); }
 .spec-state-block[data-state="error"]    .spec-state-title { color: var(--color-semantic-error, #EA3A2E); }
-.spec-token-row { display: flex; align-items: center; gap: 6px; padding: 1px 0; }
+
+/* 3-column header */
+.spec-col-head {
+  display: grid;
+  grid-template-columns: 1fr 1fr 30px;
+  gap: 4px;
+  padding-bottom: 5px;
+  margin-bottom: 3px;
+  border-bottom: 1px solid var(--dbd);
+}
+.spec-col-head span {
+  font-size: 7px; font-weight: 800; letter-spacing: .08em;
+  text-transform: uppercase; color: var(--dtm);
+  font-family: 'SF Mono', ui-monospace, monospace;
+}
+.spec-col-head span:last-child { text-align: center; }
+
+/* 3-column token row */
+.spec-token-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 30px;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 0;
+}
+.spec-col-semantic {
+  font-size: 8px; font-weight: 700; color: var(--da);
+  font-family: 'SF Mono', ui-monospace, monospace;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.spec-col-prim {
+  font-size: 8px; color: var(--dtm);
+  font-family: 'SF Mono', ui-monospace, monospace;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.spec-col-hex {
+  display: flex; align-items: center; justify-content: center; gap: 3px;
+}
+.spec-sw {
+  width: 11px; height: 11px; border-radius: 3px; flex-shrink: 0;
+  border: 1px solid rgba(128,128,128,.25);
+  cursor: help;
+}
 
 /* ══ Universal tooltip ══════════════════════════════════════════ */
 [data-tooltip] { position: relative; cursor: default; }

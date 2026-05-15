@@ -2387,61 +2387,62 @@ function makePasswordCard(name, label, isConfirm, container) {
   </div>`;
 }
 
-/* ── Spec panel HTML (shared across all input cards) ── */
+/* ── Spec panel HTML — 3 columns: Semantic · Primitive · HEX L/D ── */
 function makeSpecPanel() {
-  const dot  = (color, style) => `<span class="spec-token-dot" style="background:${color}"></span>`;
-  const dotBg = () => `<span class="spec-token-dot spec-token-dot--bg"></span>`;
-  const dotTy = () => `<span class="spec-token-dot spec-token-dot--type">Aa</span>`;
-  const row  = (tip, dotHtml, name, prop) =>
-    `<div class="spec-token-row" data-tooltip="${tip}">${dotHtml}<span class="spec-token-name">${name}</span><span class="spec-token-prop">${prop}</span></div>`;
-  const tyRow = (tip, label, prop) =>
-    `<div class="spec-token-row" data-tooltip="${tip}">${dotTy()}<span class="spec-token-name" style="font-family:'Montserrat',sans-serif;font-size:9px;color:var(--dtm);font-weight:500">${label}</span><span class="spec-token-prop">${prop}</span></div>`;
+  /* sw(hexL, hexD) — two swatches side by side */
+  const sw = (hexL, hexD) => {
+    var lBorder = (hexL === '#FFFFFF' || hexL === '#F7F6F9') ? 'border:1px solid rgba(0,0,0,.18);' : '';
+    var dBorder = (hexD === '#FFFFFF' || hexD === '#F7F6F9') ? 'border:1px solid rgba(0,0,0,.18);' : '';
+    return `<div class="spec-col-hex">` +
+      `<span class="spec-sw" style="background:${hexL};${lBorder}" title="Light · ${hexL}"></span>` +
+      `<span class="spec-sw" style="background:${hexD};${dBorder}" title="Dark · ${hexD}"></span>` +
+    `</div>`;
+  };
+
+  /* row(semantic, primitive, hexL, hexD) */
+  const row = (sem, prim, hexL, hexD) =>
+    `<div class="spec-token-row">` +
+      `<span class="spec-col-semantic" title="${sem}">${sem}</span>` +
+      `<span class="spec-col-prim" title="${prim}">${prim}</span>` +
+      sw(hexL, hexD) +
+    `</div>`;
+
+  const head = `<div class="spec-col-head"><span>Semantic</span><span>Primitive</span><span>HEX</span></div>`;
+
   const block = (state, title, rows) =>
-    `<div class="spec-state-block" data-state="${state}"><div class="spec-state-title">${title}</div>${rows}</div>`;
+    `<div class="spec-state-block" data-state="${state}">` +
+      `<div class="spec-state-title">${title}</div>` +
+      head + rows +
+    `</div>`;
 
-  return `<div class="input-card__spec">
-    ${block('default','Default',
-      row('#C7C0D4 · border-color', dot('var(--color-neutral-300,#C7C0D4)'), 'neutral/300', 'border') +
-      row('#988DAC · label color',  dot('var(--color-neutral-400,#988DAC)'), 'neutral/400', 'label') +
-      row('#FFFFFF · background',   dotBg(), 'primary/100', 'bg') +
-      tyRow('font-weight: 600 · font-size: 12px', 'SemiBold 12px', 'label font')
-    )}
-    ${block('focused','Focused',
-      row('#5723B0 · border-color', dot('var(--color-accent-light,#5723B0)'), 'accent/light', 'border') +
-      row('#5723B0 · label color',  dot('var(--color-accent-light,#5723B0)'), 'accent/light', 'label') +
-      row('#FFFFFF · background',   dotBg(), 'primary/100', 'bg') +
-      row('#090127 · text color',   dot('var(--color-neutral-black,#090127)'), 'neutral/black', 'value') +
-      tyRow('font-weight: 600 · font-size: 14px', 'SemiBold 14px', 'value font')
-    )}
-    ${block('filled','Filled',
-      row('#5723B0 · border-color', dot('var(--color-accent-light,#5723B0)'), 'accent/light', 'border') +
-      row('#5723B0 · label color',  dot('var(--color-accent-light,#5723B0)'), 'accent/light', 'label') +
-      row('#FFFFFF · background',   dotBg(), 'primary/100', 'bg') +
-      row('#090127 · text color',   dot('var(--color-neutral-black,#090127)'), 'neutral/black', 'value') +
-      tyRow('font-weight: 600 · font-size: 14px', 'SemiBold 14px', 'value font')
-    )}
-    ${block('completed','Completed',
-      row('#C7C0D4 · border-color', dot('var(--color-neutral-300,#C7C0D4)'), 'neutral/300', 'border') +
-      row('#5723B0 · label color',  dot('var(--color-accent-light,#5723B0)'), 'accent/light', 'label') +
-      row('#FFFFFF · background',   dotBg(), 'primary/100', 'bg') +
-      row('#090127 · text color',   dot('var(--color-neutral-black,#090127)'), 'neutral/black', 'value')
-    )}
-    ${block('error','Error',
-      row('#EA3A2E · border-color', dot('var(--color-semantic-error,#EA3A2E)'), 'semantic/error', 'border') +
-      row('#988DAC · label color',  dot('var(--color-neutral-400,#988DAC)'), 'neutral/400', 'label') +
-      row('#FFFFFF · background',   dotBg(), 'primary/100', 'bg') +
-      row('#EA3A2E · text color',   dot('var(--color-semantic-error,#EA3A2E)'), 'semantic/error', 'value') +
-      row('#EA3A2E · font-size: 10px · error msg', dot('var(--color-semantic-error,#EA3A2E)'), 'semantic/error', 'msg · 10px')
-    )}
-  </div>`;
+  return `<div class="input-card__spec">` +
+    block('default', 'Default',
+      row('s/input/border/default', 'neutral/400',  '#988DAC', '#3F3855') +
+      row('s/input/label/default',  'neutral/400',  '#988DAC', '#706784') +
+      row('primary/100',            '—',            '#FFFFFF', '#150F2B')
+    ) +
+    block('focused', 'Focused',
+      row('s/input/border/focused', 'accent/light', '#5723B0', '#A874FF') +
+      row('s/input/label/active',   'accent/light', '#5723B0', '#A874FF') +
+      row('s/input/placeholder',    'neutral/black','#090127', '#FFFFFF')
+    ) +
+    block('filled', 'Filled',
+      row('s/input/border/focused', 'accent/light', '#5723B0', '#A874FF') +
+      row('s/input/label/active',   'accent/light', '#5723B0', '#A874FF') +
+      row('s/input/placeholder',    'neutral/black','#090127', '#FFFFFF')
+    ) +
+    block('completed', 'Completed',
+      row('s/input/border/default', 'neutral/400',  '#988DAC', '#3F3855') +
+      row('s/input/label/active',   'accent/light', '#5723B0', '#A874FF') +
+      row('s/input/placeholder',    'neutral/black','#090127', '#FFFFFF')
+    ) +
+    block('error', 'Error',
+      row('s/input/border/error',   'semantic/error','#EA3A2E','#FF584D') +
+      row('neutral/400',            'neutral/400',  '#988DAC', '#706784') +
+      row('s/input/msg/error',      'semantic/error','#EA3A2E','#FF584D')
+    ) +
+  `</div>`;
 }
-
-/* Inject spec panel into every card body that doesn't already have one */
-document.querySelectorAll('.input-card__body').forEach(function(body) {
-  if (!body.querySelector('.input-card__spec')) {
-    body.insertAdjacentHTML('beforeend', makeSpecPanel());
-  }
-});
 
 const g1 = document.getElementById('standard-inputs-1');
 makeStandardCard('First Name','First Name','Must be at least 3 characters.',g1);
@@ -2461,6 +2462,13 @@ makeStandardCard('Email (Forgot Password)','Email','No account associated with t
 makeStandardCard('Temporary Password','Temporary Password','Incorrect temporary password.',g3);
 makePasswordCard('New Password','New Password',false,g3);
 makePasswordCard('Confirm Password','Confirm Password',true,g3);
+
+/* Inject spec panel into every card body — runs AFTER all cards are built */
+document.querySelectorAll('.input-card__body').forEach(function(body) {
+  if (!body.querySelector('.input-card__spec')) {
+    body.insertAdjacentHTML('beforeend', makeSpecPanel());
+  }
+});
 
 /* ── DOB segment state management ── */
 document.querySelectorAll('.input-card__live .wds-dob__input').forEach(function(input) {
