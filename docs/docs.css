@@ -1156,6 +1156,11 @@ body {
   margin: 0;
 }
 
+.wds-header-label {
+  display: flex; flex-direction: column;
+  width: 343px; max-width: 100%;
+}
+
 /* ═══════════════════════════════════════════════════════════════
    WDS BUTTON — Exact Figma specs
 ═══════════════════════════════════════════════════════════════ */
