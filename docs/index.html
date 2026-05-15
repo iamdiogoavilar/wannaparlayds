@@ -2387,61 +2387,90 @@ function makePasswordCard(name, label, isConfirm, container) {
   </div>`;
 }
 
+/* ── Copy toast ── */
+(function() {
+  var t = document.createElement('div');
+  t.id = 'copy-toast'; t.className = 'copy-toast';
+  document.body.appendChild(t);
+})();
+
+window.copyToken = function(text, label) {
+  var display = label || text;
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(text).catch(fb);
+  } else { fb(); }
+  function fb() {
+    var el = document.createElement('textarea');
+    el.value = text; el.style.cssText = 'position:fixed;opacity:0';
+    document.body.appendChild(el); el.select();
+    try { document.execCommand('copy'); } catch(e) {}
+    document.body.removeChild(el);
+  }
+  var toast = document.getElementById('copy-toast');
+  toast.textContent = display + ' copied!';
+  toast.classList.add('is-visible');
+  clearTimeout(window._toastTimer);
+  window._toastTimer = setTimeout(function() { toast.classList.remove('is-visible'); }, 2200);
+};
+
 /* ── Spec panel HTML — 3 columns: Semantic · Primitive · HEX L/D ── */
 function makeSpecPanel() {
-  /* sw(hexL, hexD) — two swatches side by side */
-  const sw = (hexL, hexD) => {
-    var lBorder = (hexL === '#FFFFFF' || hexL === '#F7F6F9') ? 'border:1px solid rgba(0,0,0,.18);' : '';
-    var dBorder = (hexD === '#FFFFFF' || hexD === '#F7F6F9') ? 'border:1px solid rgba(0,0,0,.18);' : '';
-    return `<div class="spec-col-hex">` +
-      `<span class="spec-sw" style="background:${hexL};${lBorder}" title="Light · ${hexL}"></span>` +
-      `<span class="spec-sw" style="background:${hexD};${dBorder}" title="Dark · ${hexD}"></span>` +
-    `</div>`;
-  };
+  function full(s) { return s.replace(/^s\//, 'semantic/'); }
 
-  /* row(semantic, primitive, hexL, hexD) */
-  const row = (sem, prim, hexL, hexD) =>
-    `<div class="spec-token-row">` +
-      `<span class="spec-col-semantic" title="${sem}">${sem}</span>` +
-      `<span class="spec-col-prim" title="${prim}">${prim}</span>` +
+  function sw(hexL, hexD) {
+    var lB = (hexL === '#FFFFFF' || hexL === '#F7F6F9') ? 'border:1px solid rgba(0,0,0,.2);' : '';
+    var dB = (hexD === '#FFFFFF' || hexD === '#F7F6F9') ? 'border:1px solid rgba(0,0,0,.2);' : '';
+    return '<div class="spec-col-hex">' +
+      '<span class="spec-sw" style="background:' + hexL + ';' + lB + '" title="Light · ' + hexL + '" onclick="copyToken(\'' + hexL + '\')"></span>' +
+      '<span class="spec-sw" style="background:' + hexD + ';' + dB + '" title="Dark · ' + hexD + '" onclick="copyToken(\'' + hexD + '\')"></span>' +
+    '</div>';
+  }
+
+  function row(sem, prim, hexL, hexD) {
+    var semFull = full(sem);
+    return '<div class="spec-token-row">' +
+      '<span class="spec-col-semantic" title="' + semFull + '" onclick="copyToken(\'' + semFull + '\',\'' + sem + '\')">' + sem + '</span>' +
+      '<span class="spec-col-prim" title="' + prim + '" onclick="copyToken(\'' + prim + '\')">' + prim + '</span>' +
       sw(hexL, hexD) +
-    `</div>`;
+    '</div>';
+  }
 
-  const head = `<div class="spec-col-head"><span>Semantic</span><span>Primitive</span><span>HEX</span></div>`;
+  var head = '<div class="spec-col-head"><span>Semantic</span><span>Primitive</span><span>HEX</span></div>';
 
-  const block = (state, title, rows) =>
-    `<div class="spec-state-block" data-state="${state}">` +
-      `<div class="spec-state-title">${title}</div>` +
+  function block(state, title, rows) {
+    return '<div class="spec-state-block" data-state="' + state + '">' +
+      '<div class="spec-state-title">' + title + '</div>' +
       head + rows +
-    `</div>`;
+    '</div>';
+  }
 
-  return `<div class="input-card__spec">` +
+  return '<div class="input-card__spec">' +
     block('default', 'Default',
-      row('s/input/border/default', 'neutral/400',  '#988DAC', '#3F3855') +
-      row('s/input/label/default',  'neutral/400',  '#988DAC', '#706784') +
-      row('primary/100',            '—',            '#FFFFFF', '#150F2B')
+      row('s/input/border/default', 'neutral/400',   '#988DAC', '#3F3855') +
+      row('s/input/label/default',  'neutral/400',   '#988DAC', '#706784') +
+      row('primary/100',            '—',             '#FFFFFF', '#150F2B')
     ) +
     block('focused', 'Focused',
-      row('s/input/border/focused', 'accent/light', '#5723B0', '#A874FF') +
-      row('s/input/label/active',   'accent/light', '#5723B0', '#A874FF') +
-      row('s/input/placeholder',    'neutral/black','#090127', '#FFFFFF')
+      row('s/input/border/focused', 'accent/light',  '#5723B0', '#A874FF') +
+      row('s/input/label/active',   'accent/light',  '#5723B0', '#A874FF') +
+      row('s/input/placeholder',    'neutral/black', '#090127', '#FFFFFF')
     ) +
     block('filled', 'Filled',
-      row('s/input/border/focused', 'accent/light', '#5723B0', '#A874FF') +
-      row('s/input/label/active',   'accent/light', '#5723B0', '#A874FF') +
-      row('s/input/placeholder',    'neutral/black','#090127', '#FFFFFF')
+      row('s/input/border/focused', 'accent/light',  '#5723B0', '#A874FF') +
+      row('s/input/label/active',   'accent/light',  '#5723B0', '#A874FF') +
+      row('s/input/placeholder',    'neutral/black', '#090127', '#FFFFFF')
     ) +
     block('completed', 'Completed',
-      row('s/input/border/default', 'neutral/400',  '#988DAC', '#3F3855') +
-      row('s/input/label/active',   'accent/light', '#5723B0', '#A874FF') +
-      row('s/input/placeholder',    'neutral/black','#090127', '#FFFFFF')
+      row('s/input/border/default', 'neutral/400',   '#988DAC', '#3F3855') +
+      row('s/input/label/active',   'accent/light',  '#5723B0', '#A874FF') +
+      row('s/input/placeholder',    'neutral/black', '#090127', '#FFFFFF')
     ) +
     block('error', 'Error',
-      row('s/input/border/error',   'semantic/error','#EA3A2E','#FF584D') +
-      row('neutral/400',            'neutral/400',  '#988DAC', '#706784') +
-      row('s/input/msg/error',      'semantic/error','#EA3A2E','#FF584D')
+      row('s/input/border/error',   'semantic/error','#EA3A2E', '#FF584D') +
+      row('neutral/400',            'neutral/400',   '#988DAC', '#706784') +
+      row('s/input/msg/error',      'semantic/error','#EA3A2E', '#FF584D')
     ) +
-  `</div>`;
+  '</div>';
 }
 
 const g1 = document.getElementById('standard-inputs-1');
