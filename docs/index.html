@@ -17,7 +17,61 @@
   <div class="navbar__brand">
     <img src="logo.svg" alt="Wanna" class="navbar__logo-img" />
     <span class="navbar__title">Wanna Design System</span>
-    <span class="navbar__badge">v1.0</span>
+    <div class="navbar__version" id="navbar-version">
+      <button class="navbar__badge" onclick="toggleRoadmap()" aria-label="Ver roadmap">
+        v1.0 <svg width="9" height="9" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg>
+      </button>
+      <div class="roadmap-panel" id="roadmap-panel">
+
+        <div class="roadmap-panel__head">
+          <svg width="14" height="14" viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm-1 7V3.5L18.5 9H13zM8 16h8v2H8zm0-4h8v2H8zm0-4h5v2H8z"/></svg>
+          <div>
+            <div class="roadmap-panel__name">Wanna Design System</div>
+            <div class="roadmap-panel__sub">v1.0 · Roadmap público</div>
+          </div>
+        </div>
+
+        <div class="roadmap-group">
+          <div class="roadmap-group__label roadmap-group__label--done">✓ Lançado · v1.0</div>
+          <div class="roadmap-item"><div class="roadmap-dot roadmap-dot--done"></div>Color Tokens (6 escalas + gradients)</div>
+          <div class="roadmap-item"><div class="roadmap-dot roadmap-dot--done"></div>Typography Tokens (Montserrat + Barlow)</div>
+          <div class="roadmap-item"><div class="roadmap-dot roadmap-dot--done"></div>Spacing &amp; Radius Tokens</div>
+          <div class="roadmap-item"><div class="roadmap-dot roadmap-dot--done"></div>Shadow Tokens</div>
+          <div class="roadmap-item"><div class="roadmap-dot roadmap-dot--done"></div>Icons Library</div>
+          <div class="roadmap-item"><div class="roadmap-dot roadmap-dot--done"></div>Button Components (7 variantes)</div>
+          <div class="roadmap-item"><div class="roadmap-dot roadmap-dot--done"></div>Input Components (6 tipos)</div>
+          <div class="roadmap-item"><div class="roadmap-dot roadmap-dot--done"></div>Header Components (3 variantes)</div>
+        </div>
+
+        <div class="roadmap-group">
+          <div class="roadmap-group__label roadmap-group__label--wip">● Em andamento</div>
+          <div class="roadmap-item"><div class="roadmap-dot roadmap-dot--wip"></div>Typography docs — sync HTML com Figma</div>
+          <div class="roadmap-item"><div class="roadmap-dot roadmap-dot--wip"></div>Dark mode refinamentos</div>
+          <div class="roadmap-item"><div class="roadmap-dot roadmap-dot--wip"></div>Anotações de componentes no Figma</div>
+        </div>
+
+        <div class="roadmap-group">
+          <div class="roadmap-group__label roadmap-group__label--next">○ Planejado · v1.1</div>
+          <div class="roadmap-item"><div class="roadmap-dot roadmap-dot--next"></div>Toast / Notification</div>
+          <div class="roadmap-item"><div class="roadmap-dot roadmap-dot--next"></div>Bottom Sheet</div>
+          <div class="roadmap-item"><div class="roadmap-dot roadmap-dot--next"></div>Modal / Dialog</div>
+          <div class="roadmap-item"><div class="roadmap-dot roadmap-dot--next"></div>Badge / Chip</div>
+          <div class="roadmap-item"><div class="roadmap-dot roadmap-dot--next"></div>Tab Bar (Navegação)</div>
+          <div class="roadmap-item"><div class="roadmap-dot roadmap-dot--next"></div>Empty States</div>
+          <div class="roadmap-item"><div class="roadmap-dot roadmap-dot--next"></div>Loading / Skeleton</div>
+        </div>
+
+        <div class="roadmap-group">
+          <div class="roadmap-group__label roadmap-group__label--next">○ Futuro · v2.0</div>
+          <div class="roadmap-item"><div class="roadmap-dot roadmap-dot--next"></div>Motion / Animation Tokens</div>
+          <div class="roadmap-item"><div class="roadmap-dot roadmap-dot--next"></div>Illustration System</div>
+          <div class="roadmap-item"><div class="roadmap-dot roadmap-dot--next"></div>iOS SwiftUI Components</div>
+          <div class="roadmap-item"><div class="roadmap-dot roadmap-dot--next"></div>Android Compose Components</div>
+          <div class="roadmap-item"><div class="roadmap-dot roadmap-dot--next"></div>Accessibility Audit</div>
+        </div>
+
+      </div>
+    </div>
   </div>
   <nav class="navbar__links">
     <!-- Download tokens button -->
@@ -4139,9 +4193,17 @@ body.comment-mode * { cursor: crosshair !important; }
     document.getElementById('dl-tokens').classList.remove('is-open');
   }
 
-  /* close on outside click */
+  window.toggleRoadmap = function() {
+    document.getElementById('navbar-version').classList.toggle('is-open');
+  };
+  function closeRoadmap() {
+    document.getElementById('navbar-version').classList.remove('is-open');
+  }
+
+  /* close both menus on outside click */
   document.addEventListener('click', function(e) {
     if (!e.target.closest('#dl-tokens')) closeDlMenu();
+    if (!e.target.closest('#navbar-version')) closeRoadmap();
   });
 
 })();
