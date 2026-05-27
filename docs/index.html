@@ -2310,43 +2310,82 @@
       </div>
       <div class="input-card__body">
         <div class="input-card__live">
-          <div class="input-card__live-label">Live demo</div>
-          <button class="wds-btn wds-btn--primary-brand" style="width:100%;border-radius:16px;gap:8px">
-            <svg width="18" height="18" viewBox="0 0 24 24"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>
-            Continue
-          </button>
+          <div class="input-card__live-label">Live demo — Ready</div>
+          <!-- Ready state: fee/payout left + "Go to checkout →" right -->
+          <div class="wds-pa-btn">
+            <div class="wds-pa-btn__fee">
+              <span>$5</span><span style="font-weight:400;opacity:.8">could pay</span><span>$25</span>
+            </div>
+            <div class="wds-pa-btn__action">
+              Go to checkout
+              <svg viewBox="0 0 24 24" width="24" height="24" fill="white" style="transform:rotate(180deg);flex-shrink:0">
+                <path d="M7.82344 12.9999L13.4234 18.5999L11.9984 19.9999L3.99844 11.9999L11.9984 3.9999L13.4234 5.3999L7.82344 10.9999H19.9984V12.9999H7.82344Z"/>
+              </svg>
+            </div>
+          </div>
         </div>
         <div class="input-card__states">
-          <div class="input-card__states-label">Variações da ação</div>
+          <div class="input-card__states-label">Todas as variações</div>
           <div class="btn-states-grid">
+
+            <!-- Ready -->
             <div class="state-item">
               <span class="state-tag">Ready</span>
-              <button class="wds-btn wds-btn--primary-brand" style="width:100%;border-radius:16px;gap:8px">
-                <svg width="18" height="18" viewBox="0 0 24 24"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>
-                Ready
-              </button>
+              <div class="wds-pa-btn">
+                <div class="wds-pa-btn__fee">
+                  <span>$5</span><span style="font-weight:400;font-size:11px;opacity:.8">could pay</span><span>$25</span>
+                </div>
+                <div class="wds-pa-btn__action">
+                  Go to checkout
+                  <svg viewBox="0 0 24 24" width="20" height="20" fill="white" style="transform:rotate(180deg);flex-shrink:0">
+                    <path d="M7.82344 12.9999L13.4234 18.5999L11.9984 19.9999L3.99844 11.9999L11.9984 3.9999L13.4234 5.3999L7.82344 10.9999H19.9984V12.9999H7.82344Z"/>
+                  </svg>
+                </div>
+              </div>
             </div>
+
+            <!-- Payout -->
             <div class="state-item">
               <span class="state-tag">Payout</span>
-              <button class="wds-btn wds-btn--primary-brand" style="width:100%;border-radius:16px;gap:8px">
-                <svg width="18" height="18" viewBox="0 0 24 24"><path d="M12 2L9.5 9.5 2 12 9.5 14.5 12 22 14.5 14.5 22 12 14.5 9.5z"/></svg>
-                Payout
-              </button>
+              <div class="wds-pa-btn">
+                <div class="wds-pa-btn__fee">
+                  <span>$5</span><span style="font-weight:400;font-size:11px;opacity:.8">could pay</span><span>$25</span>
+                </div>
+                <div class="wds-pa-btn__action">
+                  Continue
+                  <svg viewBox="0 0 24 24" width="20" height="20" fill="white" style="transform:rotate(180deg);flex-shrink:0">
+                    <path d="M7.82344 12.9999L13.4234 18.5999L11.9984 19.9999L3.99844 11.9999L11.9984 3.9999L13.4234 5.3999L7.82344 10.9999H19.9984V12.9999H7.82344Z"/>
+                  </svg>
+                </div>
+              </div>
             </div>
+
+            <!-- Checkout -->
             <div class="state-item">
               <span class="state-tag">Checkout</span>
-              <button class="wds-btn wds-btn--primary-brand" style="width:100%;border-radius:16px;gap:8px">
-                <svg width="18" height="18" viewBox="0 0 24 24"><path d="M5 6h14v2H5zm-2 4h18v2H3zm2 4h14v2H5z"/></svg>
-                Checkout
-              </button>
+              <div class="wds-pa-btn" style="justify-content:flex-end;padding-left:48px">
+                <div class="wds-pa-btn__center">
+                  Go to checkout
+                  <svg viewBox="0 0 24 24" width="20" height="20" fill="white" style="transform:rotate(180deg);flex-shrink:0">
+                    <path d="M7.82344 12.9999L13.4234 18.5999L11.9984 19.9999L3.99844 11.9999L11.9984 3.9999L13.4234 5.3999L7.82344 10.9999H19.9984V12.9999H7.82344Z"/>
+                  </svg>
+                </div>
+              </div>
             </div>
+
+            <!-- Continue -->
             <div class="state-item">
               <span class="state-tag">Continue</span>
-              <button class="wds-btn wds-btn--primary-brand" style="width:100%;border-radius:16px;gap:8px">
-                <svg width="18" height="18" viewBox="0 0 24 24"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>
-                Continue
-              </button>
+              <div class="wds-pa-btn" style="justify-content:flex-end;padding-left:48px">
+                <div class="wds-pa-btn__center">
+                  Continue making picks
+                  <svg viewBox="0 0 24 24" width="20" height="20" fill="white" style="transform:rotate(180deg);flex-shrink:0">
+                    <path d="M7.82344 12.9999L13.4234 18.5999L11.9984 19.9999L3.99844 11.9999L11.9984 3.9999L13.4234 5.3999L7.82344 10.9999H19.9984V12.9999H7.82344Z"/>
+                  </svg>
+                </div>
+              </div>
             </div>
+
           </div>
         </div>
       </div>
@@ -2356,40 +2395,96 @@
     <div class="input-card" id="btn2-parlay-hint">
       <div class="input-card__header">
         <span class="input-card__name">Parlay Action / Hint</span>
-        <span class="input-card__tag">7 variações</span>
+        <span class="input-card__tag">6 variações</span>
       </div>
       <div class="input-card__body">
         <div class="input-card__live">
-          <div class="input-card__live-label">Live demo</div>
-          <div style="display:flex;align-items:center;gap:8px;background:rgba(245,204,69,.20);border-radius:12px;padding:10px 14px;width:100%">
-            <div style="width:6px;height:6px;border-radius:50%;background:#F5CC45;flex-shrink:0"></div>
-            <span style="font-family:'Montserrat',sans-serif;font-size:12px;font-weight:600;color:var(--color-neutral-black,#090127)">Add 2+ picks to build a parlay</span>
+          <div class="input-card__live-label">Live demo — Add Player</div>
+          <!-- Active hint: warm amber bg + trending_up icon + text -->
+          <div class="wds-pa-hint">
+            <div class="wds-pa-hint__icon">
+              <svg viewBox="0 0 24 24" width="24" height="24" fill="none">
+                <path d="M3.40156 18L2.00156 16.6L9.40156 9.15L13.4016 13.15L18.6016 8H16.0016V6H22.0016V12H20.0016V9.4L13.4016 16L9.40156 12L3.40156 18Z" fill="#F59E0B"/>
+              </svg>
+            </div>
+            <span class="wds-pa-hint__text">Add a player pick</span>
           </div>
         </div>
         <div class="input-card__states">
-          <div class="input-card__states-label">Variações do hint</div>
-          <div style="display:flex;flex-direction:column;gap:8px;width:100%">
-            <div class="state-item" style="flex-direction:row;align-items:center;gap:8px">
-              <span class="state-tag" style="min-width:64px">Hint 1</span>
-              <div style="display:flex;align-items:center;gap:8px;background:rgba(245,204,69,.20);border-radius:8px;padding:8px 12px;flex:1">
-                <div style="width:5px;height:5px;border-radius:50%;background:#F5CC45;flex-shrink:0"></div>
-                <span style="font-family:'Montserrat',sans-serif;font-size:11px;font-weight:600;color:var(--color-neutral-black,#090127)">Add 2+ picks to build a parlay</span>
+          <div class="input-card__states-label">Todas as variações</div>
+          <div style="display:flex;flex-direction:column;gap:10px;width:100%">
+
+            <!-- Empty -->
+            <div class="state-item">
+              <span class="state-tag">Empty</span>
+              <div class="wds-pa-hint wds-pa-hint--empty">Start making picks!</div>
+            </div>
+
+            <!-- Add Points -->
+            <div class="state-item">
+              <span class="state-tag">Add Points</span>
+              <div class="wds-pa-hint">
+                <div class="wds-pa-hint__icon">
+                  <svg viewBox="0 0 24 24" width="24" height="24" fill="none">
+                    <path d="M3.40156 18L2.00156 16.6L9.40156 9.15L13.4016 13.15L18.6016 8H16.0016V6H22.0016V12H20.0016V9.4L13.4016 16L9.40156 12L3.40156 18Z" fill="#F59E0B"/>
+                  </svg>
+                </div>
+                <span class="wds-pa-hint__text">Add picks to increase your points</span>
               </div>
             </div>
-            <div class="state-item" style="flex-direction:row;align-items:center;gap:8px">
-              <span class="state-tag" style="min-width:64px">Hint 2</span>
-              <div style="display:flex;align-items:center;gap:8px;background:rgba(25,143,81,.20);border-radius:8px;padding:8px 12px;flex:1">
-                <div style="width:5px;height:5px;border-radius:50%;background:#198F51;flex-shrink:0"></div>
-                <span style="font-family:'Montserrat',sans-serif;font-size:11px;font-weight:600;color:var(--color-neutral-black,#090127)">All picks locked in!</span>
+
+            <!-- Add Player -->
+            <div class="state-item">
+              <span class="state-tag">Add Player</span>
+              <div class="wds-pa-hint">
+                <div class="wds-pa-hint__icon">
+                  <svg viewBox="0 0 24 24" width="24" height="24" fill="none">
+                    <path d="M3.40156 18L2.00156 16.6L9.40156 9.15L13.4016 13.15L18.6016 8H16.0016V6H22.0016V12H20.0016V9.4L13.4016 16L9.40156 12L3.40156 18Z" fill="#F59E0B"/>
+                  </svg>
+                </div>
+                <span class="wds-pa-hint__text">Add a player pick</span>
               </div>
             </div>
-            <div class="state-item" style="flex-direction:row;align-items:center;gap:8px">
-              <span class="state-tag" style="min-width:64px">Hint 3</span>
-              <div style="display:flex;align-items:center;gap:8px;background:rgba(87,35,176,.10);border-radius:8px;padding:8px 12px;flex:1">
-                <div style="width:5px;height:5px;border-radius:50%;background:var(--color-accent-light,#5723B0);flex-shrink:0"></div>
-                <span style="font-family:'Montserrat',sans-serif;font-size:11px;font-weight:600;color:var(--color-neutral-black,#090127)">Potential payout: $250.00</span>
+
+            <!-- Different Event -->
+            <div class="state-item">
+              <span class="state-tag">Different Event</span>
+              <div class="wds-pa-hint">
+                <div class="wds-pa-hint__icon">
+                  <svg viewBox="0 0 24 24" width="24" height="24" fill="none">
+                    <path d="M3.40156 18L2.00156 16.6L9.40156 9.15L13.4016 13.15L18.6016 8H16.0016V6H22.0016V12H20.0016V9.4L13.4016 16L9.40156 12L3.40156 18Z" fill="#F59E0B"/>
+                  </svg>
+                </div>
+                <span class="wds-pa-hint__text">Add a pick from a different event</span>
               </div>
             </div>
+
+            <!-- Meet Requirement -->
+            <div class="state-item">
+              <span class="state-tag">Meet Requirement</span>
+              <div class="wds-pa-hint">
+                <div class="wds-pa-hint__icon">
+                  <svg viewBox="0 0 24 24" width="24" height="24" fill="none">
+                    <path d="M3.40156 18L2.00156 16.6L9.40156 9.15L13.4016 13.15L18.6016 8H16.0016V6H22.0016V12H20.0016V9.4L13.4016 16L9.40156 12L3.40156 18Z" fill="#F59E0B"/>
+                  </svg>
+                </div>
+                <span class="wds-pa-hint__text">Add picks to meet requirement</span>
+              </div>
+            </div>
+
+            <!-- Max Exceeded -->
+            <div class="state-item">
+              <span class="state-tag">Max Exceeded</span>
+              <div class="wds-pa-hint wds-pa-hint--disabled">
+                <div class="wds-pa-hint__icon">
+                  <svg viewBox="0 0 24 24" width="24" height="24" fill="none">
+                    <path d="M16 18V16H18.6L13.4 10.85L9.4 14.85L2 7.4L3.4 6L9.4 12L13.4 8L20 14.6V12H22V18H16Z" fill="#F59E0B"/>
+                  </svg>
+                </div>
+                <span class="wds-pa-hint__text wds-pa-hint__text--disabled">Max picks exceeded</span>
+              </div>
+            </div>
+
           </div>
         </div>
       </div>
@@ -3103,12 +3198,23 @@ document.querySelectorAll('#section-inputs .input-card__body, #section-input-lab
       row('ParlayAction/button/Text', 'neutral/white', '#FFFFFF', '#090127'),
       null
     ),
-    'btn2-parlay-hint': panel(
-      row('ParlayAction/hint/Fill',      'support/yellow/20', 'rgba(245,204,69,.20)', 'rgba(245,204,69,.20)') +
-      row('ParlayAction/hint/text',      'neutral/black',     '#090127', '#FFFFFF') +
-      row('ParlayAction/hint/indicator', '— semantic/indicator', '#F5CC45', '#F5CC45'),
-      null
-    )
+    'btn2-parlay-hint':
+      '<div class="input-card__spec">' +
+      block('default', 'Active (Add Points · Add Player · Different Event · Meet Requirement)',
+        row('ParlayAction/hint/Fill', 'support/warning/20', 'rgba(252,165,18,.2)', 'rgba(252,165,18,.2)') +
+        row('ParlayAction/hint/text', 'neutral/black',      '#090127', '#FFFFFF') +
+        row('ParlayAction/hint/indicator', '— trending_up fill', '#F59E0B', '#F59E0B')
+      ) +
+      block('disabled', 'Max Exceeded',
+        row('ParlayAction/hint/Fill',       'neutral/100',   '#F7F6F9', '#150F2B') +
+        row('button/primary/text/disabled', 'neutral/400',   '#988DAC', '#706784') +
+        row('ParlayAction/hint/indicator',  '— trending_down fill', '#F59E0B', '#F59E0B')
+      ) +
+      block('default', 'Empty',
+        row('ParlayAction/empty/Fill', 'neutral/100',         '#F7F6F9', '#150F2B') +
+        row('ParlayAction/empty/text', 'neutral/400',         '#988DAC', '#706784')
+      ) +
+      '</div>'
   };
 
   Object.keys(specs).forEach(function(id) {
