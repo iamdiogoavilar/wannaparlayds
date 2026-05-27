@@ -1399,6 +1399,17 @@ body {
   border: 1px solid var(--color-accent-light, #5723B0);
   color: var(--color-accent-light, #5723B0); font-size: 16px;
 }
+/* Ghost */
+.wds-btn--ghost {
+  height: 48px; border-radius: 100px; background: transparent;
+  border: 1px solid var(--color-accent-tertiary, #E1D5F2);
+  color: var(--color-accent-light, #5723B0); font-size: 16px;
+}
+.wds-btn--ghost.is-disabled {
+  border-color: var(--color-neutral-200, #EAE7F1);
+  color: var(--color-neutral-400, #988DAC);
+  cursor: not-allowed; pointer-events: none;
+}
 /* Secondary Soft */
 .wds-btn--secondary-soft {
   height: 48px; border-radius: 100px;

@@ -2042,33 +2042,6 @@
       </div>
     </div>
 
-    <!-- Secondary -->
-    <div class="input-card" id="btn2-secondary">
-      <div class="input-card__header">
-        <span class="input-card__name">Button / Secondary</span>
-        <span class="input-card__tag">2 estados</span>
-      </div>
-      <div class="input-card__body">
-        <div class="input-card__live">
-          <div class="input-card__live-label">Live demo</div>
-          <button class="wds-btn wds-btn--secondary-soft">Secondary</button>
-        </div>
-        <div class="input-card__states">
-          <div class="input-card__states-label">Estados</div>
-          <div class="btn-states-grid">
-            <div class="state-item">
-              <span class="state-tag">Default</span>
-              <button class="wds-btn wds-btn--secondary-soft">Secondary</button>
-            </div>
-            <div class="state-item">
-              <span class="state-tag">Disabled</span>
-              <button class="wds-btn wds-btn--primary-brand is-disabled" disabled>Secondary</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
     <!-- Ghost -->
     <div class="input-card" id="btn2-ghost">
       <div class="input-card__header">
@@ -2078,45 +2051,18 @@
       <div class="input-card__body">
         <div class="input-card__live">
           <div class="input-card__live-label">Live demo</div>
-          <button class="wds-btn wds-btn--secondary-outline">Ghost</button>
+          <button class="wds-btn wds-btn--ghost">Ghost</button>
         </div>
         <div class="input-card__states">
           <div class="input-card__states-label">Estados</div>
           <div class="btn-states-grid">
             <div class="state-item">
               <span class="state-tag">Default</span>
-              <button class="wds-btn wds-btn--secondary-outline">Ghost</button>
+              <button class="wds-btn wds-btn--ghost">Ghost</button>
             </div>
             <div class="state-item">
               <span class="state-tag">Disabled</span>
-              <button class="wds-btn wds-btn--secondary-outline" style="opacity:.4;cursor:not-allowed;pointer-events:none" disabled>Ghost</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Destructive -->
-    <div class="input-card" id="btn2-destructive">
-      <div class="input-card__header">
-        <span class="input-card__name">Button / Destructive</span>
-        <span class="input-card__tag">2 estados</span>
-      </div>
-      <div class="input-card__body">
-        <div class="input-card__live">
-          <div class="input-card__live-label">Live demo</div>
-          <button class="wds-btn" style="height:48px;border-radius:100px;background:var(--color-semantic-error,#EA3A2E);color:#fff;font-size:16px;padding:0 24px">Destructive</button>
-        </div>
-        <div class="input-card__states">
-          <div class="input-card__states-label">Estados</div>
-          <div class="btn-states-grid">
-            <div class="state-item">
-              <span class="state-tag">Default</span>
-              <button class="wds-btn" style="height:48px;border-radius:100px;background:var(--color-semantic-error,#EA3A2E);color:#fff;font-size:16px;padding:0 24px;width:100%">Destructive</button>
-            </div>
-            <div class="state-item">
-              <span class="state-tag">Disabled</span>
-              <button class="wds-btn wds-btn--primary-brand is-disabled" disabled>Destructive</button>
+              <button class="wds-btn wds-btn--ghost is-disabled" disabled>Ghost</button>
             </div>
           </div>
         </div>
@@ -3150,25 +3096,12 @@ document.querySelectorAll('#section-inputs .input-card__body, #section-input-lab
       row('gradient/silver',            '— paint style', '#C0C0C0', '#C0C0C0') +
       row('Button/Primary/Text/disabled','neutral/400',  '#988DAC', '#706784')
     ),
-    'btn2-secondary': panel(
-      row('Button/Secondary/Fill',   'accent/secondary', '#EFE9F8', '#150F2B') +
-      row('Button/Secondary/Text',   'accent/light',     '#5723B0', '#A874FF') +
-      row('Button/Secondary/stroke', 'accent/tertiary',  '#E1D5F2', '#2B263F'),
-      row('Button/Secondary/disabled/Fill', 'neutral/200', '#EAE7F1', '#2B263F') +
-      row('Button/Secondary/disabled/Text', 'neutral/400', '#988DAC', '#706784')
-    ),
     'btn2-ghost': panel(
       row('Button/Ghost/Fill',   '— transparent',    'rgba(0,0,0,0)', 'rgba(0,0,0,0)') +
       row('Button/Ghost/Text',   'accent/light',      '#5723B0', '#A874FF') +
       row('Button/Ghost/stroke', 'accent/tertiary',   '#E1D5F2', '#2B263F'),
       row('Button/Ghost/disabled/Text',   'neutral/400', '#988DAC', '#706784') +
       row('Button/Ghost/disabled/stroke', 'neutral/200', '#EAE7F1', '#2B263F')
-    ),
-    'btn2-destructive': panel(
-      row('Button/Destructive/Fill', 'semantic/error',  '#EA3A2E', '#FF584D') +
-      row('Button/Destructive/Text', 'neutral/white',   '#FFFFFF', '#090127'),
-      row('Button/Destructive/disabled/Fill', 'neutral/200', '#EAE7F1', '#2B263F') +
-      row('Button/Destructive/disabled/Text', 'neutral/400', '#988DAC', '#706784')
     ),
     'btn2-compact-yellow': panel(
       row('Button/Compact/Yellow/Fill', 'support/yellow', '#F5CC45', '#F5CC45') +
