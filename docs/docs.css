@@ -909,6 +909,21 @@ body {
 .state-item { display: flex; flex-direction: column; gap: 6px; }
 .state-tag { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: .8px; color: var(--dtm); }
 
+/* Button states grid — 2 columns, no span override */
+.btn-states-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+.btn-states-grid .wds-btn { width: 100%; }
+.btn-states-grid .wds-btn--compact-accent,
+.btn-states-grid .wds-btn--compact-secondary { width: auto; align-self: flex-start; }
+.btn-states-grid .wds-btn--cta-brand,
+.btn-states-grid .wds-btn--cta-secondary { width: 100%; justify-content: space-between; }
+
+/* Disabled spec-state-block color */
+.spec-state-block[data-state="disabled"] .spec-state-title { color: var(--color-neutral-400, #988DAC); }
+
 /* ═══════════════════════════════════════════════════════════════
    WDS INPUT COMPONENT — Exact Figma specs
    ──────────────────────────────────────────────────────────────

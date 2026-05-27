@@ -130,6 +130,7 @@
         <li><a href="#" class="sidebar__link" data-section="inputs"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="opacity:.7;flex-shrink:0"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>Inputs</a></li>
         <li><a href="#" class="sidebar__link" data-section="input-label"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="opacity:.7;flex-shrink:0"><path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"/></svg>Input Label</a></li>
         <li><a href="#" class="sidebar__link" data-section="buttons"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="opacity:.7;flex-shrink:0"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm7 13H5v-.23c0-.62.28-1.2.76-1.58C7.47 15.82 9.64 15 12 15s4.53.82 6.24 2.19c.48.38.76.97.76 1.58V19z"/></svg>Buttons</a></li>
+        <li><a href="#" class="sidebar__link" data-section="buttons2"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="opacity:.7;flex-shrink:0"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10H7v-2h10v2zm0-4H7V7h10v2z"/></svg>Buttons 2</a></li>
         <li><a href="#" class="sidebar__link" data-section="headers"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="opacity:.7;flex-shrink:0"><path d="M4 4h16v2H4zm0 6h16v2H4zm0 6h10v2H4z"/></svg>Headers</a></li>
       </ul>
     </div>
@@ -1949,6 +1950,453 @@
   </div>
 </section>
 
+<!-- ══════════════════════════════════════════ BUTTONS 2 -->
+<section id="section-buttons2" class="section">
+  <p class="section__eyebrow">Components</p>
+  <h1 class="section__title">Buttons 2</h1>
+  <p class="section__subtitle">Sistema de botões com tokens de design. Cada card exibe os estados e a tabela completa de tokens: componente → primitivo → HEX claro/escuro.</p>
+
+  <!-- ─── BUTTON MD ──────────────────────────────────────── -->
+  <div class="input-group">
+    <h2 class="input-group__title">Button MD</h2>
+    <p class="input-group__desc">48px de altura · border-radius 100px · Montserrat SemiBold 16px · padding 0 24px</p>
+
+    <!-- Brand -->
+    <div class="input-card" id="btn2-brand">
+      <div class="input-card__header">
+        <span class="input-card__name">Button / Brand</span>
+        <span class="input-card__tag">2 estados</span>
+      </div>
+      <div class="input-card__body">
+        <div class="input-card__live">
+          <div class="input-card__live-label">Live demo</div>
+          <button class="wds-btn wds-btn--primary-brand">Primary</button>
+        </div>
+        <div class="input-card__states">
+          <div class="input-card__states-label">Estados</div>
+          <div class="btn-states-grid">
+            <div class="state-item">
+              <span class="state-tag">Default</span>
+              <button class="wds-btn wds-btn--primary-brand">Primary</button>
+            </div>
+            <div class="state-item">
+              <span class="state-tag">Disabled</span>
+              <button class="wds-btn wds-btn--primary-brand is-disabled" disabled>Primary</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Accent (Yellow) -->
+    <div class="input-card" id="btn2-accent">
+      <div class="input-card__header">
+        <span class="input-card__name">Button / Accent</span>
+        <span class="input-card__tag">2 estados</span>
+      </div>
+      <div class="input-card__body">
+        <div class="input-card__live">
+          <div class="input-card__live-label">Live demo</div>
+          <button class="wds-btn wds-btn--accent">Accent</button>
+        </div>
+        <div class="input-card__states">
+          <div class="input-card__states-label">Estados</div>
+          <div class="btn-states-grid">
+            <div class="state-item">
+              <span class="state-tag">Default</span>
+              <button class="wds-btn wds-btn--accent">Accent</button>
+            </div>
+            <div class="state-item">
+              <span class="state-tag">Disabled</span>
+              <button class="wds-btn wds-btn--primary-brand is-disabled" disabled>Accent</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Gold -->
+    <div class="input-card" id="btn2-gold">
+      <div class="input-card__header">
+        <span class="input-card__name">Button / Gold</span>
+        <span class="input-card__tag">2 estados</span>
+      </div>
+      <div class="input-card__body">
+        <div class="input-card__live">
+          <div class="input-card__live-label">Live demo</div>
+          <button class="wds-btn wds-btn--gold">Gold</button>
+        </div>
+        <div class="input-card__states">
+          <div class="input-card__states-label">Estados</div>
+          <div class="btn-states-grid">
+            <div class="state-item">
+              <span class="state-tag">Default</span>
+              <button class="wds-btn wds-btn--gold">Gold</button>
+            </div>
+            <div class="state-item">
+              <span class="state-tag">Disabled</span>
+              <button class="wds-btn wds-btn--gold is-disabled" disabled>Gold</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Secondary -->
+    <div class="input-card" id="btn2-secondary">
+      <div class="input-card__header">
+        <span class="input-card__name">Button / Secondary</span>
+        <span class="input-card__tag">2 estados</span>
+      </div>
+      <div class="input-card__body">
+        <div class="input-card__live">
+          <div class="input-card__live-label">Live demo</div>
+          <button class="wds-btn wds-btn--secondary-soft">Secondary</button>
+        </div>
+        <div class="input-card__states">
+          <div class="input-card__states-label">Estados</div>
+          <div class="btn-states-grid">
+            <div class="state-item">
+              <span class="state-tag">Default</span>
+              <button class="wds-btn wds-btn--secondary-soft">Secondary</button>
+            </div>
+            <div class="state-item">
+              <span class="state-tag">Disabled</span>
+              <button class="wds-btn wds-btn--primary-brand is-disabled" disabled>Secondary</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Ghost -->
+    <div class="input-card" id="btn2-ghost">
+      <div class="input-card__header">
+        <span class="input-card__name">Button / Ghost</span>
+        <span class="input-card__tag">2 estados</span>
+      </div>
+      <div class="input-card__body">
+        <div class="input-card__live">
+          <div class="input-card__live-label">Live demo</div>
+          <button class="wds-btn wds-btn--secondary-outline">Ghost</button>
+        </div>
+        <div class="input-card__states">
+          <div class="input-card__states-label">Estados</div>
+          <div class="btn-states-grid">
+            <div class="state-item">
+              <span class="state-tag">Default</span>
+              <button class="wds-btn wds-btn--secondary-outline">Ghost</button>
+            </div>
+            <div class="state-item">
+              <span class="state-tag">Disabled</span>
+              <button class="wds-btn wds-btn--secondary-outline" style="opacity:.4;cursor:not-allowed;pointer-events:none" disabled>Ghost</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Destructive -->
+    <div class="input-card" id="btn2-destructive">
+      <div class="input-card__header">
+        <span class="input-card__name">Button / Destructive</span>
+        <span class="input-card__tag">2 estados</span>
+      </div>
+      <div class="input-card__body">
+        <div class="input-card__live">
+          <div class="input-card__live-label">Live demo</div>
+          <button class="wds-btn" style="height:48px;border-radius:100px;background:var(--color-semantic-error,#EA3A2E);color:#fff;font-size:16px;padding:0 24px">Destructive</button>
+        </div>
+        <div class="input-card__states">
+          <div class="input-card__states-label">Estados</div>
+          <div class="btn-states-grid">
+            <div class="state-item">
+              <span class="state-tag">Default</span>
+              <button class="wds-btn" style="height:48px;border-radius:100px;background:var(--color-semantic-error,#EA3A2E);color:#fff;font-size:16px;padding:0 24px;width:100%">Destructive</button>
+            </div>
+            <div class="state-item">
+              <span class="state-tag">Disabled</span>
+              <button class="wds-btn wds-btn--primary-brand is-disabled" disabled>Destructive</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── BUTTON COMPACT ────────────────────────────────── -->
+  <div class="input-group">
+    <h2 class="input-group__title">Button Compact</h2>
+    <p class="input-group__desc">Botão reduzido · border-radius 42px · Montserrat SemiBold 12px · padding 8px 20px</p>
+
+    <!-- Compact Yellow -->
+    <div class="input-card" id="btn2-compact-yellow">
+      <div class="input-card__header">
+        <span class="input-card__name">Button / Compact / Yellow</span>
+        <span class="input-card__tag">2 estados</span>
+      </div>
+      <div class="input-card__body">
+        <div class="input-card__live">
+          <div class="input-card__live-label">Live demo</div>
+          <button class="wds-btn wds-btn--compact-accent">Compact</button>
+        </div>
+        <div class="input-card__states">
+          <div class="input-card__states-label">Estados</div>
+          <div class="btn-states-grid">
+            <div class="state-item">
+              <span class="state-tag">Default</span>
+              <button class="wds-btn wds-btn--compact-accent">Compact</button>
+            </div>
+            <div class="state-item">
+              <span class="state-tag">Disabled</span>
+              <button class="wds-btn wds-btn--compact-accent" style="background:var(--color-neutral-200,#EAE7F1);color:var(--color-neutral-400,#988DAC);cursor:not-allowed;pointer-events:none" disabled>Compact</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Compact Secondary -->
+    <div class="input-card" id="btn2-compact-secondary">
+      <div class="input-card__header">
+        <span class="input-card__name">Button / Compact / Secondary</span>
+        <span class="input-card__tag">2 estados</span>
+      </div>
+      <div class="input-card__body">
+        <div class="input-card__live">
+          <div class="input-card__live-label">Live demo</div>
+          <button class="wds-btn" style="border-radius:42px;background:var(--color-accent-100,#EFE9F8);border:1px solid var(--color-accent-200,#E1D5F2);color:var(--color-accent-light,#5723B0);font-size:12px;font-weight:600;padding:8px 20px;width:auto;height:auto">Secondary</button>
+        </div>
+        <div class="input-card__states">
+          <div class="input-card__states-label">Estados</div>
+          <div class="btn-states-grid">
+            <div class="state-item">
+              <span class="state-tag">Default</span>
+              <button class="wds-btn" style="border-radius:42px;background:var(--color-accent-100,#EFE9F8);border:1px solid var(--color-accent-200,#E1D5F2);color:var(--color-accent-light,#5723B0);font-size:12px;font-weight:600;padding:8px 20px;width:auto;height:auto">Secondary</button>
+            </div>
+            <div class="state-item">
+              <span class="state-tag">Disabled</span>
+              <button class="wds-btn" style="border-radius:42px;background:var(--color-neutral-200,#EAE7F1);border:1px solid var(--color-neutral-200,#EAE7F1);color:var(--color-neutral-400,#988DAC);font-size:12px;font-weight:600;padding:8px 20px;width:auto;height:auto;cursor:not-allowed" disabled>Secondary</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── BUTTON FLOATING ───────────────────────────────── -->
+  <div class="input-group">
+    <h2 class="input-group__title">Button Floating</h2>
+    <p class="input-group__desc">52px de altura · border-radius 32px · Montserrat Bold 700 16px · ícone em pill 40×40px</p>
+
+    <!-- Floating Brand -->
+    <div class="input-card" id="btn2-floating-brand">
+      <div class="input-card__header">
+        <span class="input-card__name">Button / Floating / Brand</span>
+        <span class="input-card__tag">1 estado</span>
+      </div>
+      <div class="input-card__body">
+        <div class="input-card__live">
+          <div class="input-card__live-label">Live demo</div>
+          <button class="wds-btn wds-btn--cta-brand">
+            Make your Parlay
+            <span class="wds-btn__cta-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>
+            </span>
+          </button>
+        </div>
+        <div class="input-card__states">
+          <div class="input-card__states-label">Estado</div>
+          <div class="btn-states-grid">
+            <div class="state-item">
+              <span class="state-tag">Default</span>
+              <button class="wds-btn wds-btn--cta-brand">
+                Make your Parlay
+                <span class="wds-btn__cta-icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>
+                </span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Floating Secondary -->
+    <div class="input-card" id="btn2-floating-secondary">
+      <div class="input-card__header">
+        <span class="input-card__name">Button / Floating / Secondary</span>
+        <span class="input-card__tag">1 estado</span>
+      </div>
+      <div class="input-card__body">
+        <div class="input-card__live">
+          <div class="input-card__live-label">Live demo</div>
+          <button class="wds-btn wds-btn--cta-secondary">
+            View Contest
+            <span class="wds-btn__cta-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>
+            </span>
+          </button>
+        </div>
+        <div class="input-card__states">
+          <div class="input-card__states-label">Estado</div>
+          <div class="btn-states-grid">
+            <div class="state-item">
+              <span class="state-tag">Default</span>
+              <button class="wds-btn wds-btn--cta-secondary">
+                View Contest
+                <span class="wds-btn__cta-icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>
+                </span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Floating AI -->
+    <div class="input-card" id="btn2-floating-ai">
+      <div class="input-card__header">
+        <span class="input-card__name">Button / Floating / AI</span>
+        <span class="input-card__tag">2 estados</span>
+      </div>
+      <div class="input-card__body">
+        <div class="input-card__live">
+          <div class="input-card__live-label">Live demo</div>
+          <button class="wds-btn wds-btn--cta-brand" style="gap:10px">
+            <svg width="20" height="20" viewBox="0 0 24 24"><path d="M12 2L9.5 9.5 2 12 9.5 14.5 12 22 14.5 14.5 22 12 14.5 9.5z"/></svg>
+            Generate Parlay
+            <span class="wds-btn__cta-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>
+            </span>
+          </button>
+        </div>
+        <div class="input-card__states">
+          <div class="input-card__states-label">Estados</div>
+          <div class="btn-states-grid">
+            <div class="state-item">
+              <span class="state-tag">Expanded</span>
+              <button class="wds-btn wds-btn--cta-brand" style="gap:10px">
+                <svg width="20" height="20" viewBox="0 0 24 24"><path d="M12 2L9.5 9.5 2 12 9.5 14.5 12 22 14.5 14.5 22 12 14.5 9.5z"/></svg>
+                Generate Parlay
+                <span class="wds-btn__cta-icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>
+                </span>
+              </button>
+            </div>
+            <div class="state-item">
+              <span class="state-tag">Collapsed</span>
+              <button class="wds-btn wds-btn--cta-brand" style="width:52px;height:52px;border-radius:50%;padding:0;justify-content:center" aria-label="AI">
+                <svg width="22" height="22" viewBox="0 0 24 24"><path d="M12 2L9.5 9.5 2 12 9.5 14.5 12 22 14.5 14.5 22 12 14.5 9.5z"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── PARLAY ACTION ─────────────────────────────────── -->
+  <div class="input-group">
+    <h2 class="input-group__title">Parlay Action</h2>
+    <p class="input-group__desc">Componente de ação principal no bottom-sheet do parlay. 48px · duas áreas: Action (botão) e Hint (status). Controlado por BOOLEAN Show Action / Show Hint.</p>
+
+    <!-- Action Button -->
+    <div class="input-card" id="btn2-parlay-action">
+      <div class="input-card__header">
+        <span class="input-card__name">Parlay Action / Button</span>
+        <span class="input-card__tag">4 ações</span>
+      </div>
+      <div class="input-card__body">
+        <div class="input-card__live">
+          <div class="input-card__live-label">Live demo</div>
+          <button class="wds-btn wds-btn--primary-brand" style="width:100%;border-radius:16px;gap:8px">
+            <svg width="18" height="18" viewBox="0 0 24 24"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>
+            Continue
+          </button>
+        </div>
+        <div class="input-card__states">
+          <div class="input-card__states-label">Variações da ação</div>
+          <div class="btn-states-grid">
+            <div class="state-item">
+              <span class="state-tag">Ready</span>
+              <button class="wds-btn wds-btn--primary-brand" style="width:100%;border-radius:16px;gap:8px">
+                <svg width="18" height="18" viewBox="0 0 24 24"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>
+                Ready
+              </button>
+            </div>
+            <div class="state-item">
+              <span class="state-tag">Payout</span>
+              <button class="wds-btn wds-btn--primary-brand" style="width:100%;border-radius:16px;gap:8px">
+                <svg width="18" height="18" viewBox="0 0 24 24"><path d="M12 2L9.5 9.5 2 12 9.5 14.5 12 22 14.5 14.5 22 12 14.5 9.5z"/></svg>
+                Payout
+              </button>
+            </div>
+            <div class="state-item">
+              <span class="state-tag">Checkout</span>
+              <button class="wds-btn wds-btn--primary-brand" style="width:100%;border-radius:16px;gap:8px">
+                <svg width="18" height="18" viewBox="0 0 24 24"><path d="M5 6h14v2H5zm-2 4h18v2H3zm2 4h14v2H5z"/></svg>
+                Checkout
+              </button>
+            </div>
+            <div class="state-item">
+              <span class="state-tag">Continue</span>
+              <button class="wds-btn wds-btn--primary-brand" style="width:100%;border-radius:16px;gap:8px">
+                <svg width="18" height="18" viewBox="0 0 24 24"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>
+                Continue
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hint Area -->
+    <div class="input-card" id="btn2-parlay-hint">
+      <div class="input-card__header">
+        <span class="input-card__name">Parlay Action / Hint</span>
+        <span class="input-card__tag">7 variações</span>
+      </div>
+      <div class="input-card__body">
+        <div class="input-card__live">
+          <div class="input-card__live-label">Live demo</div>
+          <div style="display:flex;align-items:center;gap:8px;background:rgba(245,204,69,.20);border-radius:12px;padding:10px 14px;width:100%">
+            <div style="width:6px;height:6px;border-radius:50%;background:#F5CC45;flex-shrink:0"></div>
+            <span style="font-family:'Montserrat',sans-serif;font-size:12px;font-weight:600;color:var(--color-neutral-black,#090127)">Add 2+ picks to build a parlay</span>
+          </div>
+        </div>
+        <div class="input-card__states">
+          <div class="input-card__states-label">Variações do hint</div>
+          <div style="display:flex;flex-direction:column;gap:8px;width:100%">
+            <div class="state-item" style="flex-direction:row;align-items:center;gap:8px">
+              <span class="state-tag" style="min-width:64px">Hint 1</span>
+              <div style="display:flex;align-items:center;gap:8px;background:rgba(245,204,69,.20);border-radius:8px;padding:8px 12px;flex:1">
+                <div style="width:5px;height:5px;border-radius:50%;background:#F5CC45;flex-shrink:0"></div>
+                <span style="font-family:'Montserrat',sans-serif;font-size:11px;font-weight:600;color:var(--color-neutral-black,#090127)">Add 2+ picks to build a parlay</span>
+              </div>
+            </div>
+            <div class="state-item" style="flex-direction:row;align-items:center;gap:8px">
+              <span class="state-tag" style="min-width:64px">Hint 2</span>
+              <div style="display:flex;align-items:center;gap:8px;background:rgba(25,143,81,.20);border-radius:8px;padding:8px 12px;flex:1">
+                <div style="width:5px;height:5px;border-radius:50%;background:#198F51;flex-shrink:0"></div>
+                <span style="font-family:'Montserrat',sans-serif;font-size:11px;font-weight:600;color:var(--color-neutral-black,#090127)">All picks locked in!</span>
+              </div>
+            </div>
+            <div class="state-item" style="flex-direction:row;align-items:center;gap:8px">
+              <span class="state-tag" style="min-width:64px">Hint 3</span>
+              <div style="display:flex;align-items:center;gap:8px;background:rgba(87,35,176,.10);border-radius:8px;padding:8px 12px;flex:1">
+                <div style="width:5px;height:5px;border-radius:50%;background:var(--color-accent-light,#5723B0);flex-shrink:0"></div>
+                <span style="font-family:'Montserrat',sans-serif;font-size:11px;font-weight:600;color:var(--color-neutral-black,#090127)">Potential payout: $250.00</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ═══════════════════════════════════════════════ HEADERS -->
 <section id="section-headers" class="section">
   <p class="section__eyebrow">Components</p>
@@ -2542,12 +2990,136 @@ makeStandardCard('Temporary Password','Temporary Password','Incorrect temporary 
 makePasswordCard('New Password','New Password',false,g3);
 makePasswordCard('Confirm Password','Confirm Password',true,g3);
 
-/* Inject spec panel into every card body — runs AFTER all cards are built */
-document.querySelectorAll('.input-card__body').forEach(function(body) {
+/* Inject spec panel into input card bodies only (not Buttons 2) */
+document.querySelectorAll('#section-inputs .input-card__body, #section-input-label .input-card__body').forEach(function(body) {
   if (!body.querySelector('.input-card__spec')) {
     body.insertAdjacentHTML('beforeend', makeSpecPanel());
   }
 });
+
+/* ── Buttons 2 — spec panel injection ── */
+(function() {
+  function sw(hexL, hexD) {
+    var lB = (hexL === '#FFFFFF' || hexL === '#F7F6F9') ? 'border:1px solid rgba(0,0,0,.2);' : '';
+    var dB = (hexD === '#FFFFFF' || hexD === '#F7F6F9') ? 'border:1px solid rgba(0,0,0,.2);' : '';
+    return '<div class="spec-col-hex">' +
+      '<span class="spec-sw" style="background:' + hexL + ';' + lB + '" title="Light · ' + hexL + '" onclick="copyToken(\'' + hexL + '\')"></span>' +
+      '<span class="spec-sw" style="background:' + hexD + ';' + dB + '" title="Dark · ' + hexD + '" onclick="copyToken(\'' + hexD + '\')"></span>' +
+    '</div>';
+  }
+  function row(sem, prim, hexL, hexD) {
+    return '<div class="spec-token-row">' +
+      '<span class="spec-col-semantic" title="' + sem + '" onclick="copyToken(\'' + sem + '\')">' + sem + '</span>' +
+      '<span class="spec-col-prim" title="' + prim + '" onclick="copyToken(\'' + prim + '\')">' + prim + '</span>' +
+      sw(hexL, hexD) +
+    '</div>';
+  }
+  var head = '<div class="spec-col-head"><span>Token</span><span>Primitive</span><span>HEX</span></div>';
+  function block(state, title, rows) {
+    return '<div class="spec-state-block" data-state="' + state + '">' +
+      '<div class="spec-state-title">' + title + '</div>' +
+      head + rows +
+    '</div>';
+  }
+  function panel(defaultRows, disabledRows) {
+    var html = '<div class="input-card__spec">' + block('default', 'Default', defaultRows);
+    if (disabledRows) html += block('disabled', 'Disabled', disabledRows);
+    html += '</div>';
+    return html;
+  }
+
+  var disabledCommon =
+    row('Button/Primary/Fill/disabled',  'neutral/200', '#EAE7F1', '#2B263F') +
+    row('Button/Primary/Text/disabled',  'neutral/400', '#988DAC', '#706784');
+
+  var specs = {
+    'btn2-brand': panel(
+      row('Button/Primary/Brand/Fill', 'accent/light',   '#5723B0', '#A874FF') +
+      row('Button/Primary/Brand/Text', 'neutral/white',  '#FFFFFF', '#090127'),
+      disabledCommon
+    ),
+    'btn2-accent': panel(
+      row('Button/Primary/Accent/Fill', 'support/yellow', '#F5CC45', '#F5CC45') +
+      row('Button/Primary/Accent/Text', 'neutral/black',  '#090127', '#FFFFFF'),
+      disabledCommon
+    ),
+    'btn2-gold': panel(
+      row('gradient/gold',              '— paint style', '#F8BD4F', '#F8BD4F') +
+      row('Button/Primary/Gold/Text',   'neutral/black',  '#090127', '#FFFFFF'),
+      row('gradient/silver',            '— paint style', '#C0C0C0', '#C0C0C0') +
+      row('Button/Primary/Text/disabled','neutral/400',  '#988DAC', '#706784')
+    ),
+    'btn2-secondary': panel(
+      row('Button/Secondary/Fill',   'accent/secondary', '#EFE9F8', '#150F2B') +
+      row('Button/Secondary/Text',   'accent/light',     '#5723B0', '#A874FF') +
+      row('Button/Secondary/stroke', 'accent/tertiary',  '#E1D5F2', '#2B263F'),
+      row('Button/Secondary/disabled/Fill', 'neutral/200', '#EAE7F1', '#2B263F') +
+      row('Button/Secondary/disabled/Text', 'neutral/400', '#988DAC', '#706784')
+    ),
+    'btn2-ghost': panel(
+      row('Button/Ghost/Fill',   '— transparent',    'rgba(0,0,0,0)', 'rgba(0,0,0,0)') +
+      row('Button/Ghost/Text',   'accent/light',      '#5723B0', '#A874FF') +
+      row('Button/Ghost/stroke', 'accent/tertiary',   '#E1D5F2', '#2B263F'),
+      row('Button/Ghost/disabled/Text',   'neutral/400', '#988DAC', '#706784') +
+      row('Button/Ghost/disabled/stroke', 'neutral/200', '#EAE7F1', '#2B263F')
+    ),
+    'btn2-destructive': panel(
+      row('Button/Destructive/Fill', 'semantic/error',  '#EA3A2E', '#FF584D') +
+      row('Button/Destructive/Text', 'neutral/white',   '#FFFFFF', '#090127'),
+      row('Button/Destructive/disabled/Fill', 'neutral/200', '#EAE7F1', '#2B263F') +
+      row('Button/Destructive/disabled/Text', 'neutral/400', '#988DAC', '#706784')
+    ),
+    'btn2-compact-yellow': panel(
+      row('Button/Compact/Yellow/Fill', 'support/yellow', '#F5CC45', '#F5CC45') +
+      row('Button/Compact/Yellow/Text', 'neutral/black',  '#090127', '#FFFFFF'),
+      row('Button/Compact/Yellow/disabled/Fill', 'neutral/200', '#EAE7F1', '#2B263F') +
+      row('Button/Compact/Yellow/disabled/Text', 'neutral/400', '#988DAC', '#706784')
+    ),
+    'btn2-compact-secondary': panel(
+      row('Button/Secondary/Fill',   'accent/secondary', '#EFE9F8', '#150F2B') +
+      row('Button/Secondary/Text',   'accent/light',     '#5723B0', '#A874FF') +
+      row('Button/Secondary/stroke', 'accent/tertiary',  '#E1D5F2', '#2B263F'),
+      row('Button/Secondary/disabled/Fill', 'neutral/200', '#EAE7F1', '#2B263F') +
+      row('Button/Secondary/disabled/Text', 'neutral/400', '#988DAC', '#706784')
+    ),
+    'btn2-floating-brand': panel(
+      row('gradient/brand',           '— paint style', '#5723B0', '#2C1357') +
+      row('Button/Primary/Brand/Text','neutral/white',  '#FFFFFF', '#090127'),
+      null
+    ),
+    'btn2-floating-secondary': panel(
+      row('Button/Secondary/Fill',   'accent/secondary', '#EFE9F8', '#150F2B') +
+      row('Button/Secondary/Text',   'accent/light',     '#5723B0', '#A874FF') +
+      row('Button/Secondary/stroke', 'accent/tertiary',  '#E1D5F2', '#2B263F'),
+      null
+    ),
+    'btn2-floating-ai': panel(
+      row('gradient/brand',           '— paint style', '#5723B0', '#2C1357') +
+      row('Button/Primary/Brand/Text','neutral/white',  '#FFFFFF', '#090127'),
+      null
+    ),
+    'btn2-parlay-action': panel(
+      row('ParlayAction/button/Fill', 'accent/light',  '#5723B0', '#A874FF') +
+      row('ParlayAction/button/Text', 'neutral/white', '#FFFFFF', '#090127'),
+      null
+    ),
+    'btn2-parlay-hint': panel(
+      row('ParlayAction/hint/Fill',      'support/yellow/20', 'rgba(245,204,69,.20)', 'rgba(245,204,69,.20)') +
+      row('ParlayAction/hint/text',      'neutral/black',     '#090127', '#FFFFFF') +
+      row('ParlayAction/hint/indicator', '— semantic/indicator', '#F5CC45', '#F5CC45'),
+      null
+    )
+  };
+
+  Object.keys(specs).forEach(function(id) {
+    var card = document.getElementById(id);
+    if (!card) return;
+    var body = card.querySelector('.input-card__body');
+    if (body && !body.querySelector('.input-card__spec')) {
+      body.insertAdjacentHTML('beforeend', specs[id]);
+    }
+  });
+})();
 
 /* ── DOB segment state management ── */
 document.querySelectorAll('.input-card__live .wds-dob__input').forEach(function(input) {
