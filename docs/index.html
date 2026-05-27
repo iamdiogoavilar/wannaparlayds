@@ -2395,7 +2395,7 @@
     <div class="input-card" id="btn2-parlay-hint">
       <div class="input-card__header">
         <span class="input-card__name">Parlay Action / Hint</span>
-        <span class="input-card__tag">6 variações</span>
+        <span class="input-card__tag">7 variações</span>
       </div>
       <div class="input-card__body">
         <div class="input-card__live">
@@ -2414,10 +2414,16 @@
           <div class="input-card__states-label">Todas as variações</div>
           <div style="display:flex;flex-direction:column;gap:10px;width:100%">
 
-            <!-- Empty -->
+            <!-- Empty — Start making picks -->
             <div class="state-item">
-              <span class="state-tag">Empty</span>
+              <span class="state-tag">Empty 1</span>
               <div class="wds-pa-hint wds-pa-hint--empty">Start making picks!</div>
+            </div>
+
+            <!-- Empty — Make a pick (player picks) -->
+            <div class="state-item">
+              <span class="state-tag">Empty 2</span>
+              <div class="wds-pa-hint wds-pa-hint--empty">Make a pick</div>
             </div>
 
             <!-- Add Points -->
@@ -2472,10 +2478,10 @@
               </div>
             </div>
 
-            <!-- Max Exceeded -->
+            <!-- Max Exceeded — mesmo fill amber, texto disabled, trending_down -->
             <div class="state-item">
               <span class="state-tag">Max Exceeded</span>
-              <div class="wds-pa-hint wds-pa-hint--disabled">
+              <div class="wds-pa-hint">
                 <div class="wds-pa-hint__icon">
                   <svg viewBox="0 0 24 24" width="24" height="24" fill="none">
                     <path d="M16 18V16H18.6L13.4 10.85L9.4 14.85L2 7.4L3.4 6L9.4 12L13.4 8L20 14.6V12H22V18H16Z" fill="#F59E0B"/>
@@ -3200,19 +3206,19 @@ document.querySelectorAll('#section-inputs .input-card__body, #section-input-lab
     ),
     'btn2-parlay-hint':
       '<div class="input-card__spec">' +
-      block('default', 'Active (Add Points · Add Player · Different Event · Meet Requirement)',
-        row('ParlayAction/hint/Fill', 'support/warning/20', 'rgba(252,165,18,.2)', 'rgba(252,165,18,.2)') +
-        row('ParlayAction/hint/text', 'neutral/black',      '#090127', '#FFFFFF') +
+      block('default', 'Active — Add Points · Add Player · Different Event · Meet Requirement',
+        row('ParlayAction/hint/Fill',      'support/warning/20', 'rgba(252,165,18,.2)', 'rgba(252,165,18,.2)') +
+        row('ParlayAction/hint/text',      'neutral/black',      '#090127', '#FFFFFF') +
         row('ParlayAction/hint/indicator', '— trending_up fill', '#F59E0B', '#F59E0B')
       ) +
-      block('disabled', 'Max Exceeded',
-        row('ParlayAction/hint/Fill',       'neutral/100',   '#F7F6F9', '#150F2B') +
-        row('button/primary/text/disabled', 'neutral/400',   '#988DAC', '#706784') +
+      block('disabled', 'Max Exceeded — mesmo fill amber, texto disabled',
+        row('ParlayAction/hint/Fill',       'support/warning/20', 'rgba(252,165,18,.2)', 'rgba(252,165,18,.2)') +
+        row('button/primary/text/disabled', 'neutral/400',        '#988DAC', '#706784') +
         row('ParlayAction/hint/indicator',  '— trending_down fill', '#F59E0B', '#F59E0B')
       ) +
-      block('default', 'Empty',
-        row('ParlayAction/empty/Fill', 'neutral/100',         '#F7F6F9', '#150F2B') +
-        row('ParlayAction/empty/text', 'neutral/400',         '#988DAC', '#706784')
+      block('default', 'Empty — Start making picks! · Make a pick',
+        row('ParlayAction/empty/Fill', 'neutral/100', '#F7F6F9', '#150F2B') +
+        row('ParlayAction/empty/text', 'neutral/400', '#988DAC', '#706784')
       ) +
       '</div>'
   };

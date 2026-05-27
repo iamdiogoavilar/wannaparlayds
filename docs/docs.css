@@ -1230,11 +1230,7 @@ body {
   color: var(--color-neutral-400, #988DAC);
   font-family: 'Montserrat', sans-serif;
 }
-.wds-pa-hint--disabled {
-  background: var(--color-neutral-100, #F7F6F9);
-  border-radius: 130px;
-  padding: 4px 48px;
-}
+/* wds-pa-hint--disabled removed: Max Exceeded uses same amber fill as active hints */
 .wds-pa-hint__icon {
   position: absolute;
   left: 4px;
@@ -1254,7 +1250,7 @@ body {
 [data-theme="dark"] .wds-pa-btn { background: var(--color-accent-dark, #A874FF); }
 [data-theme="dark"] .wds-pa-hint { background: rgba(252,165,18,.20); }
 [data-theme="dark"] .wds-pa-hint--empty { background: #150F2B; }
-[data-theme="dark"] .wds-pa-hint--disabled { background: #150F2B; }
+/* dark hint--disabled removed — Max Exceeded uses amber bg */
 [data-theme="dark"] .wds-pa-hint__text { color: #FFFFFF; }
 [data-theme="dark"] .wds-pa-hint__text--disabled { color: #706784; }
 
