@@ -919,7 +919,7 @@ body {
 .btn-states-grid .wds-btn--compact-accent,
 .btn-states-grid .wds-btn--compact-secondary { width: auto; align-self: flex-start; }
 .btn-states-grid .wds-btn--cta-brand,
-.btn-states-grid .wds-btn--cta-secondary { width: 100%; justify-content: space-between; }
+.btn-states-grid .wds-btn--cta-secondary { width: auto; align-self: flex-start; }
 
 /* Disabled spec-state-block color */
 .spec-state-block[data-state="disabled"] .spec-state-title { color: var(--color-neutral-400, #988DAC); }
@@ -1207,11 +1207,11 @@ body {
 }
 .wds-pa-btn__action {
   display: flex; align-items: center; gap: 8px; flex-shrink: 0;
-  font-size: 14px; font-weight: 700; line-height: 1; white-space: nowrap;
+  font-size: 12px; font-weight: 600; line-height: 1; white-space: nowrap;
 }
 .wds-pa-btn__center {
   flex: 1; display: flex; align-items: center; justify-content: center; gap: 8px;
-  font-size: 14px; font-weight: 700; line-height: 1;
+  font-size: 12px; font-weight: 600; line-height: 1;
 }
 /* Hint pill: peach bg, pill shape — icon absolute-left, text centered */
 .wds-pa-hint {
