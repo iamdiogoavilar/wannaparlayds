@@ -1203,15 +1203,15 @@ body {
 }
 .wds-pa-btn__fee {
   flex: 1; display: flex; align-items: center; gap: 4px;
-  font-size: 14px; font-weight: 700; white-space: nowrap;
+  font-size: 14px; font-weight: 700; line-height: 1; white-space: nowrap;
 }
 .wds-pa-btn__action {
   display: flex; align-items: center; gap: 8px; flex-shrink: 0;
-  font-size: 12px; font-weight: 600; white-space: nowrap;
+  font-size: 14px; font-weight: 700; line-height: 1; white-space: nowrap;
 }
 .wds-pa-btn__center {
-  flex: 1; display: flex; align-items: center; justify-content: flex-end; gap: 8px;
-  font-size: 14px; font-weight: 700;
+  flex: 1; display: flex; align-items: center; justify-content: center; gap: 8px;
+  font-size: 14px; font-weight: 700; line-height: 1;
 }
 /* Hint pill: peach bg, pill shape — icon absolute-left, text centered */
 .wds-pa-hint {
