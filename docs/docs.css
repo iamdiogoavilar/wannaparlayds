@@ -1213,36 +1213,40 @@ body {
   flex: 1; display: flex; align-items: center; justify-content: flex-end; gap: 8px;
   font-size: 14px; font-weight: 700;
 }
-/* Hint pill: peach bg, pill shape */
+/* Hint pill: peach bg, pill shape — icon absolute-left, text centered */
 .wds-pa-hint {
-  display: flex; align-items: center;
+  position: relative;
+  display: flex; align-items: center; justify-content: center;
   height: 48px; border-radius: 130px;
   background: rgba(252,165,18,.20);
-  padding: 4px 48px 4px 4px; gap: 8px; width: 100%;
+  padding: 4px 48px; /* spacing/3xl = 48px both sides */
+  width: 100%;
 }
 .wds-pa-hint--empty {
   background: var(--color-neutral-100, #F7F6F9);
   border-radius: 110px;
-  justify-content: center;
-  padding: 0 16px;
+  padding: 0 48px;
   font-size: 14px; font-weight: 600;
   color: var(--color-neutral-400, #988DAC);
   font-family: 'Montserrat', sans-serif;
 }
 .wds-pa-hint--disabled {
   background: var(--color-neutral-100, #F7F6F9);
-  border-radius: 200px;
-  padding: 4px 48px 4px 4px;
+  border-radius: 130px;
+  padding: 4px 48px;
 }
 .wds-pa-hint__icon {
-  width: 37px; height: 37px; border-radius: 41px;
+  position: absolute;
+  left: 4px;
+  width: 40px; height: 40px; border-radius: 99px;
   display: flex; align-items: center; justify-content: center;
   flex-shrink: 0;
 }
 .wds-pa-hint__text {
-  flex: 1; font-family: 'Montserrat', sans-serif;
+  font-family: 'Montserrat', sans-serif;
   font-size: 14px; font-weight: 600;
   color: var(--color-neutral-black, #090127);
+  text-align: center;
 }
 .wds-pa-hint__text--disabled {
   color: var(--color-neutral-400, #988DAC);
